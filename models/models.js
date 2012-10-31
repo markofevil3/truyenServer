@@ -14,10 +14,9 @@ var chapterSchema = new Schema({
 });
 
 var userSchema = new Schema({
-  accessToken: { type: String, index: true },
   userId: { type: Number, index: true },
   username: { type: String, index: true },
-  thumbnailUrl: String,
+  fullName: String,
   favorites: [ favoriteSchema ],
 });
 

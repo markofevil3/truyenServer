@@ -1,5 +1,7 @@
 'use strict';
 
+var Util = require('../lib/util');
+
 var User = require('../models/models').User;
 var Chapter = require('../models/models').Chapter;
 var Favorite = require('../models/models').Favorite;
@@ -34,6 +36,7 @@ exports.mangaList = function(req, res) {
 };
 
 exports.manga = function(req, res) {
+  console.log(req.query.userId);
   Manga.findOne({ '_id': req.query.id }, function(error, manga) {
     if (error) {
       console.log(error);
@@ -47,7 +50,17 @@ exports.manga = function(req, res) {
         manga.numView = 1;
       }
       manga.save();
-      res.json({ 'data': manga })
+      User.findOne({ 'userId': req.query.userId }, function(error, user) {
+        if (user == null) {
+          res.json({ 'data': manga, 'favorite': false });
+        } else {
+          if (Util.contain(user.favorites, 'itemId', manga._id)) {
+            res.json({ 'data': manga, 'favorite': true });
+          } else {
+            res.json({ 'data': manga, 'favorite': false });
+          }
+        }
+      });
     }
   });
 };
@@ -66,5 +79,27 @@ exports.mangaReading = function(req, res) {
 };
 
 exports.addFavorite = function(req, res) {
-  
+  User.findOne({ 'uid': req.query.uid }, function(error, user) {
+    if (error) {
+      console.log(error);
+    }
+    if (user == null) {
+      user = new User({ 'userId': req.query.userId });
+      user.username = req.query.username;
+      user.fullName = req.query.fullName;
+      user.favorites = [];
+    } else {
+      user.fullName = req.query.fullName;
+    }
+    if (!Util.contain(user.favorites, 'itemId', req.query.itemId )) {
+      user.favorites.push({ 'itemId': req.query.itemId, 'itemType': req.query.itemType });
+    }
+    user.save(function(error) {
+      if (error) {
+        console.log(error);
+        res.json({ 'data': error });
+      }
+      res.json({ 'data': 'success' });
+    })
+  });
 };
