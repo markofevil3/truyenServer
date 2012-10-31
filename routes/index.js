@@ -41,6 +41,12 @@ exports.manga = function(req, res) {
     if (manga == null) {
       console.log(error);
     } else {
+      if (manga.numView) {
+        manga.numView++;
+      } else {
+        manga.numView = 1;
+      }
+      manga.save();
       res.json({ 'data': manga })
     }
   });
