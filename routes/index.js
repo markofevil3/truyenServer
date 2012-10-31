@@ -63,10 +63,8 @@ exports.mangaReading = function(req, res) {
       res.json({ 'data': chapter })
     }
   });
-  // var data = {
-  //   'numPages': 14,
-  //   '_id': 1,
-  //   'nameIphone': 'sample'
-  // };
-  // res.json({ 'data': data });
+};
+
+exports.addFavorite = function(req, res) {
+  
 };
