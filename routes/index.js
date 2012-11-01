@@ -111,11 +111,13 @@ exports.removeFavorite = function(req, res) {
     if (user == null) {
       res.json({ 'data': false });
     } else {
-      var favorite = user.favorites.id('50922b01e4b3602f0600001e');
+      var favorite = user.favorites.id(req.query.itemId);
       if (favorite != null) {
-        favorite.remove();
-        user.save();
+        favorite.remove(function() {
+          user.save();
+        });
       }
+      res.json({ 'data': 'success' });
     }
   });
 };
@@ -146,7 +148,7 @@ exports.getFavorites = function(req, res) {
             break;
         }
       }
-      Manga.find({ '_id': { $in: mangaIds }}, '_id title author cover datePost numView').sort('title', 1).exec(function(error, mangas) {
+      Manga.find({ '_id': { $in: mangaIds }}).sort('title', 1).exec(function(error, mangas) {
         if (error) {
           console.log(error);
           res.json({ 'data': false });
