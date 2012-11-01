@@ -27,7 +27,7 @@ exports.mangaList = function(req, res) {
   //   console.log(i);
   //   manga.save();
   // }
-  Manga.find({}, function(error, mangas) {
+  Manga.find({}).sort( 'title', 1 ).exec(function(error, mangas) {
     if (error) {
       console.log(error);
     }
@@ -36,7 +36,6 @@ exports.mangaList = function(req, res) {
 };
 
 exports.manga = function(req, res) {
-  console.log(req.query.userId);
   Manga.findOne({ '_id': req.query.id }, function(error, manga) {
     if (error) {
       console.log(error);
@@ -79,7 +78,7 @@ exports.mangaReading = function(req, res) {
 };
 
 exports.addFavorite = function(req, res) {
-  User.findOne({ 'uid': req.query.uid }, function(error, user) {
+  User.findOne({ 'userId': req.query.userId }, function(error, user) {
     if (error) {
       console.log(error);
     }
@@ -103,3 +102,60 @@ exports.addFavorite = function(req, res) {
     })
   });
 };
+
+exports.removeFavorite = function(req, res) {
+  User.findOne({ 'userId': req.query.userId }, function(error, user) {
+    if (error) {
+      console.log(error);
+    }
+    if (user == null) {
+      res.json({ 'data': false });
+    } else {
+      var favorite = user.favorites.id('50922b01e4b3602f0600001e');
+      if (favorite != null) {
+        favorite.remove();
+        user.save();
+      }
+    }
+  });
+};
+
+exports.getFavorites = function(req, res) {
+  User.findOne({ 'userId': req.query.userId }, function(error, user) {
+    if (error) {
+      console.log(error);
+    }
+    if (user == null) {
+      res.json({ 'data': false });
+    } else {
+      var favorites = {};
+      var mangaIds = [];
+      var storyIds = [];
+      var funnyIds = [];
+      for (var i = 0; i < user.favorites.length; i++) {
+        var itemType = user.favorites[i].itemType;
+        switch(itemType.toString()) {
+          case '0':
+            mangaIds.push(user.favorites[i].itemId);
+            break;
+          case '1':
+            storyIds.push(user.favorites[i].itemId);
+            break;
+          case '2':
+            funnyIds.push(user.favorites[i].itemId);
+            break;
+        }
+      }
+      Manga.find({ '_id': { $in: mangaIds }}).sort('title', 1).exec(function(error, mangas) {
+        if (error) {
+          console.log(error);
+          res.json({ 'data': false });
+        }
+        if (mangas != null) {
+          favorites['manga'] = mangas;
+        }
+        res.json({ 'data': favorites });
+      });
+    }
+  });
+}
