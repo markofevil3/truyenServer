@@ -41,6 +41,7 @@ app.get('/mangaReading', routes.mangaReading);
 app.get('/addFavorite', routes.addFavorite);
 app.get('/removeFavorite', routes.removeFavorite);
 app.get('/getFavorites', routes.getFavorites);
+app.get('/storyList', routes.storyList);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));

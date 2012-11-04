@@ -6,6 +6,23 @@ var User = require('../models/models').User;
 var Chapter = require('../models/models').Chapter;
 var Favorite = require('../models/models').Favorite;
 var Manga = require('../models/models').Manga;
+var Story = require('../models/models').Story;
+
+exports.storyList = function(req, res) {
+  // for (var i = 0; i < 15; i++) {
+  //   var story = new Story({});
+  //   story.title = 'Chiếc lá cuối cùng ' + i;
+  //   story.author = 'Quan';
+  //   story.datePost = Date.now();
+  //   story.save();
+  // }
+  Story.find({}, '_id title author datePost numView shortDes').sort( 'title', 1 ).exec(function(error, stories) {
+    if (error) {
+      console.log(error);
+    }
+    res.json({ 'data': stories });
+  });
+};
 
 exports.mangaList = function(req, res) {
   // for (var i = 0; i < 30; i++) {
@@ -111,13 +128,14 @@ exports.removeFavorite = function(req, res) {
     if (user == null) {
       res.json({ 'data': false });
     } else {
-      var favorite = user.favorites.id(req.query.itemId);
-      if (favorite != null) {
-        favorite.remove(function() {
-          user.save();
-        });
+      for (var i = 0; i < user.favorites.length; i++) {
+        if (user.favorites[i].itemId.toString() == req.query.itemId.toString()) {
+          user.favorites[i].remove();
+        }
       }
-      res.json({ 'data': 'success' });
+      user.save(function() {
+        res.json({ 'data': 'success' });
+      });
     }
   });
 };

@@ -25,8 +25,17 @@ var mangaSchema = new Schema({
   author: String,
   cover: String,
   datePost: Date,
-  numView: String,
+  numView: Number,
   chapters: [ chapterSchema ]
+});
+
+var storySchema = new Schema({
+  title: String,
+  author: String,
+  datePost: Date,
+  numView: Number,
+  shortDes: String,
+  content: String
 });
 
 // var shipSchema = new Schema({
@@ -92,5 +101,6 @@ module.exports = {
   'User': mongoose.model('User', userSchema),
   'Favorite': mongoose.model('Favorite', favoriteSchema),
   'Manga': mongoose.model('Manga', mangaSchema),
-  'Chapter': mongoose.model('Chapter', chapterSchema)
+  'Chapter': mongoose.model('Chapter', chapterSchema),
+  'Story': mongoose.model('Story', storySchema)
 };
