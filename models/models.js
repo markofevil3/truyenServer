@@ -34,8 +34,16 @@ var storySchema = new Schema({
   author: String,
   datePost: Date,
   numView: Number,
+  type: Number,
   shortDes: String,
-  content: String
+  content: String,
+  chapters: [ chapterStorySchema ]
+});
+
+var chapterStorySchema = new Schema({
+  chapter: Number,
+  title: String,
+  content: String,
 });
 
 // var shipSchema = new Schema({

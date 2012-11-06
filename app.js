@@ -42,6 +42,8 @@ app.get('/addFavorite', routes.addFavorite);
 app.get('/removeFavorite', routes.removeFavorite);
 app.get('/getFavorites', routes.getFavorites);
 app.get('/storyList', routes.storyList);
+app.get('/getStory', routes.getStory);
+app.get('/getStoryChapter', routes.getStoryChapter);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));

@@ -1,6 +1,7 @@
 'use strict';
 
 var Util = require('../lib/util');
+var PDFDocument = require('pdfkit');
 
 var User = require('../models/models').User;
 var Chapter = require('../models/models').Chapter;
@@ -9,19 +10,55 @@ var Manga = require('../models/models').Manga;
 var Story = require('../models/models').Story;
 
 exports.storyList = function(req, res) {
-  // for (var i = 0; i < 15; i++) {
+  // for (var i = 0; i < 5; i++) {
   //   var story = new Story({});
-  //   story.title = 'Chiếc lá cuối cùng ' + i;
-  //   story.author = 'Quan';
+  //   story.title = 'Full story ' + i;
+  //   story.author = 'Phi Quan';
   //   story.datePost = Date.now();
+  //   story.type = 1;
+  //   }
   //   story.save();
   // }
-  Story.find({}, '_id title author datePost numView shortDes').sort( 'title', 1 ).exec(function(error, stories) {
+  Story.find({}, '_id title author datePost numView shortDes type').sort( 'title', 1 ).exec(function(error, stories) {
     if (error) {
       console.log(error);
     }
     res.json({ 'data': stories });
   });
+};
+
+exports.getStory = function(req, res) {
+  Story.findOne({ '_id': req.query.id }, '_id author title datePost numView shortDes chapters.chapter chapters.title', function(error, story) {
+    if (error) {
+      console.log(error);
+    }
+    console.log(story);
+    if (story == null) {
+      console.log(error);
+    } else {
+      if (story.numView) {
+        story.numView++;
+      } else {
+        story.numView = 1;
+      }
+      story.save();
+      User.findOne({ 'userId': req.query.userId }, function(error, user) {
+        if (user == null) {
+          res.json({ 'data': story, 'favorite': false });
+        } else {
+          if (Util.contain(user.favorites, 'itemId', story._id)) {
+            res.json({ 'data': story, 'favorite': true });
+          } else {
+            res.json({ 'data': story, 'favorite': false });
+          }
+        }
+      });
+    }
+  });
+};
+
+exports.getStoryChapter = function(req, res) {
+  
 };
 
 exports.mangaList = function(req, res) {
