@@ -28,7 +28,7 @@ exports.storyList = function(req, res) {
 };
 
 exports.getStory = function(req, res) {
-  Story.findOne({ '_id': req.query.id }, '_id author title datePost numView shortDes chapters.chapter chapters.title', function(error, story) {
+  Story.findOne({ '_id': req.query.id }, '_id author title datePost numView shortDes chapters.chapter chapters.title chapters._id', function(error, story) {
     if (error) {
       console.log(error);
     }
@@ -211,7 +211,16 @@ exports.getFavorites = function(req, res) {
         if (mangas != null) {
           favorites['manga'] = mangas;
         }
-        res.json({ 'data': favorites });
+        Story.find({ '_id': { $in: storyIds }}, '_id author title datePost numView shortDes chapters.chapter chapters.title chapters._id type').sort('title', 1).exec(function(error, stories) {
+          if (error) {
+            console.log(error);
+            res.json({ 'data': false });
+          }
+          if (stories != null) {
+            favorites['story'] = stories;
+          }
+          res.json({ 'data': favorites });
+        });
       });
     }
   });
