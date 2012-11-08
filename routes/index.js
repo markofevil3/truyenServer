@@ -32,7 +32,6 @@ exports.getStory = function(req, res) {
     if (error) {
       console.log(error);
     }
-    console.log(story);
     if (story == null) {
       console.log(error);
     } else {
@@ -57,8 +56,23 @@ exports.getStory = function(req, res) {
   });
 };
 
-exports.getStoryChapter = function(req, res) {
-  
+exports.getStoryContent = function(req, res) {
+  Story.findOne({ '_id': req.query.id }, function(error, story) {
+    if (error) {
+      console.log(error);
+    }
+    console.log(story);
+    if (story == null) {
+      console.log(error);
+    } else {
+      if (req.query.type == 0) {
+        res.json({ 'data': story });
+      } else {
+        var chapter = story.chapters.id(req.query.chapterId);
+        res.json({ 'data': chapter });
+      }
+    }
+  });
 };
 
 exports.mangaList = function(req, res) {

@@ -43,7 +43,7 @@ app.get('/removeFavorite', routes.removeFavorite);
 app.get('/getFavorites', routes.getFavorites);
 app.get('/storyList', routes.storyList);
 app.get('/getStory', routes.getStory);
-app.get('/getStoryChapter', routes.getStoryChapter);
+app.get('/getStoryContent', routes.getStoryContent);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
