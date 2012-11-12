@@ -16,6 +16,12 @@ exports.storyList = function(req, res) {
   //   story.author = 'Phi Quan';
   //   story.datePost = Date.now();
   //   story.type = 1;
+  //   for (var j = 0; j < 5; j++) {
+  //     var chapter = {
+  //       chapter: j + 1,
+  //       title: 'Chua co Title',
+  //     }
+  //     story.chapters.push(chapter);
   //   }
   //   story.save();
   // }
@@ -61,14 +67,13 @@ exports.getStoryContent = function(req, res) {
     if (error) {
       console.log(error);
     }
-    console.log(story);
     if (story == null) {
       console.log(error);
     } else {
       if (req.query.type == 0) {
         res.json({ 'data': story });
       } else {
-        var chapter = story.chapters.id(req.query.chapterId);
+        var chapter = story.chapters.id(req.query.chapter);
         res.json({ 'data': chapter });
       }
     }

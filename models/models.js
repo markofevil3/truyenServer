@@ -29,6 +29,12 @@ var mangaSchema = new Schema({
   chapters: [ chapterSchema ]
 });
 
+var chapterStorySchema = new Schema({
+  chapter: Number,
+  title: String,
+  content: String,
+});
+
 var storySchema = new Schema({
   title: String,
   author: String,
@@ -40,31 +46,6 @@ var storySchema = new Schema({
   chapters: [ chapterStorySchema ]
 });
 
-var chapterStorySchema = new Schema({
-  chapter: Number,
-  title: String,
-  content: String,
-});
-
-// var shipSchema = new Schema({
-//   name: String,
-//   hp: Number,
-//   weaponAttSLot: Number,
-//   weaponDefSLot: Number,
-//   upgrade: Number,
-//   using: Boolean
-// });
-// 
-// var weaponSchema = new Schema({
-//   name: String,
-//   damage: Number,
-//   slotType: String,
-//   upgrade: Number,
-//   effect: {},
-//   anti: [String],
-//   using: Boolean
-// });
-// 
 // var gameSchema = new Schema({
 //   target: String,
 //   drawAuthor: ObjectId,
@@ -110,5 +91,5 @@ module.exports = {
   'Favorite': mongoose.model('Favorite', favoriteSchema),
   'Manga': mongoose.model('Manga', mangaSchema),
   'Chapter': mongoose.model('Chapter', chapterSchema),
-  'Story': mongoose.model('Story', storySchema)
+  'Story': mongoose.model('Story', storySchema),
 };
