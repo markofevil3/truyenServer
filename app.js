@@ -2,6 +2,7 @@
 
 var express = require('express');
 var routes = require('./routes');
+var tools = require('./routes/tools');
 var http = require('http');
 var path = require('path');
 var fs = require('fs');
@@ -44,6 +45,9 @@ app.get('/getFavorites', routes.getFavorites);
 app.get('/storyList', routes.storyList);
 app.get('/getStory', routes.getStory);
 app.get('/getStoryContent', routes.getStoryContent);
+
+//## import manga
+app.get('/import', tools.importManga);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));

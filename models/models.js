@@ -8,9 +8,11 @@ var favoriteSchema = new Schema({
 });
 
 var chapterSchema = new Schema({
-  chapter: String,
+  // chapter: String,
+  chapter: Number,
   title: String,
   numPages: Number,
+  pages: []
 });
 
 var userSchema = new Schema({
@@ -26,6 +28,8 @@ var mangaSchema = new Schema({
   cover: String,
   datePost: Date,
   numView: Number,
+  folder: String,
+  source: String,
   chapters: [ chapterSchema ]
 });
 
