@@ -100,7 +100,7 @@ exports.mangaList = function(req, res) {
   //   console.log(i);
   //   manga.save();
   // }
-  Manga.find({}).sort( 'title', 1 ).exec(function(error, mangas) {
+  Manga.find({}, '_id title author cover datePost numView source folder').sort( 'title', 1 ).exec(function(error, mangas) {
     if (error) {
       console.log(error);
     }
@@ -109,7 +109,7 @@ exports.mangaList = function(req, res) {
 };
 
 exports.manga = function(req, res) {
-  Manga.findOne({ '_id': req.query.id }, function(error, manga) {
+  Manga.findOne({ '_id': req.query.id }, '_id title author cover datePost numView source chapters._id chapters.chapter chapter.title', function(error, manga) {
     if (error) {
       console.log(error);
     }

@@ -20,12 +20,7 @@ exports.importManga = function(req, res) {
   walker = walk.walk(mangaRoot, options);
 
   walker.on("directories", function (root, dirStatsArray, next) {
-    // dirStatsArray is an array of `stat` objects with the additional attributes
-    // * type
-    // * error
-    // * name
     if (root == mangaRoot) {
-      // console.log(dirStatsArray);
       for (var i = 0; i < dirStatsArray.length; i++) {
         mangaDir.push({'name': dirStatsArray[i].name, 'chapters': []});
       }
