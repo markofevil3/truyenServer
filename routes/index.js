@@ -48,6 +48,7 @@ exports.getStory = function(req, res) {
       }
       story.save();
       User.findOne({ 'userId': req.query.userId }, function(error, user) {
+        story.chapters.sort(Util.dynamicSort('chapter', -1));
         if (user == null) {
           res.json({ 'data': story, 'favorite': false });
         } else {
@@ -109,7 +110,7 @@ exports.mangaList = function(req, res) {
 };
 
 exports.manga = function(req, res) {
-  Manga.findOne({ '_id': req.query.id }, '_id title author cover datePost numView source chapters._id chapters.chapter chapter.title', function(error, manga) {
+  Manga.findOne({ '_id': req.query.id }, '_id title folder author cover datePost numView source chapters._id chapters.chapter chapter.title', function(error, manga) {
     if (error) {
       console.log(error);
     }
@@ -123,6 +124,7 @@ exports.manga = function(req, res) {
       }
       manga.save();
       User.findOne({ 'userId': req.query.userId }, function(error, user) {
+        manga.chapters.sort(Util.dynamicSort('chapter', -1));
         if (user == null) {
           res.json({ 'data': manga, 'favorite': false });
         } else {
