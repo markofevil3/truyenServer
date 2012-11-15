@@ -138,14 +138,15 @@ exports.manga = function(req, res) {
 };
 
 exports.mangaReading = function(req, res) {
-  Manga.findOne({ 'chapter.i._id': req.query.id }, function(error, chapter) {
+  Manga.findOne({ '_id': req.query.id }, function(error, manga) {
     if (error) {
       console.log(error);
     }
-    if (chapter == null) {
+    if (manga == null) {
       console.log(error);
     } else {
-      res.json({ 'data': chapter })
+      var chapter = manga.chapters.id(req.query.chapter);
+      res.json({ 'data': chapter });
     }
   });
 };

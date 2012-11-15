@@ -71,7 +71,7 @@ function getPage() {
       var indexOfManga = Util.indexOf(mangaDir, 'name', dirInfo[3]);
       var indexOfChapter = Util.indexOf(mangaDir[indexOfManga].chapters, 'chapter', parseFloat(dirInfo[4]));
       var dirToDb = root.replace('public', '');
-      mangaDir[indexOfManga].chapters[indexOfChapter].pages.push(dirToDb + fileStats.name);
+      mangaDir[indexOfManga].chapters[indexOfChapter].pages.push(dirToDb + '/' + fileStats.name);
       console.log(root + '/' + fileStats.name);
       next();
     } else {
