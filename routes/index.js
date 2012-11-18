@@ -225,7 +225,7 @@ exports.getFavorites = function(req, res) {
             break;
         }
       }
-      Manga.find({ '_id': { $in: mangaIds }}).sort('title', 1).exec(function(error, mangas) {
+      Manga.find({ '_id': { $in: mangaIds }}, '_id author folder cover title datePost numView chapters.chapter chapters.title chapters._id').sort('title', 1).exec(function(error, mangas) {
         if (error) {
           console.log(error);
           res.json({ 'data': false });

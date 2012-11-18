@@ -13,9 +13,9 @@ var options = {
 var walker;
 
 var mangaRoot = 'public/images/manga';
+// var mangaRoot = '../manga';
 var mangaDir = [];
 var clone;
-
 exports.importManga = function(req, res) {
   walker = walk.walk(mangaRoot, options);
 
@@ -87,33 +87,38 @@ function getPage() {
 
 function importToDb() {
   var imageFolder = '/images/manga/';
-  for (var i = 0; i < mangaDir.length; i++) {
-    var mangaInfo = mangaDir[i];
-    var title = mangaInfo.name;
-    var source = 'Sưu Tầm';
-    var author = 'Đang Cập Nhật';
-    var numView = Util.getRandomInt(60);
-    var folder = imageFolder + mangaInfo.name;
-    var manga = new Manga({});
-    manga.title = title;
-    manga.source = source;
-    manga.author = author;
-    manga.numView = numView;
-    manga.folder = folder;
-    manga.chapters = [];
-    for (var j = 0; j < mangaInfo.chapters.length; j++) {
-      manga.chapters.push({
-        'chapter': mangaInfo.chapters[j].chapter,
-        'pages': mangaInfo.chapters[j].pages
+  var count = 0;
+  // for (var z = 0; z < 20; z++) {
+    for (var i = 0; i < mangaDir.length; i++) {
+      var mangaInfo = mangaDir[i];
+      var title = mangaInfo.name;
+      var source = 'Sưu Tầm';
+      var author = 'Đang Cập Nhật';
+      var numView = Util.getRandomInt(60);
+      var folder = imageFolder + mangaInfo.name;
+      var manga = new Manga({});
+      manga.title = title;
+      manga.source = source;
+      manga.author = author;
+      manga.numView = numView;
+      manga.folder = folder;
+      manga.chapters = [];
+      for (var j = 0; j < mangaInfo.chapters.length; j++) {
+        manga.chapters.push({
+          'chapter': mangaInfo.chapters[j].chapter,
+          'pages': mangaInfo.chapters[j].pages
+        });
+      }
+      manga.save(function(err) {
+        if (err) {
+          console.log(err);
+          console.log(manga.title);
+        }
+        count++;
+        console.log(count);
       });
     }
-    manga.save(function(err) {
-      if (err) {
-        console.log(err);
-        console.log(manga.title);
-      }
-    })
-  }
+  // }
 };
 
 function getMangaName(title) {
