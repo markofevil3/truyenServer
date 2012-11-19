@@ -1,2 +1,3 @@
 public/images/manga/
-*.DS_Store
+public/images/manga/.DS_Store
+.DS_Store
