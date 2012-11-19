@@ -246,4 +246,10 @@ exports.getFavorites = function(req, res) {
       });
     }
   });
-}
+};
+
+exports.facebook = function(req, res) {
+  res.render('facebook', { 
+    title: 'STruyen Facebook Page',
+  });
+};

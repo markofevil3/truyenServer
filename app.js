@@ -46,6 +46,9 @@ app.get('/storyList', routes.storyList);
 app.get('/getStory', routes.getStory);
 app.get('/getStoryContent', routes.getStoryContent);
 
+//render
+app.get('/facebook', routes.facebook);
+
 //## import manga
 app.get('/import', tools.importManga);
 
