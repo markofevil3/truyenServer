@@ -45,6 +45,7 @@ app.get('/getFavorites', routes.getFavorites);
 app.get('/storyList', routes.storyList);
 app.get('/getStory', routes.getStory);
 app.get('/getStoryContent', routes.getStoryContent);
+app.get('/support', routes.support);
 
 //render
 app.get('/facebook', routes.facebook);

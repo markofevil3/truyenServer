@@ -2,12 +2,20 @@
 
 var Util = require('../lib/util');
 var PDFDocument = require('pdfkit');
+var email   = require('emailjs/email');
 
 var User = require('../models/models').User;
 var Chapter = require('../models/models').Chapter;
 var Favorite = require('../models/models').Favorite;
 var Manga = require('../models/models').Manga;
 var Story = require('../models/models').Story;
+
+var emailServer  = email.server.connect({
+   user:     "quanbp@sixthgearstudios.com", 
+   password: "ltu052006", 
+   host:     "smtp.gmail.com", 
+   ssl:      true
+});
 
 exports.storyList = function(req, res) {
   // for (var i = 0; i < 5; i++) {
@@ -251,5 +259,17 @@ exports.getFavorites = function(req, res) {
 exports.facebook = function(req, res) {
   res.render('facebook', { 
     title: 'STruyen Facebook Page',
+  });
+};
+
+exports.support = function(req, res) {
+  emailServer.send({
+    text:    "STruyen Support", 
+    from:    "quanbp@sixthgearstudios.com", 
+    to:      "quanbp@sixthgearstudios.com",
+    subject: req.query.content
+  }, function(err, message) { 
+    console.log(err || message); 
+    res.json({ 'data': 'success' });
   });
 };
