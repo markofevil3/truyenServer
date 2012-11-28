@@ -97,7 +97,8 @@ function importToDb() {
       var numView = Util.getRandomInt(60);
       var folder = imageFolder + mangaInfo.name;
       var manga = new Manga({});
-      manga.title = title;
+      
+      manga.title = title.replace(/-/g, ' ');
       manga.source = source;
       manga.author = author;
       manga.numView = numView;
