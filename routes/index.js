@@ -11,8 +11,8 @@ var Manga = require('../models/models').Manga;
 var Story = require('../models/models').Story;
 
 var emailServer  = email.server.connect({
-   user:     "quanbp@sixthgearstudios.com", 
-   password: "ltu052006", 
+   user:     "bpquan205@gmail.com", 
+   password: "Strawberry205", 
    host:     "smtp.gmail.com", 
    ssl:      true
 });
@@ -257,17 +257,27 @@ exports.getFavorites = function(req, res) {
 };
 
 exports.facebook = function(req, res) {
-  res.render('facebook', { 
-    title: 'STruyen Facebook Page',
-  });
+  if (req.query.type == 0) {
+    res.render('facebook', { 
+      title: 'STruyen Facebook Page',
+      type: 'handheld',
+      height: 100
+    });
+  } else {
+    res.render('facebook', { 
+      title: 'STruyen Facebook Page',
+      type: 'tablet',
+      height: 200
+    });
+  }
 };
 
 exports.support = function(req, res) {
   emailServer.send({
-    text:    "STruyen Support", 
-    from:    "quanbp@sixthgearstudios.com", 
-    to:      "quanbp@sixthgearstudios.com",
-    subject: req.query.content
+    text:    req.query.content, 
+    from:    "bpquan205@gmail.com", 
+    to:      "bpquan205@gmail.com",
+    subject: "STruyen Support"
   }, function(err, message) { 
     console.log(err || message); 
     res.json({ 'data': 'success' });
