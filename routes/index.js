@@ -33,7 +33,7 @@ exports.storyList = function(req, res) {
   //   }
   //   story.save();
   // }
-  Story.find({}, '_id title author datePost numView shortDes type').sort( 'title', 1 ).exec(function(error, stories) {
+  Story.find({}, '_id title author datePost numView shortDes type chapters.chapter').sort( 'title', 1 ).exec(function(error, stories) {
     if (error) {
       console.log(error);
     }
@@ -90,25 +90,6 @@ exports.getStoryContent = function(req, res) {
 };
 
 exports.mangaList = function(req, res) {
-  // for (var i = 0; i < 30; i++) {
-  //   var manga = new Manga({});
-  //   manga.title = 'Doraemon ' + i;
-  //   manga.author = 'Quan';
-  //   manga.cover = '/images/manga/sample/cover2.jpg';
-  //   manga.datePost = Date.now();
-  //   manga.chapters = [];
-  //   var chapter = null;
-  //   for (var j = 0; j < 25; j++) {
-  //     chapter = {
-  //       'chapter': 'Chapter ' + (j+1),
-  //       'title': 'Begin ' + (j+1),
-  //       'numPages': 14
-  //     }
-  //     manga.chapters.push(chapter);
-  //   }
-  //   console.log(i);
-  //   manga.save();
-  // }
   Manga.find({}, '_id title author cover datePost numView source folder').sort( 'title', 1 ).exec(function(error, mangas) {
     if (error) {
       console.log(error);

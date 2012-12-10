@@ -16,6 +16,7 @@ var mangaRoot = 'public/images/manga';
 // var mangaRoot = '../manga';
 var mangaDir = [];
 var clone;
+
 exports.importManga = function(req, res) {
   walker = walk.walk(mangaRoot, options);
 
