@@ -10,6 +10,17 @@ var Favorite = require('../models/models').Favorite;
 var Manga = require('../models/models').Manga;
 var Story = require('../models/models').Story;
 
+var ADV_LINKS = [
+  'http://google.com',
+  'http://google.com',
+  'http://google.com',
+  'http://google.com',
+  'http://google.com',
+  'http://google.com',
+  'http://google.com',
+  'http://google.com',
+];
+
 var emailServer  = email.server.connect({
    user:     "bpquan205@gmail.com", 
    password: "Strawberry205", 
@@ -264,3 +275,7 @@ exports.support = function(req, res) {
     res.json({ 'data': 'success' });
   });
 };
+
+exports.adv = function(req, res) {
+  res.json({ 'data': ADV_LINKS[req.query.type ]});
+}
