@@ -1,8 +1,8 @@
 'use strict';
 
 var Util = require('../lib/util');
-var PDFDocument = require('pdfkit');
 var email   = require('emailjs/email');
+var request = require('request');
 
 var User = require('../models/models').User;
 var Chapter = require('../models/models').Chapter;
@@ -20,6 +20,9 @@ var ADV_LINKS = [
   'http://google.com',
   'http://google.com',
 ];
+
+var APP_KEY = 'rlui03MfFtEXzOr9HooyAfDnze0lQb0u';
+var PUSH_NOTIFICATION_TYPE = 'ios';
 
 var emailServer  = email.server.connect({
    user:     "bpquan205@gmail.com", 
@@ -67,7 +70,7 @@ exports.getStory = function(req, res) {
       }
       story.save();
       User.findOne({ 'userId': req.query.userId }, function(error, user) {
-        story.chapters.sort(Util.dynamicSort('chapter', -1));
+        story.chapters.sort(Util.dynamicSortNumber('chapter', -1));
         if (user == null) {
           res.json({ 'data': story, 'favorite': false });
         } else {
@@ -124,7 +127,7 @@ exports.manga = function(req, res) {
       }
       manga.save();
       User.findOne({ 'userId': req.query.userId }, function(error, user) {
-        manga.chapters.sort(Util.dynamicSort('chapter', -1));
+        manga.chapters.sort(Util.dynamicSortNumber('chapter', -1));
         if (user == null) {
           res.json({ 'data': manga, 'favorite': false });
         } else {
@@ -147,11 +150,49 @@ exports.mangaReading = function(req, res) {
     if (manga == null) {
       console.log(error);
     } else {
+      manga.chapters.sort(Util.dynamicSortNumber('chapter', -1));
       var chapter = manga.chapters.id(req.query.chapter);
-      res.json({ 'data': chapter });
+      res.json({ 'data': chapter, 'nextPrevChapters': getNextPrevChapter(manga.chapters, req.query.chapter) });
     }
   });
 };
+
+function getNextPrevChapter(chapters, chapterId) {
+  var next, prev, index;
+  for (var i = 0; i < chapters.length; i++) {
+    if (chapters[i]._id.toString() == chapterId.toString()) {
+      index = i;
+    }
+  }
+  if (chapters[index - 1]) {
+    next = chapters[index - 1]._id;
+  }
+  if (chapters[index + 1]) {
+    prev = chapters[index + 1]._id;
+  }
+  return {next: next, prev: prev};
+}
+
+// function subscribeNotification(channel, deviceToken) {
+//   request.post(
+//       'https://api.cloud.appcelerator.com/v1/push_notification/subscribe.json?key=' + APP_KEY,
+//       { form: { type: PUSH_NOTIFICATION_TYPE,
+//                 channel: channel,
+//                 device_token: deviceToken
+//               }       
+//       },
+//       function (error, response, body) {
+//           if (!error && response.statusCode == 200) {
+//               console.log(body)
+//           }
+//           console.log(error);
+//       }
+//   );
+// };
+// 
+// function unsubscribeNotification(channel, deviceToken) {
+//   
+// };
 
 exports.addFavorite = function(req, res) {
   User.findOne({ 'userId': req.query.userId }, function(error, user) {

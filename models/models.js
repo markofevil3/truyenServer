@@ -9,9 +9,10 @@ var favoriteSchema = new Schema({
 
 var chapterSchema = new Schema({
   // chapter: String,
-  chapter: Number,
+  chapter: String,
   title: String,
   numPages: Number,
+  datePost: Date,
   pages: []
 });
 
@@ -27,6 +28,7 @@ var mangaSchema = new Schema({
   author: String,
   cover: String,
   datePost: Date,
+  updatedAt: Date,
   numView: Number,
   folder: String,
   source: String,
@@ -37,58 +39,20 @@ var chapterStorySchema = new Schema({
   chapter: Number,
   title: String,
   content: String,
+  datePost: Date,
 });
 
 var storySchema = new Schema({
   title: String,
   author: String,
   datePost: Date,
+  updatedAt: Date,
   numView: Number,
   type: Number,
   shortDes: String,
   content: String,
   chapters: [ chapterStorySchema ]
 });
-
-// var gameSchema = new Schema({
-//   target: String,
-//   drawAuthor: ObjectId,
-//   drawHistory: String,
-//   drawComment: String,
-//   solveAuthor: ObjectId,
-//   solveHistory: String,
-//   solveComment: String,
-//   numNudges: Number,
-//   lastNudgeAt: Date,
-//   endedGame: Boolean
-// });
-// 
-// var setSchema = new Schema({
-//   games: [ gameSchema ],
-// });
-// 
-// var matchSchema = new Schema({
-//   player1: { type: ObjectId, index: true },
-//   player2: { type: ObjectId, index: true },
-//   sets: [ setSchema ],
-//   longestSet: Number,
-// });
-// 
-// var gallerySchema = new Schema({
-//   startDate: Date,
-//   startIndex: Number,
-//   items: [galleryItemSchema]
-// });
-// 
-// var galleryItemSchema = new Schema({
-//   drawHistory: String,
-//   drawAuthor: String,
-//   target: String,
-//   displayPos: Number,
-//   thumbnailUrl: String  
-// });
-// 
-// matchSchema.index({ player1: 1, player2: 1 });
 
 module.exports = {
   'User': mongoose.model('User', userSchema),

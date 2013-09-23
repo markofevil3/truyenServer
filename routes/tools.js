@@ -67,7 +67,7 @@ function getPage() {
   walker = walk.walk(mangaRoot, options);
 
   walker.on("file", function (root, fileStats, next) {
-    if (fileStats.name != '.DS_Store' && fileStats.name != 'cover.jpg') {
+    if (fileStats.name != '.DS_Store' && fileStats.name.indexOf('cover.jpg') == -1) {
       var dirInfo = root.split('/');
       var indexOfManga = Util.indexOf(mangaDir, 'name', dirInfo[3]);
       var indexOfChapter = Util.indexOf(mangaDir[indexOfManga].chapters, 'chapter', parseFloat(dirInfo[4]));
