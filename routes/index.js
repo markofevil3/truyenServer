@@ -31,6 +31,15 @@ var emailServer  = email.server.connect({
    ssl:      true
 });
 
+var appVersion = 1.0;
+var iosLink = "http://www.apple.com";
+var androidLink = "http://www.google.com";
+var forceUpdate = false;
+
+exports.getAppVersion = function(req, res) {
+  res.json({ 'version': appVersion, 'iosLink': iosLink, 'androidLink': androidLink, 'force': forceUpdate });
+};
+
 exports.storyList = function(req, res) {
   // for (var i = 0; i < 5; i++) {
   //   var story = new Story({});

@@ -50,6 +50,7 @@ app.get('/getStory', routes.getStory);
 app.get('/getStoryContent', routes.getStoryContent);
 app.get('/support', routes.support);
 app.get('/adv', routes.adv);
+app.get('/appVersion', routes.getAppVersion);
 
 //render
 app.get('/facebook', routes.facebook);
