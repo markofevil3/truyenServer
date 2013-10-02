@@ -24,7 +24,7 @@ var userSchema = new Schema({
 });
 
 var mangaSchema = new Schema({
-  title: String,
+  title: { type: String, index: true },
   author: String,
   cover: String,
   datePost: Date,
