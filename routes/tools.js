@@ -3,6 +3,7 @@ var Chapter = require('../models/models').Chapter;
 var Favorite = require('../models/models').Favorite;
 var Manga = require('../models/models').Manga;
 var Story = require('../models/models').Story;
+var exec = require('child_process').exec;
 
 var Util = require('../lib/util');
 var fs = require('fs');
@@ -16,6 +17,109 @@ var mangaRoot = 'public/images/manga';
 // var mangaRoot = '../manga';
 var mangaDir = [];
 var clone;
+
+var autoDownloadLink = 'http://truyentranhtuan.com/moi-cap-nhat/4/index.html';
+
+exports.autoDownloadChapters = function(req, res) {
+  exec("rm /Users/rongxanh2052004/Super/Project/iosApp/truyenServer/public/downloadNewChapter/index.html");
+  var child = exec("wget " + autoDownloadLink + " --directory-prefix=/Users/rongxanh2052004/Super/Project/iosApp/truyenServer/public/downloadNewChapter/",
+  function (error, stdout, stderr) {
+    if (error !== null) {
+      console.log("ERROR: " + autoDownloadLink + "/index.html");
+    }
+    else {
+      console.log("DOWNLOADED LIST NEW CHAPTERS FILE");
+      // inspect file and download newest chapter
+      var chapterList = getChapterListFromString(fs.readFileSync("public/downloadNewChapter/index.html", 'utf8'));
+      console.log(chapterList);
+      downloadAndSaveChapter(chapterList);
+    }
+  });
+}
+
+function downloadAndSaveChapter(chapterList) {
+  if (chapterList.length > 0) {
+    var mangaData = chapterList.pop();
+    Manga.findOne({ 'title': mangaData.mangaName }, function(error, manga) {
+      if (error) {
+        console.log(error);
+      }
+      if (manga == null) {
+        console.log("Cant Find Manga------------------------ " + mangaData.mangaName);
+      } else {
+        for (var i = 0; i < manga.chapters.length; i++) {
+          if (manga.chapters[i].chapter == mangaData.chapter.toString()) {
+            console.log("Chapter exist " + mangaData.mangaName + " -- " + mangaData.chapter);
+            downloadAndSaveChapter(chapterList);
+            return;
+          }
+        }
+        // start download
+        var root = "truyentranhtuan.com/" + mangaData.link;
+        var child = exec("wget http://" + root + "doc-truyen/index.html --directory-prefix=/Users/rongxanh2052004/Super/Project/iosApp/truyenServer/public/downloadNewChapter/" + root + "/",
+         function (error, stdout, stderr) {
+           if (error !== null) {
+             console.log("ERROR: " + root + "/doc-truyen/index.html");
+             downloadAndSaveChapter(chapterList);
+           } else {
+             var contents = fs.readFileSync("public/downloadNewChapter/" + root + "index.html", 'utf8');
+             inspectFile(contents, function(imageLinks) {
+               if (imageLinks.length > 0) {
+                 manga.chapters.push({
+                   'chapter': mangaData.chapter.toString(),
+                   'pages': imageLinks
+                 });
+                 manga.save(function(error) {
+                   console.log("SAVED " + root + "index.html");
+                   downloadAndSaveChapter(chapterList);
+                 });
+               }
+             })
+             // downloadAndSaveChapter(chapterList);
+           }
+         });
+      }
+    });
+  } else {
+    console.log("### DONE ###");
+  }
+}
+
+// get images link from content
+function inspectFile(contents, callback) {
+  // is reading managa page
+  if (contents.indexOf('slides2=[') != -1) {
+    // get image links 
+    var start = contents.indexOf('slides2=[');
+    var end = contents.indexOf('];', start);
+    var n = contents.substr(start + 9, end - start - 9);
+    n = n.replace(/"/g, '');
+    var arr = n.split(',');
+    callback(arr);
+  } else {
+    callback([]);
+  }
+}
+
+function getChapterListFromString(contents) {
+  var chapterList = [];
+  // get image links
+  var startIndex = contents.indexOf('Chap mới nhất:');
+  while(contents.indexOf('Chap mới nhất:', startIndex) != -1) {
+    // get download link
+    var start = contents.indexOf('<a href="', startIndex);
+    var end = contents.indexOf('">', start + 9);
+    var chapterLink = contents.substr(start + 10, end - start - 10);
+    // get manga name
+    var nameEnd = contents.indexOf('</a>', end);
+    var mangaNameChapter = contents.substr(end + 2, nameEnd - end - 2);
+    var mangaName = mangaNameChapter.substr(0, mangaNameChapter.lastIndexOf(" "));
+    var chapter = mangaNameChapter.substr(mangaNameChapter.lastIndexOf(" ") + 1, mangaNameChapter.length);
+    chapterList.push({link: chapterLink, chapter: chapter, mangaName: mangaName});
+    startIndex = end;
+  }
+  return chapterList;
+}
 
 exports.importManga = function(req, res) {
   walker = walk.walk(mangaRoot, options);
