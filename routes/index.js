@@ -32,30 +32,16 @@ var emailServer  = email.server.connect({
 });
 
 var appVersion = 1.0;
-var iosLink = "http://www.apple.com";
+var iosLink = "itms-apps://itunes.apple.com/us/app/truyen/id718172153?ls=1&mt=8";
 var androidLink = "http://www.google.com";
 var forceUpdate = false;
+var facebookPostLink = 'https://www.facebook.com/pages/Truy%E1%BB%87n-tranh-Truy%E1%BB%87n-ng%E1%BA%AFn-Truy%E1%BB%87n-c%C6%B0%E1%BB%9Di/518980604798172';
 
 exports.getAppVersion = function(req, res) {
-  res.json({ 'version': appVersion, 'iosLink': iosLink, 'androidLink': androidLink, 'force': forceUpdate });
+  res.json({ 'version': appVersion, 'iosLink': iosLink, 'androidLink': androidLink, 'force': forceUpdate, 'facebookPostLink': facebookPostLink });
 };
 
 exports.storyList = function(req, res) {
-  // for (var i = 0; i < 5; i++) {
-  //   var story = new Story({});
-  //   story.title = 'Full story ' + i;
-  //   story.author = 'Phi Quan';
-  //   story.datePost = Date.now();
-  //   story.type = 1;
-  //   for (var j = 0; j < 5; j++) {
-  //     var chapter = {
-  //       chapter: j + 1,
-  //       title: 'Chua co Title',
-  //     }
-  //     story.chapters.push(chapter);
-  //   }
-  //   story.save();
-  // }
   Story.find({}, '_id title author datePost numView shortDes type chapters.chapter').sort( 'title', 1 ).exec(function(error, stories) {
     if (error) {
       console.log(error);

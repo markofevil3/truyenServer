@@ -9,7 +9,7 @@ var favoriteSchema = new Schema({
 
 var chapterSchema = new Schema({
   // chapter: String,
-  chapter: String,
+  chapter: { type: String, index: true },
   title: String,
   numPages: Number,
   datePost: Date,
@@ -29,21 +29,22 @@ var mangaSchema = new Schema({
   cover: String,
   datePost: Date,
   updatedAt: Date,
-  numView: Number,
+  numView: { type: Number, index: true },
   folder: String,
   source: String,
   chapters: [ chapterSchema ]
 });
 
 var chapterStorySchema = new Schema({
-  chapter: Number,
-  title: String,
+  chapter: { type: String, index: true },
+  title: { type: String, index: true },
   content: String,
   datePost: Date,
+  folder: String
 });
 
 var storySchema = new Schema({
-  title: String,
+  title: { type: String, index: true },
   author: String,
   datePost: Date,
   updatedAt: Date,
