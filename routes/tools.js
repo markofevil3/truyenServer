@@ -38,7 +38,7 @@ function autoDownloadChapters(startIndex, callback) {
   });
 }
 
-// schedule.scheduleJob('0 */8 * * *', function(){
+schedule.scheduleJob('0 */8 * * *', function(){
   autoDownloadChapters(1, function() {
     autoDownloadChapters(2, function() {
       autoDownloadChapters(3, function() {
@@ -46,7 +46,7 @@ function autoDownloadChapters(startIndex, callback) {
       });
     });
   });
-// });
+});
 
 function deleteFolderRecursive(path) {
   if( fs.existsSync(path) ) {
