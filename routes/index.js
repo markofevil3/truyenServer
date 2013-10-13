@@ -31,10 +31,10 @@ var emailServer  = email.server.connect({
    ssl:      true
 });
 
-var appVersion = 1.0;
+var appVersion = 1.1;
 var iosLink = "itms-apps://itunes.apple.com/us/app/truyen/id718172153?ls=1&mt=8";
 var androidLink = "http://www.google.com";
-var forceUpdate = false;
+var forceUpdate = true;
 var facebookPostLink = 'https://www.facebook.com/pages/Truy%E1%BB%87n-tranh-Truy%E1%BB%87n-ng%E1%BA%AFn-Truy%E1%BB%87n-c%C6%B0%E1%BB%9Di/518980604798172';
 
 exports.getAppVersion = function(req, res) {
