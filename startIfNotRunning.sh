@@ -28,7 +28,7 @@ then
     cd ~/truyenServer
   then
     echo "`date` Restarting killed node process." >> ~/truyenServer/serverState.log 2>&1 &
-    node app.js >> production.log 2>&1 &
+    /usr/local/bin/node app.js >> production.log 2>&1 &
   else
     echo "Could not locate current directory."
   fi
