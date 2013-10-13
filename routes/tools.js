@@ -7,6 +7,7 @@ var exec = require('child_process').exec;
 
 var Util = require('../lib/util');
 var fs = require('fs');
+var schedule = require('node-schedule');
 var walk = require('walk');
 var options = {
   followLinks: false,
@@ -18,10 +19,10 @@ var mangaRoot = 'public/images/manga';
 var mangaDir = [];
 var clone;
 
-var autoDownloadLink = 'http://truyentranhtuan.com/moi-cap-nhat/4/index.html';
 
-exports.autoDownloadChapters = function(req, res) {
-  exec("rm /Users/rongxanh2052004/Super/Project/iosApp/truyenServer/public/downloadNewChapter/index.html");
+function autoDownloadChapters(startIndex, callback) {
+  var autoDownloadLink = 'http://truyentranhtuan.com/moi-cap-nhat/' + startIndex + '/index.html';
+  deleteFolderRecursive("public/downloadNewChapter");
   var child = exec("wget " + autoDownloadLink + " --directory-prefix=/Users/rongxanh2052004/Super/Project/iosApp/truyenServer/public/downloadNewChapter/",
   function (error, stdout, stderr) {
     if (error !== null) {
@@ -32,12 +33,36 @@ exports.autoDownloadChapters = function(req, res) {
       // inspect file and download newest chapter
       var chapterList = getChapterListFromString(fs.readFileSync("public/downloadNewChapter/index.html", 'utf8'));
       console.log(chapterList);
-      downloadAndSaveChapter(chapterList);
+      downloadAndSaveChapter(chapterList, callback);
     }
   });
 }
 
-function downloadAndSaveChapter(chapterList) {
+schedule.scheduleJob('0 */8 * * *', function(){
+  autoDownloadChapters(1, function() {
+    autoDownloadChapters(2, function() {
+      autoDownloadChapters(3, function() {
+        console.log("FINISH DOWNLOAD 3 NEW CHAPTER PAGES!!");
+      });
+    });
+  });
+});
+
+function deleteFolderRecursive(path) {
+  if( fs.existsSync(path) ) {
+    fs.readdirSync(path).forEach(function(file,index){
+      var curPath = path + "/" + file;
+      if(fs.statSync(curPath).isDirectory()) { // recurse
+        deleteFolderRecursive(curPath);
+      } else { // delete file
+        fs.unlinkSync(curPath);
+      }
+    });
+    fs.rmdirSync(path);
+  }
+};
+
+function downloadAndSaveChapter(chapterList, callback) {
   if (chapterList.length > 0) {
     var mangaData = chapterList.pop();
     Manga.findOne({ 'title': mangaData.mangaName }, function(error, manga) {
@@ -46,11 +71,13 @@ function downloadAndSaveChapter(chapterList) {
       }
       if (manga == null) {
         console.log("Cant Find Manga------------------------ " + mangaData.mangaName);
+        downloadAndSaveChapter(chapterList, callback);
+        return;
       } else {
         for (var i = 0; i < manga.chapters.length; i++) {
           if (manga.chapters[i].chapter == mangaData.chapter.toString()) {
             console.log("Chapter exist " + mangaData.mangaName + " -- " + mangaData.chapter);
-            downloadAndSaveChapter(chapterList);
+            downloadAndSaveChapter(chapterList, callback);
             return;
           }
         }
@@ -60,7 +87,7 @@ function downloadAndSaveChapter(chapterList) {
          function (error, stdout, stderr) {
            if (error !== null) {
              console.log("ERROR: " + root + "/doc-truyen/index.html");
-             downloadAndSaveChapter(chapterList);
+             downloadAndSaveChapter(chapterList, callback);
            } else {
              var contents = fs.readFileSync("public/downloadNewChapter/" + root + "index.html", 'utf8');
              inspectFile(contents, function(imageLinks) {
@@ -69,10 +96,14 @@ function downloadAndSaveChapter(chapterList) {
                    'chapter': mangaData.chapter.toString(),
                    'pages': imageLinks
                  });
+                 manga.updatedAt = Date.now();
                  manga.save(function(error) {
                    console.log("SAVED " + root + "index.html");
-                   downloadAndSaveChapter(chapterList);
+                   downloadAndSaveChapter(chapterList, callback);
                  });
+               } else {
+                 console.log("NO IMAGES FOUND " + root + "index.html");
+                 downloadAndSaveChapter(chapterList, callback);
                }
              })
              // downloadAndSaveChapter(chapterList);
@@ -81,7 +112,7 @@ function downloadAndSaveChapter(chapterList) {
       }
     });
   } else {
-    console.log("### DONE ###");
+    callback();
   }
 }
 
