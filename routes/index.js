@@ -31,7 +31,7 @@ var emailServer  = email.server.connect({
    ssl:      true
 });
 
-var appVersion = 1.1;
+var appVersion = 1.0;
 var iosLink = "itms-apps://itunes.apple.com/us/app/truyen/id718172153?ls=1&mt=8";
 var androidLink = "http://www.google.com";
 var forceUpdate = true;
