@@ -89,7 +89,7 @@ function downloadAndSaveChapter(chapterList, callback) {
         }
         // start download
         var root = "truyentranhtuan.com/" + mangaData.link;
-        var child = exec("wget http://" + root + "doc-truyen/index.html --directory-prefix=/Users/rongxanh2052004/Super/Project/iosApp/truyenServer/public/downloadNewChapter/" + root + "/",
+        var child = exec("wget http://" + root + "doc-truyen/index.html --directory-prefix=" + __dirname + "/../public/downloadNewChapter/" + root + "/",
          function (error, stdout, stderr) {
            if (error !== null) {
              console.log("ERROR: " + root + "/doc-truyen/index.html");
