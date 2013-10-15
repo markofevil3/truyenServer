@@ -19,11 +19,10 @@ var mangaRoot = 'public/images/manga';
 var mangaDir = [];
 var clone;
 
-
 function autoDownloadChapters(startIndex, callback) {
   var autoDownloadLink = 'http://truyentranhtuan.com/moi-cap-nhat/' + startIndex + '/index.html';
   deleteFolderRecursive("public/downloadNewChapter");
-  var child = exec("wget " + autoDownloadLink + " --directory-prefix=/Users/rongxanh2052004/Super/Project/iosApp/truyenServer/public/downloadNewChapter/",
+  var child = exec("wget " + autoDownloadLink + " --directory-prefix=" + __dirname + "/../public/downloadNewChapter/",
   function (error, stdout, stderr) {
     if (error !== null) {
       console.log("ERROR: " + autoDownloadLink + "/index.html");
