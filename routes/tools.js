@@ -36,14 +36,8 @@ function autoDownloadChapters(startIndex, callback) {
     }
   });
 }
-autoDownloadChapters(1, function() {
-  autoDownloadChapters(2, function() {
-    autoDownloadChapters(3, function() {
-      console.log("FINISH DOWNLOAD 3 NEW CHAPTER PAGES!!");
-    });
-  });
-});
-schedule.scheduleJob('0 */6 * * *', function(){
+
+schedule.scheduleJob('0 */8 * * *', function(){
   console.log("####### BEGIN DOWNLOAD NEW CHAPTER!!!");
   autoDownloadChapters(1, function() {
     autoDownloadChapters(2, function() {
