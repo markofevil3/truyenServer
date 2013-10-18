@@ -37,7 +37,7 @@ function autoDownloadChapters(startIndex, callback) {
   });
 }
 
-schedule.scheduleJob('0 */8 * * *', function(){
+schedule.scheduleJob('0 */12 * * *', function(){
   console.log("####### BEGIN DOWNLOAD NEW CHAPTER!!!");
   autoDownloadChapters(1, function() {
     autoDownloadChapters(2, function() {
