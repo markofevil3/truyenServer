@@ -62,6 +62,7 @@ app.get('/resize', tools.resizeImages);
 
 //# ADMIN ############
 app.get('/admin', adminRoute.index);
+app.post('/updateStories', adminRoute.updateStories);
 //###################
 
 http.createServer(app).listen(app.get('port'), function(){
