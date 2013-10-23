@@ -35,7 +35,8 @@ var appVersion = 1.1;
 var iosLink = "itms-apps://itunes.apple.com/us/app/truyen/id718172153?ls=1&mt=8";
 var androidLink = "http://www.google.com";
 var forceUpdate = true;
-var facebookPostLink = 'https://www.facebook.com/pages/Truy%E1%BB%87n-tranh-Truy%E1%BB%87n-ng%E1%BA%AFn-Truy%E1%BB%87n-c%C6%B0%E1%BB%9Di/518980604798172';
+// var facebookPostLink = 'https://www.facebook.com/pages/Truy%E1%BB%87n-tranh-Truy%E1%BB%87n-ng%E1%BA%AFn-Truy%E1%BB%87n-c%C6%B0%E1%BB%9Di/518980604798172';
+var facebookPostLink = 'https://itunes.apple.com/us/app/full-truyen/id718172153?ls=1&mt=8';
 
 exports.getAppVersion = function(req, res) {
   res.json({ 'version': appVersion, 'iosLink': iosLink, 'androidLink': androidLink, 'force': forceUpdate, 'facebookPostLink': facebookPostLink });
