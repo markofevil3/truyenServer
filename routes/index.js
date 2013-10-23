@@ -25,8 +25,8 @@ var APP_KEY = 'rlui03MfFtEXzOr9HooyAfDnze0lQb0u';
 var PUSH_NOTIFICATION_TYPE = 'ios';
 
 var emailServer  = email.server.connect({
-   user:     "bpquan205@gmail.com", 
-   password: "Strawberry205", 
+   user:     "fulltruyen@gmail.com", 
+   password: "fulltruyenthuquan", 
    host:     "smtp.gmail.com", 
    ssl:      true
 });
