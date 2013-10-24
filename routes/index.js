@@ -31,7 +31,12 @@ var emailServer  = email.server.connect({
    ssl:      true
 });
 
-var appVersion = 1.1;
+var admobPublisher = {"android": "123456",
+											"iphone": "a15242fc9991b03",
+											"ipad": "a15242fe704686c"
+										 };
+var advPublisher = 0; // 0: iad, 1: admob
+var appVersion = "1.1";
 var iosLink = "itms-apps://itunes.apple.com/us/app/truyen/id718172153?ls=1&mt=8";
 var androidLink = "http://www.google.com";
 var forceUpdate = true;
@@ -39,20 +44,20 @@ var forceUpdate = true;
 var facebookPostLink = 'https://itunes.apple.com/us/app/full-truyen/id718172153?ls=1&mt=8';
 
 exports.getAppVersion = function(req, res) {
-  res.json({ 'version': appVersion, 'iosLink': iosLink, 'androidLink': androidLink, 'force': forceUpdate, 'facebookPostLink': facebookPostLink });
+  res.json({ 'version': appVersion, 'iosLink': iosLink, 'androidLink': androidLink, 'force': forceUpdate, 'facebookPostLink': facebookPostLink, 'advPublisher': advPublisher, 'admobPublisher': admobPublisher });
 };
 
 exports.storyList = function(req, res) {
-  Story.find({}, '_id title author datePost numView shortDes type chapters.chapter').sort( 'title', 1 ).exec(function(error, stories) {
+  Story.find({}, '_id title author datePost numView type cover cate').sort( 'title', 1 ).exec(function(error, stories) {
     if (error) {
       console.log(error);
     }
-    res.json({ 'data': stories });
+    res.json({ 'data': stories, 'advPublisher': advPublisher, 'admobPublisher': admobPublisher });
   });
 };
 
 exports.getStory = function(req, res) {
-  Story.findOne({ '_id': req.query.id }, '_id author title datePost numView shortDes chapters.chapter chapters.title chapters._id', function(error, story) {
+  Story.findOne({ '_id': req.query.id }, '_id author cover title datePost numView shortDes chapters.chapter chapters.title chapters._id', function(error, story) {
     if (error) {
       console.log(error);
     }
@@ -68,12 +73,12 @@ exports.getStory = function(req, res) {
       User.findOne({ 'userId': req.query.userId }, function(error, user) {
         story.chapters.sort(Util.dynamicSortNumber('chapter', -1));
         if (user == null) {
-          res.json({ 'data': story, 'favorite': false });
+          res.json({ 'data': story, 'favorite': false, 'advPublisher': advPublisher, 'admobPublisher': admobPublisher });
         } else {
           if (Util.contain(user.favorites, 'itemId', story._id)) {
-            res.json({ 'data': story, 'favorite': true });
+            res.json({ 'data': story, 'favorite': true, 'advPublisher': advPublisher, 'admobPublisher': admobPublisher });
           } else {
-            res.json({ 'data': story, 'favorite': false });
+            res.json({ 'data': story, 'favorite': false, 'advPublisher': advPublisher, 'admobPublisher': admobPublisher });
           }
         }
       });
@@ -90,10 +95,10 @@ exports.getStoryContent = function(req, res) {
       console.log(error);
     } else {
       if (req.query.type == 0) {
-        res.json({ 'data': story });
+        res.json({ 'data': story, 'advPublisher': advPublisher, 'admobPublisher': admobPublisher });
       } else {
         var chapter = story.chapters.id(req.query.chapter);
-        res.json({ 'data': chapter });
+        res.json({ 'data': chapter, 'advPublisher': advPublisher, 'admobPublisher': admobPublisher });
       }
     }
   });
@@ -104,7 +109,7 @@ exports.mangaList = function(req, res) {
     if (error) {
       console.log(error);
     }
-    res.json({ 'data': mangas });
+    res.json({ 'data': mangas, 'advPublisher': advPublisher, 'admobPublisher': admobPublisher });
   });
 };
 
@@ -125,12 +130,12 @@ exports.manga = function(req, res) {
       User.findOne({ 'userId': req.query.userId }, function(error, user) {
         manga.chapters.sort(Util.dynamicSortNumber('chapter', -1));
         if (user == null) {
-          res.json({ 'data': manga, 'favorite': false });
+          res.json({ 'data': manga, 'favorite': false, 'advPublisher': advPublisher, 'admobPublisher': admobPublisher });
         } else {
           if (Util.contain(user.favorites, 'itemId', manga._id)) {
-            res.json({ 'data': manga, 'favorite': true });
+            res.json({ 'data': manga, 'favorite': true, 'advPublisher': advPublisher, 'admobPublisher': admobPublisher });
           } else {
-            res.json({ 'data': manga, 'favorite': false });
+            res.json({ 'data': manga, 'favorite': false, 'advPublisher': advPublisher, 'admobPublisher': admobPublisher });
           }
         }
       });
@@ -148,7 +153,7 @@ exports.mangaReading = function(req, res) {
     } else {
       manga.chapters.sort(Util.dynamicSortNumber('chapter', -1));
       var chapter = manga.chapters.id(req.query.chapter);
-      res.json({ 'data': chapter, 'nextPrevChapters': getNextPrevChapter(manga.chapters, req.query.chapter) });
+      res.json({ 'data': chapter, 'nextPrevChapters': getNextPrevChapter(manga.chapters, req.query.chapter), 'advPublisher': advPublisher, 'admobPublisher': admobPublisher });
     }
   });
 };
@@ -209,9 +214,9 @@ exports.addFavorite = function(req, res) {
     user.save(function(error) {
       if (error) {
         console.log(error);
-        res.json({ 'data': error });
+        res.json({ 'data': error, 'advPublisher': advPublisher, 'admobPublisher': admobPublisher });
       }
-      res.json({ 'data': 'success' });
+      res.json({ 'data': 'success', 'advPublisher': advPublisher, 'admobPublisher': admobPublisher });
     })
   });
 };
@@ -230,7 +235,7 @@ exports.removeFavorite = function(req, res) {
         }
       }
       user.save(function() {
-        res.json({ 'data': 'success' });
+        res.json({ 'data': 'success', 'advPublisher': advPublisher, 'admobPublisher': admobPublisher });
       });
     }
   });
@@ -242,7 +247,7 @@ exports.getFavorites = function(req, res) {
       console.log(error);
     }
     if (user == null) {
-      res.json({ 'data': false });
+      res.json({ 'data': false, 'advPublisher': advPublisher, 'admobPublisher': admobPublisher });
     } else {
       var favorites = {};
       var mangaIds = [];
@@ -265,7 +270,7 @@ exports.getFavorites = function(req, res) {
       Manga.find({ '_id': { $in: mangaIds }}, '_id author folder cover title datePost numView chapters.chapter chapters.title chapters._id').sort('title', 1).exec(function(error, mangas) {
         if (error) {
           console.log(error);
-          res.json({ 'data': false });
+          res.json({ 'data': false, 'advPublisher': advPublisher, 'admobPublisher': admobPublisher });
         }
         if (mangas != null) {
           favorites['manga'] = mangas;
@@ -273,12 +278,12 @@ exports.getFavorites = function(req, res) {
         Story.find({ '_id': { $in: storyIds }}, '_id author title datePost numView shortDes chapters.chapter chapters.title chapters._id type').sort('title', 1).exec(function(error, stories) {
           if (error) {
             console.log(error);
-            res.json({ 'data': false });
+            res.json({ 'data': false, 'advPublisher': advPublisher, 'admobPublisher': admobPublisher });
           }
           if (stories != null) {
             favorites['story'] = stories;
           }
-          res.json({ 'data': favorites });
+          res.json({ 'data': favorites, 'advPublisher': advPublisher, 'admobPublisher': admobPublisher });
         });
       });
     }
@@ -309,10 +314,10 @@ exports.support = function(req, res) {
     subject: "STruyen Support"
   }, function(err, message) { 
     console.log(err || message); 
-    res.json({ 'data': 'success' });
+    res.json({ 'data': 'success', 'advPublisher': advPublisher, 'admobPublisher': admobPublisher });
   });
 };
 
 exports.adv = function(req, res) {
-  res.json({ 'data': ADV_LINKS[req.query.type ]});
+  res.json({ 'data': ADV_LINKS[req.query.type ], 'advPublisher': advPublisher, 'admobPublisher': admobPublisher });
 }
