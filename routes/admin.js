@@ -24,7 +24,7 @@ exports.index = function(req, res) {
       });
     });
   } else {
-    Story.find({}, '_id title author datePost numView shortDes type').sort( 'title', 1 ).exec(function(error, stories) {
+    Story.find({}, '_id title author datePost numView shortDes cover type').sort( 'title', 1 ).exec(function(error, stories) {
       if (error) {
         console.log(error);
       }
@@ -38,7 +38,7 @@ exports.index = function(req, res) {
 };
 
 exports.updateStories = function(req, res) {
-  Story.find({}, '_id title author shortDes type').sort( 'title', 1 ).exec(function(error, stories) {
+  Story.find({}, '_id title author shortDes cover type').sort( 'title', 1 ).exec(function(error, stories) {
     if (error) {
       console.log(error);
     }
@@ -49,6 +49,9 @@ exports.updateStories = function(req, res) {
       }
       if (stories[i].author != req.body["story-author-" + stories[i]._id.toString()]) {
         stories[i].author = req.body["story-author-" + stories[i]._id.toString()];
+      }
+      if (stories[i].cover != req.body["story-cover-" + stories[i]._id.toString()]) {
+        stories[i].cover = req.body["story-cover-" + stories[i]._id.toString()];
       }
       stories[i].save(function() {
         count++;
