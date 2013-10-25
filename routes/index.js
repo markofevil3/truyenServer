@@ -309,12 +309,12 @@ exports.facebook = function(req, res) {
 exports.support = function(req, res) {
   emailServer.send({
     text:    req.query.content, 
-    from:    "bpquan205@gmail.com", 
-    to:      "bpquan205@gmail.com",
+    from:    "fulltruyen@gmail.com", 
+    to:      "fulltruyen@gmail.com",
     subject: "STruyen Support"
   }, function(err, message) { 
-    console.log(err || message); 
-    res.json({ 'data': 'success', 'advPublisher': advPublisher, 'admobPublisher': admobPublisher });
+    console.log(err || message);
+    res.json({ 'data': 'success' });
   });
 };
 
