@@ -4,6 +4,7 @@ var express = require('express');
 var routes = require('./routes');
 var tools = require('./routes/tools');
 var adminRoute = require('./routes/admin');
+var websiteRoute = require('./routes/website');
 var http = require('http');
 var path = require('path');
 var fs = require('fs');
@@ -55,6 +56,10 @@ app.get('/appVersion', routes.getAppVersion);
 
 //render
 app.get('/facebook', routes.facebook);
+
+// ## website
+app.get('/contactUs', websiteRoute.contactUs);
+app.get('/', websiteRoute.contactUs);
 
 //## import manga
 app.get('/import', tools.importManga);
