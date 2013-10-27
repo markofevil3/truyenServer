@@ -311,7 +311,7 @@ exports.support = function(req, res) {
     text:    req.query.content, 
     from:    "fulltruyen@gmail.com", 
     to:      "fulltruyen@gmail.com",
-    subject: "STruyen Support"
+    subject: "Full Truyện Support"
   }, function(err, message) { 
     console.log(err || message);
     res.json({ 'data': 'success' });

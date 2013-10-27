@@ -67,6 +67,12 @@ app.get('/resize', tools.resizeImages);
 
 //# ADMIN ############
 app.get('/admin', adminRoute.index);
+app.get('/addStory', adminRoute.addStoryPage);
+app.get('/checkStory', adminRoute.checkStory);
+app.get('/removeStory', adminRoute.removeStory);
+app.get('/addStoryChapter', adminRoute.addStoryChapterPage);
+app.post('/addStory', adminRoute.addStory);
+app.post('/addStoryChapter', adminRoute.addStoryChapter);
 app.post('/updateStories', adminRoute.updateStories);
 //###################
 
