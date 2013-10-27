@@ -11,6 +11,10 @@ var Favorite = require('../models/models').Favorite;
 var Manga = require('../models/models').Manga;
 var Story = require('../models/models').Story;
 
+// Story cate:
+// 0: ngon tinh
+// 1:
+
 exports.index = function(req, res) {
   if (req.query.type == "manga") {
     Manga.find({}, '_id title author cover').sort( 'title', 1 ).exec(function(error, mangas) {
@@ -24,13 +28,14 @@ exports.index = function(req, res) {
       });
     });
   } else {
-    Story.find({}, '_id title author datePost numView shortDes cover type').sort( 'title', 1 ).exec(function(error, stories) {
+    Story.find({}, '_id title author datePost numView shortDes cover type').sort( 'author', 1 ).exec(function(error, stories) {
       if (error) {
         console.log(error);
       }
       res.render('admin/index', { 
         title: 'Full Truyện',
         error: '',
+        accessToken: req.query.accessToken,
         stories: stories
       });
     });
@@ -60,5 +65,113 @@ exports.updateStories = function(req, res) {
         }
       })
     }
+  });
+}
+
+exports.addStoryPage = function(req, res) {
+  res.render('admin/addStory', { 
+    title: 'Full Truyện'
+  });
+}
+
+exports.addStory = function(req, res) {
+  console.log(req.body);
+  var story = new Story({});
+  story.title = req.body["story-title"];
+  story.author = req.body["story-author"];
+  story.cate = parseInt(req.body["story-cate"]);
+  story.datePost = Date.now();
+  story.updatedAt = Date.now();
+  story.numView = 0;
+  story.shortDes = req.body["story-shortDes"];
+  story.type = 1;
+  for (var i = 1; i <= parseInt(req.body["chapter-count"]); i++) {
+    var inputChapter = {
+      chapter: req.body["chapter-chapter-" + i],
+      title: req.body["chapter-title-" + i],
+      content: req.body["chapter-content-" + i],
+      datePost: Date.now()
+    }
+    story.chapters.push(inputChapter);
+  }
+  story.save(function(error) {
+    console.log("########## Add Story " + story.title);
+    if (error) {
+      console.log(error);
+    }
+    adminRoute.index(req, res);
+  });
+}
+
+exports.removeStory = function(req, res) {
+  // Story.findByIdAndRemove(req.query.id, function(error) {
+  //   console.log(error);
+  // });
+  if (req.query.accessToken == 'hgl4vs4oyk6b') {
+    Story.findById(req.query.id, function (err, story) {
+      if (!err) {
+        story.remove();
+      }
+      res.json({ data: "success" });
+    });
+  } else {
+    res.json({ data: "fail"});
+  }
+}
+
+exports.addStoryChapter = function(req, res) {
+  Story.findOne({'_id': req.body["chapter-id"]}).exec(function(error, story) {
+    if (error) {
+      console.log(error);
+    }
+    if (story != null) {
+      story.title = req.body["story-title"];
+      story.author = req.body["story-author"];
+      story.cover = req.body["story-cover"];
+      story.shortDes = req.body["story-shortDes"];
+      for (var i = 1; i <= parseInt(req.body["chapter-count"]); i++) {
+        var inputChapter = {
+          chapter: req.body["chapter-chapter-" + i],
+          title: req.body["chapter-title-" + i],
+          content: req.body["chapter-content-" + i],
+          datePost: Date.now()
+        }
+        story.chapters.push(inputChapter);
+      }
+      story.save(function(error) {
+        if (error) {
+          console.log(error);
+        }
+        console.log("########## Add Chapter " + story.title);
+        adminRoute.index(req, res);
+      });
+    }
+  });
+}
+
+exports.addStoryChapterPage = function(req, res) {
+  Story.findOne({'_id': req.query.id}, '_id title author datePost numView shortDes cover type').exec(function(error, story) {
+    if (error) {
+      console.log(error);
+    }
+    res.render('admin/addStoryChapterPage', { 
+      title: 'Full Truyện',
+      story: story
+    });
+  });
+}
+
+exports.checkStory = function(req, res) {
+  Story.find({}, '_id title author').exec(function(error, stories) {
+    if (error) {
+      console.log(error);
+    }
+    var returnData = [];
+    for (var i = 0; i < stories.length; i++) {
+      if (Util.removeUTF8(stories[i].title).indexOf(Util.removeUTF8(req.query.title)) != -1) {
+        returnData.push(stories[i]);
+      }
+    }
+    res.json({ data: returnData });
   });
 }
