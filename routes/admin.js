@@ -150,7 +150,7 @@ exports.addStoryChapter = function(req, res) {
 }
 
 exports.addStoryChapterPage = function(req, res) {
-  Story.findOne({'_id': req.query.id}, '_id title author datePost numView shortDes cover type').exec(function(error, story) {
+  Story.findOne({'_id': req.query.id}, '_id title author datePost numView shortDes cover type chapters.chapter chapters.title').exec(function(error, story) {
     if (error) {
       console.log(error);
     }

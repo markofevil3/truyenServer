@@ -11,6 +11,7 @@ block content
         input(type="submit", name="submit", value="Update")
         table
           tr
+            td
             td 
               span(class="row-title") STT
             td
@@ -19,9 +20,11 @@ block content
               span Tác Giả
             td
               span Cover Link
-            td
           - each story,i in stories
             tr
+              td
+                button(id="btnRemove", onClick="removeStory('#{story._id}', '#{story.title}', '#{accessToken}'); return false;") Remove
+                button(id="btnRemove", onClick="openAddStoryChapterPage('#{story._id}'); return false;") Thêm Chương
               td #{i}
               td(class="input-rows")
                 input(name="story-title-#{story._id}", id="story-title-#{story._id}", class="story-titles editables", type="text", value="#{story.title}")
@@ -32,6 +35,3 @@ block content
                   input(name="story-cover-#{story._id}", id="story-cover-#{story._id}", class="story-covers editables", type="text", value="#{story.cover}")
                 - else
                   input(name="story-cover-#{story._id}", id="story-cover-#{story._id}", class="story-covers editables", type="text", value="")
-              td
-                button(id="btnRemove", onClick="openAddStoryChapterPage('#{story._id}'); return false;") Thêm Chương
-                button(id="btnRemove", onClick="removeStory('#{story._id}', '#{story.title}', '#{accessToken}'); return false;") Remove
