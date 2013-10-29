@@ -35,6 +35,11 @@ block content
       br
       textarea(name="story-shortDes", id="story-shortDes", class="story-shortDes editables", value="#{story.shortDes}")
       br
+      span Các Chương Đã Có:
+      br
+      select(name="story-chapters", id="story-chapters")
+        - each chapter in story.chapters
+          option Chương #{chapter.chapter} - #{chapter.title}
       input(name="chapter-count", id="chapter-count", type="hidden", value="")
       div(id="chapters-wapper")
       button(type="button", onClick="addMoreChapter()") Thêm Chapter
