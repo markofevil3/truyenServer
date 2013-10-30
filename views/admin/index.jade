@@ -24,7 +24,8 @@ block content
             tr
               td
                 button(id="btnRemove", onClick="removeStory('#{story._id}', '#{story.title}', '#{accessToken}'); return false;") Remove
-                button(id="btnRemove", onClick="openAddStoryChapterPage('#{story._id}'); return false;") Thêm Chương
+                button(id="btnAddChapter", onClick="openAddStoryChapterPage('#{story._id}'); return false;") Thêm Chương
+                button(id="btnListChapters", onClick="openListChaptersPage('#{story._id}'); return false;") List Chương
               td #{i}
               td(class="input-rows")
                 input(name="story-title-#{story._id}", id="story-title-#{story._id}", class="story-titles editables", type="text", value="#{story.title}")

@@ -29,7 +29,7 @@ var mangaSchema = new Schema({
   cover: String,
   datePost: Date,
   updatedAt: Date,
-  numView: { type: Number, index: true },
+  numView: Number,
   folder: String,
   source: String,
   chapters: [ chapterSchema ]
@@ -37,7 +37,7 @@ var mangaSchema = new Schema({
 
 var chapterStorySchema = new Schema({
   chapter: { type: String, index: true },
-  title: { type: String, index: true },
+  title: String,
   content: String,
   datePost: Date,
   folder: String
@@ -45,7 +45,7 @@ var chapterStorySchema = new Schema({
 
 var storySchema = new Schema({
   title: { type: String, index: true },
-  author: { type: String, index: true },
+  author: String,
   datePost: Date,
   updatedAt: Date,
   numView: Number,

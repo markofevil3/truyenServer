@@ -12,15 +12,14 @@ var checkStoryTableRow =
                '  td #{author}'
   );
 
+var globalData;
+
 $("document").ready(function(){
   $( ".input-rows" ).click(function() {
     $(this).find(".editables").each(function() {
       this.disabled = false;
     });
   });
-  // $('.editables').blur(function() {
-  //   this.disabled = true;
-  // });
 });
 
 function checkStory() {
@@ -85,10 +84,24 @@ function removeStory(storyId, storyName, accessToken) {
       .fail(function() {
         window.location.replace("/admin?accessToken=" + accessToken);
       })
-  } else {
   }
 }
 
 function openAddStoryChapterPage(storyId) {
   window.location.replace('/addStoryChapter?id=' + storyId);
+}
+
+function openListChaptersPage(storyId) {
+  window.location.replace('/listStoryChapters?id=' + storyId);
+}
+
+function removeStoryChapter(storyId, chapterId, chapterTitle) {
+  var confirmBox = confirm("Xoá chương : " + chapterTitle + " ?");
+  if (confirmBox == true) {
+    window.location.replace('/removeStoryChapter?storyId=' + storyId + '&chapterId=' + chapterId);
+  }
+}
+
+function openEditStoryChapterPage(storyId, chapterId) {
+  window.location.replace('/editStoryChapter?storyId=' + storyId + '&chapterId=' + chapterId);
 }

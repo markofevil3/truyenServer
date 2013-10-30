@@ -1,0 +1,38 @@
+extends layout
+
+block textEditor
+  script(src="/ckeditor/ckeditor.js")
+block content
+  div(id="index-page")
+    a(href="/listStoryChapters?id=#{story._id}") Quay lại
+    br
+    br
+    span Truyện: #{story.title} - #{chapter.title}
+    br
+    br
+    form(action="editStoryChapter", method="POST", enctype="multipart/form-data")
+      input(type="submit", name="submit", value="Update")
+      br
+      br
+      input(name="storyId", id="storyId", type="hidden", value="#{story._id}")
+      input(name="chapterId", id="chapterId", type="hidden", value="#{chapter._id}")
+      span Chapter:
+      br
+      input(name="chapter-chapter", id="chapter-chapter", class="editables", type="text", value="#{chapter.chapter}")
+      br
+      br
+      span Title:
+      br
+      input(name="chapter-title", id="chapter-title", class="editables", type="text", value="#{chapter.title}")
+      br
+      br
+      span Nội Dung:
+      br
+      textarea(id="msgpost", name="msgpost", class="input-panel")      
+        | #{chapter.content}
+block afterScript
+  script
+    // ##### edit story chapter content
+    CKEDITOR.replace( 'msgpost',{
+      width: "480px",
+    });
