@@ -28,7 +28,7 @@ exports.index = function(req, res) {
       });
     });
   } else {
-    Story.find({}, '_id title author datePost numView shortDes cover type').sort( 'author', 1 ).exec(function(error, stories) {
+    Story.find({}, '_id title author datePost numView shortDes cover type').sort( 'title', 1 ).exec(function(error, stories) {
       if (error) {
         console.log(error);
       }
