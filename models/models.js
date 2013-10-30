@@ -45,7 +45,7 @@ var chapterStorySchema = new Schema({
 
 var storySchema = new Schema({
   title: { type: String, index: true },
-  author: String,
+  author: { type: String, index: true },
   datePost: Date,
   updatedAt: Date,
   numView: Number,
