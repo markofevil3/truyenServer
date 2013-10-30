@@ -71,9 +71,14 @@ app.get('/addStory', adminRoute.addStoryPage);
 app.get('/checkStory', adminRoute.checkStory);
 app.get('/removeStory', adminRoute.removeStory);
 app.get('/addStoryChapter', adminRoute.addStoryChapterPage);
+app.get('/listStoryChapters', adminRoute.listStoryChapters);
+app.get('/removeStoryChapter', adminRoute.removeStoryChapter);
+app.get('/editStoryChapter', adminRoute.editStoryChapterPage);
 app.post('/addStory', adminRoute.addStory);
 app.post('/addStoryChapter', adminRoute.addStoryChapter);
 app.post('/updateStories', adminRoute.updateStories);
+app.post('/updateStoryChapters', adminRoute.updateStoryChapters);
+app.post('/editStoryChapter', adminRoute.editStoryChapter);
 //###################
 
 http.createServer(app).listen(app.get('port'), function(){

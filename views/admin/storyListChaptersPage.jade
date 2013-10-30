@@ -1,0 +1,29 @@
+extends layout
+
+block content
+  div(id="index-page")
+    a(href="/admin") List Truyện
+    br
+    br
+    span Truyện: #{story.title}
+    br
+    br
+    form(action="updateStoryChapters", method="POST", enctype="multipart/form-data")
+      input(type="submit", name="submit", value="Update")
+      input(name="storyId", id="storyId", type="hidden", value="#{story._id}")
+      table
+        tr
+          td
+          td 
+            span(class="row-title") Chapter
+          td
+            span(class="row-title") Tên Chapter
+        - each chapter,i in story.chapters
+          tr
+            td
+              button(id="btnRemove", onClick="removeStoryChapter('#{story._id}', '#{chapter._id}', '#{chapter.title}'); return false;") Remove
+              button(id="btnEditChapter", onClick="openEditStoryChapterPage('#{story._id}', '#{chapter._id}'); return false;") Sửa Nội Dung
+            td 
+              input(name="chapter-chapter-#{chapter._id}", id="chapter-chapter-#{chapter._id}", class="editables", type="text", value="#{chapter.chapter}")
+            td(class="input-rows")
+              input(name="chapter-title-#{chapter._id}", id="chapter-title-#{chapter._id}", class="editables", type="text", value="#{chapter.title}")
