@@ -36,7 +36,7 @@ var admobPublisher = {"android": "123456",
 											"ipad": "a15242fe704686c"
 										 };
 var advPublisher = 0; // 0: iad, 1: admob
-var appVersion = "1.1";
+var appVersion = "1.1.1";
 var iosLink = "itms-apps://itunes.apple.com/us/app/truyen/id718172153?ls=1&mt=8";
 var androidLink = "http://www.google.com";
 var forceUpdate = true;
