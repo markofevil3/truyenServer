@@ -153,6 +153,7 @@ exports.mangaReading = function(req, res) {
     } else {
       manga.chapters.sort(Util.dynamicSortNumber('chapter', -1));
       var chapter = manga.chapters.id(req.query.chapter);
+      chapter.pages.sort();
       res.json({ 'data': chapter, 'nextPrevChapters': getNextPrevChapter(manga.chapters, req.query.chapter), 'advPublisher': advPublisher, 'admobPublisher': admobPublisher });
     }
   });
