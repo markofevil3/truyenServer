@@ -7,7 +7,7 @@ then
     cd ~/truyenServer
   then
     echo "`date` Restarting killed mongo process." >> ~/truyenServer/serverState.log 2>&1 &
-    mongod --dbpath ~/data/db >> production.log 2>&1 &
+    mongod --dbpath /data/db >> production.log 2>&1 &
   else
     echo "Could not locate current directory."
   fi
