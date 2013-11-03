@@ -69,18 +69,24 @@ exports.getStory = function(req, res) {
       } else {
         story.numView = 1;
       }
-      story.save();
-      User.findOne({ 'userId': req.query.userId }, function(error, user) {
-        story.chapters.sort(Util.dynamicSortNumber('chapter', -1));
-        if (user == null) {
-          res.json({ 'data': story, 'favorite': false, 'advPublisher': advPublisher, 'admobPublisher': admobPublisher });
-        } else {
-          if (Util.contain(user.favorites, 'itemId', story._id)) {
-            res.json({ 'data': story, 'favorite': true, 'advPublisher': advPublisher, 'admobPublisher': admobPublisher });
-          } else {
-            res.json({ 'data': story, 'favorite': false, 'advPublisher': advPublisher, 'admobPublisher': admobPublisher });
-          }
+      for (var i = 0; i < story.chapters.length; i++) {
+        if (story.chapters[i].chapter != story.chapters[i].title) {
+          story.chapters[i].chapter = story.chapters[i].title;
         }
+      }
+      story.save(function() {
+        User.findOne({ 'userId': req.query.userId }, function(error, user) {
+          story.chapters.sort(Util.dynamicSortNumber('chapter', -1));
+          if (user == null) {
+            res.json({ 'data': story, 'favorite': false, 'advPublisher': advPublisher, 'admobPublisher': admobPublisher });
+          } else {
+            if (Util.contain(user.favorites, 'itemId', story._id)) {
+              res.json({ 'data': story, 'favorite': true, 'advPublisher': advPublisher, 'admobPublisher': admobPublisher });
+            } else {
+              res.json({ 'data': story, 'favorite': false, 'advPublisher': advPublisher, 'admobPublisher': admobPublisher });
+            }
+          }
+        });
       });
     }
   });
