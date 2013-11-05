@@ -82,7 +82,6 @@ exports.addStoryPage = function(req, res) {
 }
 
 exports.addStory = function(req, res) {
-  console.log(req.body);
   var story = new Story({});
   story.title = req.body["story-title"];
   story.author = req.body["story-author"];
@@ -212,7 +211,7 @@ exports.updateStoryChapters = function(req, res) {
         var chapter = story.chapters[i];
         if (req.body['chapter-chapter-' + chapter._id]) {
           if (chapter.chapter != req.body['chapter-chapter-' + chapter._id]) {
-            chapter.chapter = req.body['chapter-chapter-' + chapter._id];
+            chapter.chapter = checkChapterNumber(req.body['chapter-chapter-' + chapter._id]);
           }
           if (chapter.title != req.body['chapter-title-' + chapter._id]) {
             chapter.title = req.body['chapter-title-' + chapter._id];
@@ -261,7 +260,7 @@ exports.editStoryChapter = function(req, res) {
     if (story != null) {
       var chapter = story.chapters.id(req.body.chapterId);
       if (chapter != null) {
-        chapter.chapter = req.body['chapter-chapter'];
+        chapter.chapter = checkChapterNumber(req.body['chapter-chapter']);
         chapter.title = req.body['chapter-title'];
         chapter.content = req.body['msgpost'];
         story.save(function() {
@@ -292,4 +291,12 @@ exports.checkStory = function(req, res) {
     }
     res.json({ data: returnData });
   });
+};
+
+function checkChapterNumber(chapterNum) {
+  while (chapterNum.length < 3) {
+    chapterNum = "0" + chapterNum;
+  }
+  console.log(chapterNum);
+  return chapterNum.toString();
 }
