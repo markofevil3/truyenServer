@@ -1,0 +1,50 @@
+extends layout
+
+block content
+  div(id="addStoryChapter-page")
+    a(href="/listAudio") List Audio
+    br
+    br
+    - if (typeof(success) != 'undefined')
+      span(class="successText") Nhập thành công!
+    - if (typeof(error) != 'undefined')
+      span(class="errorText") #{error}
+    form(id="addAudioForm", action="addAudio", method="POST", enctype="multipart/form-data")
+      span Tên Truyện Audio
+      br
+      input(name="audio_title", id="audio_title", class="audio_titles editables", type="text", value="")
+      br
+      br
+      span Tác Giả
+      br
+      input(name="audio_author", id="audio_author", class="audio_authors editables", type="text", value="")
+      br
+      br
+      span Người Đọc
+      br
+      input(name="audio_reader", id="audio_reader", class="audio_readers editables", type="text", value="")
+      br
+      br
+      span Link Ảnh Bìa
+      br
+      input(name="audio_cover", id="audio_cover", class="audio_covers editables", type="text", value="")
+      br
+      br
+      span Độ dài của File (giây) 
+      br
+      input(name="audio_length", id="audio_length", class="audio_length editables", type="text", value="")
+      br
+      br
+      span Link tải
+      br
+      input(name="audio_link", id="audio_link", class="audio_link editables", type="text", value="")
+      br
+      br
+      span Tên File (đuôi .mp3 hoặc .wav)
+      br
+      input(name="audio_fileName", id="audio_fileName", class="audio_fileName editables", type="text", value="")
+      br
+      br
+      input(type="submit", name="submit", value="Gửi")
+      
+      

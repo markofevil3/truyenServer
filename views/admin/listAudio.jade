@@ -1,0 +1,55 @@
+extends layout
+
+block content
+  div(id="index-page")
+    a(href="/admin?type=manga") List Manga
+    br
+    br
+    a(href="/admin?type=story") List Sách Truyện
+    br
+    br
+    a(href="/addAudio") Thêm Audio
+    - if (audios.length > 0)
+      form(id="updateAudioForm", action="updateAudios", method="POST", enctype="multipart/form-data")
+        input(type="submit", name="submit", value="Update")
+        table
+          tr
+            td
+            td 
+              span(class="row-title") STT
+            td
+              span(class="row-title") Tên Audio
+            td
+              span Tác Giả
+            td
+              span Người Đọc      
+            td
+              span Cover Link
+            td
+              span Độ dài(giây) 
+            td
+              span Link tải
+            td
+              span Tên File
+          - each audio,i in audios
+            tr
+              td
+                button(id="btnRemove", onClick="removeAudio('#{audio._id}', '#{audio.title}'); return false;") Remove
+              td #{i}
+              td(class="input-rows")
+                input(name="audio-title-#{audio._id}", id="audio-title-#{audio._id}", class="inputTitles editables", type="text", value="#{audio.title}")
+              td(class="input-rows")
+                input(name="audio-author-#{audio._id}", id="audio-author-#{audio._id}", class="audio-authors", type="text", value="#{audio.author}")
+              td(class="input-rows")
+                input(name="audio-reader-#{audio._id}", id="audio-reader-#{audio._id}", class="audio-readers", type="text", value="#{audio.reader}")
+              td(class="input-rows")
+                - if (typeof(audio.cover) != 'undefined')
+                  input(name="audio-cover-#{audio._id}", id="audio-cover-#{audio._id}", class="audio-covers", type="text", value="#{audio.cover}")
+                - else
+                  input(name="audio-cover-#{audio._id}", id="audio-cover-#{audio._id}", class="audio-covers", type="text", value="")
+              td(class="input-rows")
+                input(name="audio-length-#{audio._id}", id="audio-length-#{audio._id}", class="inputLengths", type="text", value="#{audio.length}")
+              td(class="input-rows")
+                input(name="audio-link-#{audio._id}", id="audio-link-#{audio._id}", class="audio-link editables", type="text", value="#{audio.link}")
+              td(class="input-rows")
+                input(name="audio-fileName-#{audio._id}", id="audio-fileName-#{audio._id}", class="audio-fileName", type="text", value="#{audio.fileName}")
