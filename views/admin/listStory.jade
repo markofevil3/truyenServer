@@ -1,0 +1,34 @@
+extends layout
+
+block content
+  div(id="index-page")
+    - if (stories.length > 0)
+      form(action="updateStories", method="POST", enctype="multipart/form-data")
+        input(type="submit", name="submit", value="Update")
+        table
+          tr
+            // td
+            td 
+              span(class="row-title") STT
+            td
+              span(class="row-title") Tên Truyện
+            td
+              span Tác Giả
+            td
+              span Cover Link
+          - each story,i in stories
+            tr
+              // td
+              //   button(id="btnRemove", onClick="removeStory('#{story._id}', '#{story.title}', '#{accessToken}'); return false;") Remove
+              //   button(id="btnAddChapter", onClick="openAddStoryChapterPage('#{story._id}'); return false;") Thêm Chương
+              //   button(id="btnListChapters", onClick="openListChaptersPage('#{story._id}'); return false;") List Chương
+              td #{i}
+              td(class="input-rows")
+                input(name="story-title-#{story._id}", id="story-title-#{story._id}", class="story-titles editables", type="text", value="#{story.title}")
+              td(class="input-rows")
+                input(name="story-author-#{story._id}", id="story-author-#{story._id}", class="story-authors editables", type="text", value="#{story.author}")
+              td(class="input-rows")
+                - if (typeof(story.cover) != 'undefined')
+                  input(name="story-cover-#{story._id}", id="story-cover-#{story._id}", class="story-covers editables", type="text", value="#{story.cover}")
+                - else
+                  input(name="story-cover-#{story._id}", id="story-cover-#{story._id}", class="story-covers editables", type="text", value="")

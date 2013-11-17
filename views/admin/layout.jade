@@ -12,6 +12,20 @@ html
     block textEditor
     // script(src="javascripts/helpers.js", type="text/javascript")
   body
+    div(id="header-content")
+      div(id="wrapper")
+        a(href="/admin")
+          img(id="logo", src="/images/website/logo.jpg")
+    div(id="navBar-content")
+      ul(class="category")
+        li(class="mainCates")
+          a(class="a-mainCates", href="/admin") Home
+        li(class="mainCates")
+          a(class="a-mainCates", href="/listStory") List Sách Truyện
+        li(class="mainCates")
+          a(class="a-mainCates", href="/listManga") List Truyện Tranh
+        li(class="mainCates")
+          a(class="a-mainCates", href="/listAudio") List Radio Truyện
     div(id="main-content")
       block content
     // div(id="header")

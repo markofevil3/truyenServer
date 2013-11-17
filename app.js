@@ -88,6 +88,7 @@ app.get('/login', adminRoute.login);
 app.get('/logout', adminRoute.logout);
 
 app.get('/admin', check_auth, adminRoute.index);
+app.get('/listManga', check_auth, adminRoute.listManga);
 app.get('/listAudio', check_auth, adminRoute.listAudio);
 app.get('/addAudio', check_auth, adminRoute.addAudioPage);
 app.get('/removeAudio', check_auth, adminRoute.removeAudio);
@@ -98,6 +99,7 @@ app.get('/addStoryChapter', check_auth, adminRoute.addStoryChapterPage);
 app.get('/listStoryChapters', check_auth, adminRoute.listStoryChapters);
 app.get('/removeStoryChapter', check_auth, adminRoute.removeStoryChapter);
 app.get('/editStoryChapter', check_auth, adminRoute.editStoryChapterPage);
+app.get('/listStory', check_auth, adminRoute.listStory);
 app.post('/addStory', check_auth, adminRoute.addStory);
 app.post('/addStoryChapter', check_auth, adminRoute.addStoryChapter);
 app.post('/updateStories', check_auth, adminRoute.updateStories);

@@ -25,33 +25,49 @@ exports.logout = function(req, res) {
 };
 
 exports.index = function(req, res) {
-  switch(req.query.type) {
-    case "manga":
-      Manga.find({}, '_id title author cover').sort( 'title', 1 ).exec(function(error, mangas) {
-        if (error) {
-          console.log(error);
-        }
-        res.render('admin/listManga', { 
-          title: 'Full Truyện',
-          error: '',
-          mangas: mangas
-        });
-      });
-    break;
-    default:
-      Story.find({}, '_id title author datePost numView shortDes cover type').sort( 'author', 1 ).exec(function(error, stories) {
-        if (error) {
-          console.log(error);
-        }
-        res.render('admin/index', { 
-          title: 'Full Truyện',
-          error: '',
-          accessToken: req.query.accessToken,
-          stories: stories
-        });
-      });
-  }
+  res.render('admin/index', { 
+    title: 'Full Truyện',
+  });
+  // switch(req.query.type) {
+  //   case "manga":
+  //     Manga.find({}, '_id title author cover').sort( 'title', 1 ).exec(function(error, mangas) {
+  //       if (error) {
+  //         console.log(error);
+  //       }
+  //       res.render('admin/listManga', { 
+  //         title: 'Full Truyện',
+  //         error: '',
+  //         mangas: mangas
+  //       });
+  //     });
+  //   break;
+  //   default:
+  //     Story.find({}, '_id title author datePost numView shortDes cover type').sort( 'author', 1 ).exec(function(error, stories) {
+  //       if (error) {
+  //         console.log(error);
+  //       }
+  //       res.render('admin/index', { 
+  //         title: 'Full Truyện',
+  //         error: '',
+  //         accessToken: req.query.accessToken,
+  //         stories: stories
+  //       });
+  //     });
+  // }
 };
+
+exports.listManga = function(req, res) {
+  Manga.find({}, '_id title author cover').sort( 'title', 1 ).exec(function(error, mangas) {
+    if (error) {
+      console.log(error);
+    }
+    res.render('admin/listManga', { 
+      title: 'Full Truyện',
+      error: '',
+      mangas: mangas
+    });
+  });
+}
 
 exports.listAudio = function(req, res) {
   StoryAudio.find({}).sort( 'title', 1 ).exec(function(error, audios) {
@@ -183,6 +199,20 @@ exports.updateAudios = function(req, res) {
 function checkInput(inputText) {
   return (inputText != undefined && inputText != "undefined" && inputText != "" && inputText != null);
 }
+
+exports.listStory = function(req, res) {
+  Story.find({}, '_id title author datePost numView shortDes cover type').sort( 'author', 1 ).exec(function(error, stories) {
+    if (error) {
+      console.log(error);
+    }
+    res.render('admin/listStory', { 
+      title: 'Full Truyện',
+      error: '',
+      accessToken: req.query.accessToken,
+      stories: stories
+    });
+  });
+};
 
 exports.updateStories = function(req, res) {
   Story.find({}, '_id title author shortDes cover type').sort( 'title', 1 ).exec(function(error, stories) {

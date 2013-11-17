@@ -2,12 +2,6 @@ extends layout
 
 block content
   div(id="index-page")
-    a(href="/admin?type=manga") List Manga
-    br
-    br
-    a(href="/admin?type=story") List Sách Truyện
-    br
-    br
     a(href="/addAudio") Thêm Audio
     - if (audios.length > 0)
       form(id="updateAudioForm", action="updateAudios", method="POST", enctype="multipart/form-data")
