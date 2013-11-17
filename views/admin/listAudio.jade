@@ -1,7 +1,7 @@
 extends layout
 
 block content
-  div(id="index-page")
+  div(id="listAudio-page", class="contentPages")
     a(href="/addAudio") Thêm Audio
     - if (audios.length > 0)
       form(id="updateAudioForm", action="updateAudios", method="POST", enctype="multipart/form-data")
