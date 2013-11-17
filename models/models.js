@@ -21,6 +21,8 @@ var userSchema = new Schema({
   username: { type: String, index: true },
   fullName: String,
   favorites: [ favoriteSchema ],
+  unlock: [String],
+  pTime: String
 });
 
 var mangaSchema = new Schema({
@@ -57,10 +59,23 @@ var storySchema = new Schema({
   chapters: [ chapterStorySchema ]
 });
 
+var storyAudioSchema = new Schema({
+  title: { type: String, index: true },
+  author: String,
+  reader: String,
+  datePost: Date,
+  numView: Number,
+  cover: String,
+  length: Number,
+  link: String,
+  fileName: String
+});
+
 module.exports = {
   'User': mongoose.model('User', userSchema),
   'Favorite': mongoose.model('Favorite', favoriteSchema),
   'Manga': mongoose.model('Manga', mangaSchema),
   'Chapter': mongoose.model('Chapter', chapterSchema),
   'Story': mongoose.model('Story', storySchema),
+  'StoryAudio': mongoose.model('StoryAudio', storyAudioSchema),
 };

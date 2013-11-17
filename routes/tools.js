@@ -97,6 +97,7 @@ function downloadAndSaveChapter(chapterList, callback) {
                    'pages': imageLinks
                  });
                  manga.updatedAt = Date.now();
+                 manga.datePost = Date.now();
                  manga.save(function(error) {
                    console.log("SAVED " + root + "index.html");
                    downloadAndSaveChapter(chapterList, callback);

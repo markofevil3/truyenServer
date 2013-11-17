@@ -9,6 +9,7 @@ var http = require('http');
 var path = require('path');
 var fs = require('fs');
 var mongoose = require('mongoose');
+var MongoStore = require('connect-mongo')(express);
 var app = express();
 
 mongoose.connect('mongodb://localhost/truyen');
@@ -22,6 +23,12 @@ app.configure(function(){
   app.use(express.logger('dev'));
   app.use(express.bodyParser());
   app.use(express.methodOverride());
+  app.use(express.cookieParser());  
+  app.use(express.session({
+    secret: '076ee61d63aa10a125ea872411e433b9',
+    cookie: {maxAge: 43200000},
+    store: new MongoStore({db: 'truyen', clear_interval: 1})
+  }));
   // app.use(express.cookieParser('your secret here'));
   // app.use(express.session());
   app.use(app.router);
@@ -30,6 +37,14 @@ app.configure(function(){
 app.configure('development', function(){
   app.use(express.errorHandler());
 });
+
+function check_auth(req, res, next) {
+  // if(!req.session.authenticated) {
+  //   res.redirect("/login");
+  //   return;
+  // }
+  next();
+}
 
 app.all('*', function(req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
@@ -44,12 +59,15 @@ app.all('*', function(req, res, next) {
 app.get('/mangaList', routes.mangaList);
 app.get('/manga', routes.manga);
 app.get('/mangaReading', routes.mangaReading);
+app.get('/checkUnlockFunction', routes.checkUnlockFunction);
+app.get('/unlockFunction', routes.unlockFunction);
 app.get('/addFavorite', routes.addFavorite);
 app.get('/removeFavorite', routes.removeFavorite);
 app.get('/getFavorites', routes.getFavorites);
 app.get('/storyList', routes.storyList);
 app.get('/getStory', routes.getStory);
 app.get('/getStoryContent', routes.getStoryContent);
+app.get('/storyAudioList', routes.storyAudioList)
 app.get('/support', routes.support);
 app.get('/adv', routes.adv);
 app.get('/appVersion', routes.getAppVersion);
@@ -66,19 +84,27 @@ app.get('/import', tools.importManga);
 app.get('/resize', tools.resizeImages);
 
 //# ADMIN ############
-app.get('/admin', adminRoute.index);
-app.get('/addStory', adminRoute.addStoryPage);
-app.get('/checkStory', adminRoute.checkStory);
-app.get('/removeStory', adminRoute.removeStory);
-app.get('/addStoryChapter', adminRoute.addStoryChapterPage);
-app.get('/listStoryChapters', adminRoute.listStoryChapters);
-app.get('/removeStoryChapter', adminRoute.removeStoryChapter);
-app.get('/editStoryChapter', adminRoute.editStoryChapterPage);
-app.post('/addStory', adminRoute.addStory);
-app.post('/addStoryChapter', adminRoute.addStoryChapter);
-app.post('/updateStories', adminRoute.updateStories);
-app.post('/updateStoryChapters', adminRoute.updateStoryChapters);
-app.post('/editStoryChapter', adminRoute.editStoryChapter);
+app.get('/login', adminRoute.login);
+app.get('/logout', adminRoute.logout);
+
+app.get('/admin', check_auth, adminRoute.index);
+app.get('/listAudio', check_auth, adminRoute.listAudio);
+app.get('/addAudio', check_auth, adminRoute.addAudioPage);
+app.get('/removeAudio', check_auth, adminRoute.removeAudio);
+app.get('/addStory', check_auth, adminRoute.addStoryPage);
+app.get('/checkStory', check_auth, adminRoute.checkStory);
+app.get('/removeStory', check_auth, adminRoute.removeStory);
+app.get('/addStoryChapter', check_auth, adminRoute.addStoryChapterPage);
+app.get('/listStoryChapters', check_auth, adminRoute.listStoryChapters);
+app.get('/removeStoryChapter', check_auth, adminRoute.removeStoryChapter);
+app.get('/editStoryChapter', check_auth, adminRoute.editStoryChapterPage);
+app.post('/addStory', check_auth, adminRoute.addStory);
+app.post('/addStoryChapter', check_auth, adminRoute.addStoryChapter);
+app.post('/updateStories', check_auth, adminRoute.updateStories);
+app.post('/updateStoryChapters', check_auth, adminRoute.updateStoryChapters);
+app.post('/editStoryChapter', check_auth, adminRoute.editStoryChapter);
+app.post('/updateAudios', check_auth, adminRoute.updateAudios);
+app.post('/addAudio', check_auth, adminRoute.addAudio);
 //###################
 
 http.createServer(app).listen(app.get('port'), function(){

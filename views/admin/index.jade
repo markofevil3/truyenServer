@@ -5,6 +5,9 @@ block content
     a(href="/admin?type=manga") List Manga
     br
     br
+    a(href="/listAudio") List Audio
+    br
+    br
     a(href="/addStory") Nhập Truyện
     - if (stories.length > 0)
       form(action="updateStories", method="POST", enctype="multipart/form-data")

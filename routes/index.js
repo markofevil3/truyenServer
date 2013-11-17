@@ -9,6 +9,7 @@ var Chapter = require('../models/models').Chapter;
 var Favorite = require('../models/models').Favorite;
 var Manga = require('../models/models').Manga;
 var Story = require('../models/models').Story;
+var StoryAudio = require('../models/models').StoryAudio;
 
 var ADV_LINKS = [
   'http://google.com',
@@ -32,8 +33,8 @@ var emailServer  = email.server.connect({
 });
 
 var admobPublisher = {"android": "123456",
-											"iphone": "a15242fc9991b03",
-											"ipad": "a15242fe704686c"
+                      "iphone": "a15283aa0b43c3f",
+											"ipad": "a15283aa5be9001"
 										 };
 var advPublisher = 0; // 0: iad, 1: admob
 var appVersion = "1.1.1";
@@ -42,10 +43,48 @@ var androidLink = "http://www.google.com";
 var forceUpdate = true;
 // var facebookPostLink = 'https://www.facebook.com/pages/Truy%E1%BB%87n-tranh-Truy%E1%BB%87n-ng%E1%BA%AFn-Truy%E1%BB%87n-c%C6%B0%E1%BB%9Di/518980604798172';
 var facebookPostLink = 'https://itunes.apple.com/us/app/full-truyen/id718172153?ls=1&mt=8';
+var detectBrowserKey = "Appcelerator Titanium";
 
 exports.getAppVersion = function(req, res) {
   res.json({ 'version': appVersion, 'iosLink': iosLink, 'androidLink': androidLink, 'force': forceUpdate, 'facebookPostLink': facebookPostLink, 'advPublisher': advPublisher, 'admobPublisher': admobPublisher });
 };
+
+// var fakeAudios = [
+//   { 
+//     title: "Tuoi tho du doi",
+//     author: "Full Truyen",
+//     reader: "Full Truyen",
+//     numView: 0,
+//     cover: "http://image.phunuonline.com.vn/news/2012/20120916/fckimage/v/CON-TRAI-THAN-NEPTUNE-(CHIBOOKS)-bia-1.jpg",
+//     length: 960,
+//     link: "https://dl.dropboxusercontent.com/u/86872228/truyenAudio/HN1-03-2829-Tu%E1%BB%95iTh%C6%A1D%E1%BB%AFD%E1%BB%99i_Ph%C3%B9ngQu%C3%A1n.mp3",
+//     fileName: "HN1-03-2829-TuổiThơDữDội_PhùngQuán.mp3"
+//   },
+//   { 
+//     title: "TếtVềNhậnHọ",
+//     author: "Full Truyen",
+//     reader: "Full Truyen",
+//     numView: 0,
+//     cover: "http://image.phunuonline.com.vn/news/2012/20120916/fckimage/v/CON-TRAI-THAN-NEPTUNE-(CHIBOOKS)-bia-1.jpg",
+//     length: 1615,
+//     link: "https://dl.dropboxusercontent.com/u/86872228/truyenAudio/HN3-0212-T%E1%BA%BFtV%E1%BB%81Nh%E1%BA%ADnH%E1%BB%8D_Nguy%E1%BB%85nNg%E1%BB%8DcTr%E1%BB%A5.mp3",
+//     fileName: "HN3-0212-TếtVềNhậnHọ_NguyễnNgọcTrụ.mp3"
+//   },
+// ];
+// 
+// for (var i = 0; i < fakeAudios.length; i++) {
+//   var audio = new StoryAudio(fakeAudios[i]);
+//   audio.save();
+// }
+
+exports.storyAudioList = function(req, res) {
+  StoryAudio.find({}).sort( 'title', 1 ).exec(function(error, storyAudios) {
+    if (error) {
+      console.log(error);
+    }
+    res.json({ 'data': storyAudios, 'advPublisher': advPublisher, 'admobPublisher': admobPublisher });
+  });
+}
 
 exports.storyList = function(req, res) {
   Story.find({}, '_id title author datePost numView type cover cate').sort( 'title', 1 ).exec(function(error, stories) {
@@ -75,8 +114,9 @@ exports.getStory = function(req, res) {
         }
       }
       story.save(function() {
+        console.log("getStory - " + story.title);
         User.findOne({ 'userId': req.query.userId }, function(error, user) {
-          story.chapters.sort(Util.dynamicSortNumber('chapter', -1));
+          story.chapters.sort(Util.dynamicSort('chapter', -1));
           if (user == null) {
             res.json({ 'data': story, 'favorite': false, 'advPublisher': advPublisher, 'admobPublisher': admobPublisher });
           } else {
@@ -100,6 +140,7 @@ exports.getStoryContent = function(req, res) {
     if (story == null) {
       console.log(error);
     } else {
+      console.log("getStoryContent - " + story.title);
       if (req.query.type == 0) {
         res.json({ 'data': story, 'advPublisher': advPublisher, 'admobPublisher': admobPublisher });
       } else {
@@ -133,6 +174,7 @@ exports.manga = function(req, res) {
         manga.numView = 1;
       }
       manga.save();
+      console.log("manga - " + manga.title);
       User.findOne({ 'userId': req.query.userId }, function(error, user) {
         manga.chapters.sort(Util.dynamicSortNumber('chapter', -1));
         if (user == null) {
@@ -157,6 +199,7 @@ exports.mangaReading = function(req, res) {
     if (manga == null) {
       console.log(error);
     } else {
+      console.log("mangaReading - " + manga.title);
       manga.chapters.sort(Util.dynamicSortNumber('chapter', -1));
       var chapter = manga.chapters.id(req.query.chapter);
       chapter.pages.sort();
@@ -201,6 +244,74 @@ function getNextPrevChapter(chapters, chapterId) {
 // function unsubscribeNotification(channel, deviceToken) {
 //   
 // };
+
+exports.checkUnlockFunction = function(req, res) {
+  if (req.headers['user-agent'].indexOf(detectBrowserKey) > -1) {
+    User.findOne({ 'userId': req.query.userId }, function(error, user) {
+      if (error) {
+        console.log(error);
+      }
+      if (user == null) {
+        user = new User({ 'userId': req.query.userId });
+        user.username = req.query.username;
+        user.fullName = req.query.fullName;
+        user.favorites = [];
+        user.unlock = [];
+      } else {
+        user.fullName = req.query.fullName;
+      }
+      var check;
+      if (user.unlock) {
+        check = (user.unlock.indexOf(req.query.type) > -1);
+      } else {
+        user.unlock = [];
+        check = false;
+      }
+      if (!check) {
+        user.pTime = new Date().getTime() + "";
+      }
+      user.save(function(error) {
+        if (error) {
+          console.log(error);
+          res.json({ 'data': error, 'advPublisher': advPublisher, 'admobPublisher': admobPublisher });
+        }
+        res.json({ 'data': {isPurchased: check, time: user.pTime}, 'advPublisher': advPublisher, 'admobPublisher': admobPublisher });
+      });
+    });
+  } else {
+    console.log("Hacking!");
+    res.json({'data': "Cant process request!"});
+  }
+};
+
+exports.unlockFunction = function(req, res) {
+  if (req.headers['user-agent'].indexOf(detectBrowserKey) > -1) {
+    User.findOne({ 'userId': req.query.userId }, function(error, user) {
+      if (error) {
+        console.log(error);
+      }
+      if (user == null) {
+        console.log("Cant find user " + req.query.userId);
+      } else {
+        if (user.unlock.indexOf(req.query.type) <= -1 && req.query.time && req.query.time != null && user.pTime == req.query.time) {
+          user.unlock.push(req.query.type);
+          user.pTime = "";
+        } else {
+          console.log("Cant purchase " + req.query.type);
+        }
+        user.save(function(error) {
+          if (error) {
+            console.log(error);
+          }
+        });
+      }
+      res.json({ 'data': 'success', 'advPublisher': advPublisher, 'admobPublisher': admobPublisher });
+    });
+  } else {
+    console.log("Hacking!");
+    res.json({'data': "Cant process request!"});
+  }
+};
 
 exports.addFavorite = function(req, res) {
   User.findOne({ 'userId': req.query.userId }, function(error, user) {
@@ -316,9 +427,9 @@ exports.facebook = function(req, res) {
 exports.support = function(req, res) {
   emailServer.send({
     text:    req.query.content, 
-    from:    "fulltruyen@gmail.com", 
+    from:    req.query.email, 
     to:      "fulltruyen@gmail.com",
-    subject: "Full Truyện Support"
+    subject: "Full Truyện Support - " + req.query.email
   }, function(err, message) { 
     console.log(err || message);
     res.json({ 'data': 'success' });

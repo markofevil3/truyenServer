@@ -20,6 +20,46 @@ $("document").ready(function(){
       this.disabled = false;
     });
   });
+  jQuery.validator.addClassRules('inputTitles', {
+      required: true
+  });
+  jQuery.validator.addClassRules('inputLengths', {
+      required: true,
+      number: true
+  });
+  $("#updateAudioForm").validate();
+  $("#addAudioForm").validate({
+		rules: {
+			audio_title: "required",
+			audio_length: {
+			  required: true,
+			  number: true
+			},
+			audio_link: {
+			  required: true,
+			  url: true
+			},
+			audio_fileName: {
+			  required: true,
+			  extension: "mp3|wav"
+			}
+		},
+		messages: {
+			audio_title: "Thiếu tên truyện",
+			audio_length: {
+			  required: "Thiếu Độ dài của File",
+			  number: "Độ dài của file phải là số"
+			},
+			audio_link: {
+			  required: "Thiếu Link tải",
+			  url: "Link tải không đúng"
+			},
+			audio_fileName: {
+			  required: "Thiếu tên file",
+			  extension: "Tên file phải là .mp3 hoặc .wav"
+			}
+		}
+	});
 });
 
 function checkStory() {
@@ -83,6 +123,21 @@ function removeStory(storyId, storyName, accessToken) {
       })
       .fail(function() {
         window.location.replace("/admin?accessToken=" + accessToken);
+      })
+  }
+}
+
+function removeAudio(audioId, audioName) {
+  var confirmBox = confirm("Xoá audio: " + audioName + " ?");
+  if (confirmBox == true) {
+    $.ajax( "/removeAudio?id=" + audioId)
+      .done(function(response) {
+        if (response.data == 'success') {
+          window.location.replace("/listAudio");
+        }
+      })
+      .fail(function() {
+        window.location.replace("/listAudio");
       })
   }
 }
