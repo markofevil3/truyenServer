@@ -27,7 +27,7 @@ $("document").ready(function(){
       required: true,
       number: true
   });
-  $("#updateAudioForm").validate();
+  // $("#updateAudioForm").validate();
   $("#addAudioForm").validate({
 		rules: {
 			audio_title: "required",

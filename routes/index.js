@@ -44,6 +44,7 @@ var forceUpdate = true;
 // var facebookPostLink = 'https://www.facebook.com/pages/Truy%E1%BB%87n-tranh-Truy%E1%BB%87n-ng%E1%BA%AFn-Truy%E1%BB%87n-c%C6%B0%E1%BB%9Di/518980604798172';
 var facebookPostLink = 'https://itunes.apple.com/us/app/full-truyen/id718172153?ls=1&mt=8';
 var detectBrowserKey = "Appcelerator Titanium";
+var audioType = ['truyện ngắn', 'truyện đêm khuya', ' truyện dài'];
 
 exports.getAppVersion = function(req, res) {
   res.json({ 'version': appVersion, 'iosLink': iosLink, 'androidLink': androidLink, 'force': forceUpdate, 'facebookPostLink': facebookPostLink, 'advPublisher': advPublisher, 'admobPublisher': admobPublisher });
@@ -275,7 +276,8 @@ exports.checkUnlockFunction = function(req, res) {
           console.log(error);
           res.json({ 'data': error, 'advPublisher': advPublisher, 'admobPublisher': admobPublisher });
         }
-        res.json({ 'data': {isPurchased: check, time: user.pTime}, 'advPublisher': advPublisher, 'admobPublisher': admobPublisher });
+        // res.json({ 'data': {isPurchased: check, time: user.pTime}, 'advPublisher': advPublisher, 'admobPublisher': admobPublisher });
+        res.json({ 'data': {isPurchased: true, time: user.pTime}, 'advPublisher': advPublisher, 'admobPublisher': admobPublisher });
       });
     });
   } else {

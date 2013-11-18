@@ -68,7 +68,8 @@ var storyAudioSchema = new Schema({
   cover: String,
   length: Number,
   link: String,
-  fileName: String
+  fileName: String,
+  type: Number
 });
 
 module.exports = {

@@ -70,7 +70,7 @@ exports.listManga = function(req, res) {
 }
 
 exports.listAudio = function(req, res) {
-  StoryAudio.find({}).sort( 'title', 1 ).exec(function(error, audios) {
+  StoryAudio.find({}).sort( 'title', -1 ).exec(function(error, audios) {
     if (error) {
       console.log(error);
     }
