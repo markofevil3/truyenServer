@@ -50,34 +50,6 @@ exports.getAppVersion = function(req, res) {
   res.json({ 'version': appVersion, 'iosLink': iosLink, 'androidLink': androidLink, 'force': forceUpdate, 'facebookPostLink': facebookPostLink, 'advPublisher': advPublisher, 'admobPublisher': admobPublisher });
 };
 
-// var fakeAudios = [
-//   { 
-//     title: "Tuoi tho du doi",
-//     author: "Full Truyen",
-//     reader: "Full Truyen",
-//     numView: 0,
-//     cover: "http://image.phunuonline.com.vn/news/2012/20120916/fckimage/v/CON-TRAI-THAN-NEPTUNE-(CHIBOOKS)-bia-1.jpg",
-//     length: 960,
-//     link: "https://dl.dropboxusercontent.com/u/86872228/truyenAudio/HN1-03-2829-Tu%E1%BB%95iTh%C6%A1D%E1%BB%AFD%E1%BB%99i_Ph%C3%B9ngQu%C3%A1n.mp3",
-//     fileName: "HN1-03-2829-TuổiThơDữDội_PhùngQuán.mp3"
-//   },
-//   { 
-//     title: "TếtVềNhậnHọ",
-//     author: "Full Truyen",
-//     reader: "Full Truyen",
-//     numView: 0,
-//     cover: "http://image.phunuonline.com.vn/news/2012/20120916/fckimage/v/CON-TRAI-THAN-NEPTUNE-(CHIBOOKS)-bia-1.jpg",
-//     length: 1615,
-//     link: "https://dl.dropboxusercontent.com/u/86872228/truyenAudio/HN3-0212-T%E1%BA%BFtV%E1%BB%81Nh%E1%BA%ADnH%E1%BB%8D_Nguy%E1%BB%85nNg%E1%BB%8DcTr%E1%BB%A5.mp3",
-//     fileName: "HN3-0212-TếtVềNhậnHọ_NguyễnNgọcTrụ.mp3"
-//   },
-// ];
-// 
-// for (var i = 0; i < fakeAudios.length; i++) {
-//   var audio = new StoryAudio(fakeAudios[i]);
-//   audio.save();
-// }
-
 exports.storyAudioList = function(req, res) {
   StoryAudio.find({}).sort( 'title', 1 ).exec(function(error, storyAudios) {
     if (error) {
