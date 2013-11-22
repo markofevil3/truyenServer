@@ -1,0 +1,60 @@
+extends layout
+
+block content
+  div(id="editStory-page", class="contentPages")
+    // a(href="/admin") List Truyện
+    // br
+    // br
+    form(action="editStory", method="POST", enctype="multipart/form-data")
+      input(type="submit", name="submit", value="Update")
+      input(name="id", id="id", type="hidden", value="#{story._id}")
+      br
+      table(class="detailTable")
+        tr
+          td(class="detailTableTexts")
+          td(class="detailTableInputRows")
+        tr
+          td(class="detailTableTexts") Tên Truyện:
+          td(class="detailTableInputRows")
+            input(name="storyTitle", id="storyTitle", class="detailTableInputs", type="text", value="#{story.title}")
+        tr
+          td(class="detailTableTexts") Tác Giả:
+          td(class="detailTableInputRows")
+            input(name="storyAuthor", id="storyAuthor", class="detailTableInputs", type="text", value="#{story.author}")
+        tr
+          td(class="detailTableTexts") Ảnh Bìa:
+          td(class="detailTableInputRows")
+            input(name="storyCover", id="storyCover", class="detailTableInputs", type="text", value="#{story.cover}")
+        tr
+          td(class="detailTableTexts") Giới Thiệu:
+          td(class="detailTableInputRows")
+            textArea(class="shortDesInput")
+              | #{story.shortDes}
+        tr
+          td(class="detailTableTexts") Lượt View:
+          td(class="detailTableInputRows")
+            input(name="storyNumView", id="storyNumView", class="detailTableInputs", type="text", value="#{story.numView ? story.numView : 0}")
+        tr
+          td(class="detailTableTexts") Ngày Đăng:
+          td(class="detailTableInputRows") #{story.datePost}
+      br
+      span(style="margin-left: 5%") Danh Sách Chương:
+      br
+      br
+      table(class="listTable", style="width:90%; margin:auto")
+        tr
+          th(class="listTableHeader", style="width:30px")
+            span(class="row-title listTableRowSTT") STT
+          th(class="listTableHeader")
+            span(class="row-title") Tên Chương:
+          th(class="listTableHeader", style="width:100px")
+            span(class="row-title") Chức Năng:
+        - each chapter,i in story.chapters
+          tr
+            td(class="")
+              input(name="chapter-chapter-#{chapter._id}", id="chapter-chapter-#{chapter._id}", class="", type="text", value="#{chapter.chapter}")
+            td(class="")
+              input(name="chapter-title-#{chapter._id}", id="chapter-title-#{chapter._id}", class="", type="text", value="#{chapter.title}")
+            td(class="listTableRowButtons")
+              button(id="btnEditChapter", onClick="openEditStoryChapterPage('#{story._id}', '#{chapter._id}'); return false;") Sửa
+              button(id="btnRemove", onClick="removeStoryChapter('#{story._id}', '#{chapter._id}', '#{chapter.title}'); return false;") Xoá

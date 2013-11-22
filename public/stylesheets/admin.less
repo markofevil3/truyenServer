@@ -135,6 +135,16 @@ a:hover {
   }
 }
 
+#editStory-page {
+  margin: 5px;
+  position: relative;
+  
+  #btnRemove, #btnEditChapter {
+    float: right;
+    margin-right: 15px;
+  }
+}
+
 #listStory-page {
   #button-wrapper {
     height: 70px;
@@ -149,16 +159,35 @@ a:hover {
   }
 }
 
-.editables {
-  width: 300px;
-}
-
 #addStory-page, #addStoryChapter-page {
   .editables {
     width: 500px;
   }
 }
 
+/* Input style */
+.detailTable {
+  width: 90%;
+  margin: auto;
+  
+  .detailTableTexts {
+    width: 200px;
+    padding: 5px 0;
+  }
+  .detailTableInputRows {
+    padding: 5px 0;
+  }
+  
+  .detailTableInputs {
+    width: 350px;
+  }
+  
+  .shortDesInput {
+    vertical-align: top;
+    width: 350px;
+    height: 150px;
+  }
+}
 .listTable {
   table-layout: fixed;
   width: 100%;
@@ -203,6 +232,12 @@ a:hover {
     padding: 5px;
     overflow: hidden;
   }
+  .listTableRowButtons {
+    text-align: center;
+  }
+  input{
+    width: 95%;
+  }
 }
 
 .button_link {
@@ -216,4 +251,8 @@ a:hover {
 }
 .button_link:hover {
   background-color: floralwhite;
+}
+
+#footer-content {
+  height: 50px;
 }
