@@ -40,7 +40,7 @@ var advPublisher = 0; // 0: iad, 1: admob
 var appVersion = "1.2";
 var iosLink = "itms-apps://itunes.apple.com/us/app/truyen/id718172153?ls=1&mt=8";
 var androidLink = "http://www.google.com";
-var forceUpdate = true;
+var forceUpdate = false;
 // var facebookPostLink = 'https://www.facebook.com/pages/Truy%E1%BB%87n-tranh-Truy%E1%BB%87n-ng%E1%BA%AFn-Truy%E1%BB%87n-c%C6%B0%E1%BB%9Di/518980604798172';
 var facebookPostLink = 'https://itunes.apple.com/us/app/full-truyen/id718172153?ls=1&mt=8';
 var detectBrowserKey = "Appcelerator Titanium";
@@ -266,8 +266,8 @@ exports.checkUnlockFunction = function(req, res) {
           console.log(error);
           res.json({ 'data': error, 'advPublisher': advPublisher, 'admobPublisher': admobPublisher });
         }
-        // res.json({ 'data': {isPurchased: check, time: user.pTime}, 'advPublisher': advPublisher, 'admobPublisher': admobPublisher });
-        res.json({ 'data': {isPurchased: true, time: user.pTime}, 'advPublisher': advPublisher, 'admobPublisher': admobPublisher });
+        res.json({ 'data': {isPurchased: check, time: user.pTime}, 'advPublisher': advPublisher, 'admobPublisher': admobPublisher });
+        //res.json({ 'data': {isPurchased: true, time: user.pTime}, 'advPublisher': advPublisher, 'admobPublisher': admobPublisher });
       });
     });
   } else {
