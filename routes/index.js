@@ -59,6 +59,24 @@ exports.storyAudioList = function(req, res) {
   });
 }
 
+exports.storyAudio = function(req, res) {
+  StoryAudio.findOne({ '_id': req.query.id }, function(error, audio) {
+    if (error) {
+      console.log(error);
+    }
+    if (audio != null) {
+      if (audio.numView) {
+        audio.numView += 1;
+      } else {
+        audio.numView = 1;
+      }
+      console.log("getAudio - " + audio.title);
+      audio.save();
+    }
+    res.json({ 'data': 'success', 'advPublisher': advPublisher, 'admobPublisher': admobPublisher });
+  });
+}
+
 exports.storyList = function(req, res) {
   Story.find({}, '_id title author datePost numView type cover cate').sort( 'title', 1 ).exec(function(error, stories) {
     if (error) {

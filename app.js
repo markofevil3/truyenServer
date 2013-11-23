@@ -61,6 +61,8 @@ app.get('/manga', routes.manga);
 app.get('/mangaReading', routes.mangaReading);
 app.get('/checkUnlockFunction', routes.checkUnlockFunction);
 app.get('/unlockFunction', routes.unlockFunction);
+app.get('/unlockFunction', routes.unlockFunction);
+app.get('/storyAudio', routes.storyAudio);
 app.get('/addFavorite', routes.addFavorite);
 app.get('/removeFavorite', routes.removeFavorite);
 app.get('/getFavorites', routes.getFavorites);
