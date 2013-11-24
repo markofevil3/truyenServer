@@ -36,7 +36,7 @@ var admobPublisher = {"android": "123456",
                       "iphone": "a15283aa0b43c3f",
 											"ipad": "a15283aa5be9001"
 										 };
-var advPublisher = 2; // 0: iad, 1: admob, 2: inmobi
+var advPublisher = 0; // 0: iad, 1: admob, 2: inmobi
 var appVersion = "1.2";
 var iosLink = "itms-apps://itunes.apple.com/us/app/truyen/id718172153?ls=1&mt=8";
 var androidLink = "http://www.google.com";
@@ -266,8 +266,8 @@ exports.checkUnlockFunction = function(req, res) {
           console.log(error);
           res.json({ 'data': error, 'advPublisher': advPublisher, 'admobPublisher': admobPublisher });
         }
-        res.json({ 'data': {isPurchased: check, time: user.pTime}, 'advPublisher': advPublisher, 'admobPublisher': admobPublisher });
-        // res.json({ 'data': {isPurchased: true, time: user.pTime}, 'advPublisher': advPublisher, 'admobPublisher': admobPublisher });
+        // res.json({ 'data': {isPurchased: check, time: user.pTime}, 'advPublisher': advPublisher, 'admobPublisher': admobPublisher });
+        res.json({ 'data': {isPurchased: true, time: user.pTime}, 'advPublisher': advPublisher, 'admobPublisher': admobPublisher });
       });
     });
   } else {
