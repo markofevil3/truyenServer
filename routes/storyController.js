@@ -28,11 +28,13 @@ exports.listStory = function(req, res) {
 
 exports.addStoryPage = function(req, res) {
   res.render('admin/addStory', { 
-    title: 'Full Truyện'
+    title: 'Full Truyện',
+    storyCates: Util.storyCate
   });
 }
 
 exports.addStory = function(req, res) {
+  console.log(req.body);
   var story = new Story({});
   story.title = req.body["story-title"];
   story.author = req.body["story-author"];
@@ -42,9 +44,11 @@ exports.addStory = function(req, res) {
   story.numView = 0;
   story.shortDes = req.body["story-shortDes"];
   story.type = 1;
+  story.cate = req.body.storyCategory;
+  
   for (var i = 1; i <= parseInt(req.body["chapter-count"]); i++) {
     var inputChapter = {
-      chapter: req.body["chapter-chapter-" + i],
+      chapter: Util.checkChapterNumber(req.body["chapter-chapter-" + i]),
       title: req.body["chapter-title-" + i],
       content: req.body["chapter-content-" + i],
       datePost: Date.now()
@@ -56,7 +60,7 @@ exports.addStory = function(req, res) {
     if (error) {
       console.log(error);
     }
-    adminRoute.index(req, res);
+    adminRoute.addStoryPage(req, res);
   });
 }
 
@@ -76,14 +80,15 @@ exports.checkStory = function(req, res) {
 };
 
 exports.editStoryPage = function(req, res) {
-  Story.findOne({'_id': req.query.id}, '_id title author datePost cover cate type chapters.chapter chapters.title chapters._id').exec(function(error, story) {
+  Story.findOne({'_id': req.query.id}, '_id title author datePost numView cover cate type chapters.chapter chapters.title chapters._id').exec(function(error, story) {
     if (error) {
       console.log(error);
     }
     if (story != null) {
       res.render('admin/editStory', { 
         title: 'Full Truyện',
-        story: story
+        story: story,
+        storyCates: Util.storyCate
       });
     } else {
       adminRoute.listStory(req, res);
@@ -92,32 +97,138 @@ exports.editStoryPage = function(req, res) {
 }
 
 exports.editStory = function(req, res) {
-  // Story.findOne({'_id': req.body.id}, '_id title author datePost cover cate type chapters.chapter chapters.title chapters._id').exec(function(error, story) {
-  //   if (error) {
-  //     console.log(error);
-  //   }
-  //   if (story != null) {
-  //     for (var i = 0; i < story.chapters.length; i++) {
-  //       var chapter = story.chapters[i];
-  //       if (req.body['chapter-chapter-' + chapter._id]) {
-  //         if (chapter.chapter != req.body['chapter-chapter-' + chapter._id]) {
-  //           chapter.chapter = Util.checkChapterNumber(req.body['chapter-chapter-' + chapter._id]);
-  //         }
-  //         if (chapter.title != req.body['chapter-title-' + chapter._id]) {
-  //           chapter.title = req.body['chapter-title-' + chapter._id];
-  //         }
-  //       }
-  //     }
-  //     story.save(function(err) {
-  //       res.render('admin/storyListChaptersPage', { 
-  //         title: 'Full Truyện',
-  //         story: story
-  //       });
-  //     });
-  //   } else {
-  //     // adminRoute.index(req, res);
-  //   }
-  // });
+  Story.findOne({'_id': req.body.id}, '_id title author numView datePost cover cate type chapters.chapter chapters.title chapters._id').exec(function(error, story) {
+    if (error) {
+      console.log(error);
+    }
+    if (story != null) {
+      for (var i = 0; i < story.chapters.length; i++) {
+        var chapter = story.chapters[i];
+        story.title = req.body.storyTitle;
+        story.author = req.body.storyAuthor;
+        story.storyCover = req.body.cover;
+        story.cate = req.body.storyCategory;
+        story.numView = parseInt(req.body.storyNumView);
+        if (req.body['chapter-chapter-' + chapter._id]) {
+          var tempChapter = Util.checkChapterNumber(req.body['chapter-chapter-' + chapter._id]);
+          var tempChapterTitle = req.body['chapter-title-' + chapter._id];
+          if (tempChapter) {
+            if (chapter.chapter != tempChapter) {
+              chapter.chapter = Util.checkChapterNumber(tempChapter);
+            }
+          }
+          if (tempChapterTitle) {
+            if (chapter.title != tempChapterTitle) {
+              chapter.title = tempChapterTitle;
+            }
+          }
+        }
+      }
+      story.save(function(err) {
+        res.render('admin/editStory', { 
+          title: 'Full Truyện',
+          story: story,
+          storyCates: Util.storyCate
+        });
+      });
+    } else {
+      adminRoute.listStory(req, res);
+    }
+  });
+}
+
+exports.removeStory = function(req, res) {
+  Story.findById(req.query.id, function (err, story) {
+    if (!err) {
+      story.remove();
+    }
+    res.json({ data: "success" });
+  });
+}
+
+exports.removeStoryChapter = function(req, res) {
+  Story.findOne({'_id': req.query.storyId}, '_id title author numView datePost cover cate type chapters.chapter chapters.title chapters._id').exec(function(error, story) {
+    if (error) {
+      console.log(error);
+    }
+    if (story != null) {
+      var chapter = story.chapters.id(req.query.chapterId);
+      if (chapter != null) {
+        chapter.remove();
+      }
+      story.save(function() {
+        res.render('admin/editStory', { 
+          title: 'Full Truyện',
+          story: story,
+          storyCates: Util.storyCate
+        });
+      });
+    } else {
+      adminRoute.listStory(req, res);
+    }
+  });
+}
+
+exports.addStoryChapterPage = function(req, res) {
+  Story.findOne({'_id': req.query.id}, '_id title chapters.chapter chapters.title chapters._id').exec(function(error, story) {
+    if (error) {
+      console.log(error);
+    }
+    res.render('admin/addStoryChapterPage', { 
+      title: 'Full Truyện',
+      story: story
+    });
+  });
+}
+
+exports.addStoryChapter = function(req, res) {
+  Story.findOne({'_id': req.body["storyId"]}).exec(function(error, story) {
+    if (error) {
+      console.log(error);
+    }
+    if (story != null) {
+      for (var i = 1; i <= parseInt(req.body["chapter-count"]); i++) {
+        var inputChapter = {
+          chapter: req.body["chapter-chapter-" + i],
+          title: req.body["chapter-title-" + i],
+          content: req.body["chapter-content-" + i],
+          datePost: Date.now()
+        }
+        story.chapters.push(inputChapter);
+      }
+      story.save(function(error) {
+        if (error) {
+          console.log(error);
+        }
+        console.log("########## Add Chapter " + story.title);
+        req.query.id = story._id;
+        adminRoute.addStoryChapterPage(req, res);
+      });
+    }
+  });
+}
+
+exports.editStoryChapterPage = function(req, res) {
+  Story.findOne({'_id': req.query.storyId}, '_id title chapters.chapter chapters.title chapters._id chapters.content').exec(function(error, story) {
+    if (error) {
+      console.log(error);
+    }
+    if (story != null) {
+      var chapter = story.chapters.id(req.query.chapterId);
+      if (chapter != null) {
+        res.render('admin/storyEditChapter', { 
+          title: 'Full Truyện',
+          story: story,
+          chapter: chapter
+        });
+      } else {
+        req.query.id = req.query.storyId;
+        adminRoute.editStoryPage(req, res);
+      }
+    } else {
+      adminRoute.listStory(req, res);
+    }
+  });
 }
 
 exports.updateStories = function(req, res) {

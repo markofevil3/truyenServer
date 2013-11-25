@@ -135,6 +135,36 @@ a:hover {
   }
 }
 
+#addStoryChapter-page {
+  margin: 5px;
+  position: relative;
+  
+  #button-wrapper {
+    height: 40px;
+    line-height: 40px;
+    width: 90%;
+    margin: auto;
+  }
+  
+  #btnAddMoreChapter {
+    cursor:pointer; /*forces the cursor to change to a hand when the button is hovered*/
+    padding:5px 25px; /*add some padding to the inside of the button*/
+    background: #39D1E5; /*the colour of the button*/
+    border:1px solid #349DA7; /*required or the default border for the browser will appear*/
+    /*give the button curved corners, alter the size as required*/
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    /*give the button a drop shadow*/
+    -webkit-box-shadow: 0 0 4px rgba(0,0,0, .75);
+    -moz-box-shadow: 0 0 4px rgba(0,0,0, .75);
+    box-shadow: 0 0 4px rgba(0,0,0, .75);
+    /*style the text*/
+    color:#f3f3f3;
+    font-size:1.1em;
+  }
+}
+
 #editStory-page {
   margin: 5px;
   position: relative;
@@ -142,6 +172,40 @@ a:hover {
   #btnRemove, #btnEditChapter {
     float: right;
     margin-right: 15px;
+  }
+  #btnRemoveStory {
+    margin-left: 30px;
+    cursor:pointer; /*forces the cursor to change to a hand when the button is hovered*/
+    padding:5px 25px; /*add some padding to the inside of the button*/
+    background: red; /*the colour of the button*/
+    border:1px solid #F80059; /*required or the default border for the browser will appear*/
+    /*give the button curved corners, alter the size as required*/
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    /*give the button a drop shadow*/
+    -webkit-box-shadow: 0 0 4px rgba(0,0,0, .75);
+    -moz-box-shadow: 0 0 4px rgba(0,0,0, .75);
+    box-shadow: 0 0 4px rgba(0,0,0, .75);
+    /*style the text*/
+    color:#f3f3f3;
+    font-size:1.1em;
+  }
+}
+
+#editStoryChapter-page {
+  margin: 5px;
+  position: relative;
+  
+  #button-wrapper {
+    height: 70px;
+    width: 90%;
+    margin: auto;
+  }
+  #btnEditStory {
+    position: absolute;
+    margin-top: 13px;
+    background-color: ivory;
   }
 }
 
@@ -159,16 +223,22 @@ a:hover {
   }
 }
 
-#addStory-page, #addStoryChapter-page {
-  .editables {
-    width: 500px;
+#addStory-page {
+  margin: 5px;
+  position: relative;
+  
+  #pageTitle {
+    width: 90%;
+    font-weight: bold;
+    font-size: 17px;
+    margin: auto;
+    height: 40px;
+    line-height: 40px;
   }
 }
 
 /* Input style */
 .detailTable {
-  width: 90%;
-  margin: auto;
   
   .detailTableTexts {
     width: 200px;
@@ -176,6 +246,10 @@ a:hover {
   }
   .detailTableInputRows {
     padding: 5px 0;
+    
+    .checkboxes {
+      padding: 5px;
+    }
   }
   
   .detailTableInputs {
@@ -188,6 +262,10 @@ a:hover {
     height: 150px;
   }
 }
+
+.submitButtons {
+}
+
 .listTable {
   table-layout: fixed;
   width: 100%;
@@ -251,6 +329,55 @@ a:hover {
 }
 .button_link:hover {
   background-color: floralwhite;
+}
+
+input.submitButton{
+  cursor:pointer; /*forces the cursor to change to a hand when the button is hovered*/
+  padding:5px 25px; /*add some padding to the inside of the button*/
+  background: #39D1E5; /*the colour of the button*/
+  border:1px solid #349DA7; /*required or the default border for the browser will appear*/
+  /*give the button curved corners, alter the size as required*/
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  /*give the button a drop shadow*/
+  -webkit-box-shadow: 0 0 4px rgba(0,0,0, .75);
+  -moz-box-shadow: 0 0 4px rgba(0,0,0, .75);
+  box-shadow: 0 0 4px rgba(0,0,0, .75);
+  /*style the text*/
+  color:#f3f3f3;
+  font-size:1.1em;
+}
+/***NOW STYLE THE BUTTON'S HOVER AND FOCUS STATES***/
+input.submitButton:hover, input.submitButton:focus{
+  background-color :#2AADBE; /*make the background a little darker*/
+  /*reduce the drop shadow size to give a pushed button effect*/
+  -webkit-box-shadow: 0 0 1px rgba(0,0,0, .75);
+  -moz-box-shadow: 0 0 1px rgba(0,0,0, .75);
+  box-shadow: 0 0 1px rgba(0,0,0, .75);
+}
+
+.btnAddChapter {
+  text-decoration: none;
+  cursor:pointer; /*forces the cursor to change to a hand when the button is hovered*/
+  padding:5px 10px; /*add some padding to the inside of the button*/
+  background: #43D38E; /*the colour of the button*/
+  border:1px solid #32C07C; /*required or the default border for the browser will appear*/
+  /*give the button curved corners, alter the size as required*/
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  /*give the button a drop shadow*/
+  -webkit-box-shadow: 0 0 4px rgba(0,0,0, .75);
+  -moz-box-shadow: 0 0 4px rgba(0,0,0, .75);
+  box-shadow: 0 0 4px rgba(0,0,0, .75);
+  /*style the text*/
+  color:#f3f3f3;
+  font-size:1.1em;
+}
+.btnAddChapter:hover {
+  background: #2FA06A;
+  border:1px solid #188A54; /*required or the default border for the browser will appear*/
 }
 
 #footer-content {

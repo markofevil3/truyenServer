@@ -90,39 +90,50 @@ function checkStory() {
 }
 
 var addChapterDiv = 
-  Haml.compile('div(class="chapterContentDiv")',
-               '  span -------------------------------------------<br>',
-               '    div Số Thứ Tự Chapter:',
-               '    input(name="chapter-chapter-#{i}" type="text" value="" class="editables")',
-               '    div Tên Chapter:',
-               '    input(name="chapter-title-#{i}" type="text" value="" class="editables")',
-               '    div Nội Dung:',
-               '    textarea(name="chapter-content-#{i}", id="chapter-content-#{i}", class="editables", value="")',
-               '  span -------------------------------------------'
+  Haml.compile('tr',
+               '  td',
+               '  td',
+               '    span ------------------------------------------------',
+               'tr(class="chapterNumRow")',
+               '  td',
+               '    span Số Thứ Tự Chapter:',
+               '  td',
+               '    input(name="chapter-chapter-#{i}" type="text" value="" class="detailTableInputs")',
+               'tr',
+               '  td',
+               '    span Tên Chapter:',
+               '  td',
+               '    input(name="chapter-title-#{i}" type="text" value="" class="detailTableInputs")',
+               'tr',
+               '  td',
+               '    span Nội Dung:',
+               '  td',
+               '    textarea(name="chapter-content-#{i}", id="chapter-content-#{i}", class="detailTableInputs", value="")'
 );
 
 function addMoreChapter() {
-  var i = $(".chapterContentDiv").length + 1;
-  $("#chapters-wapper").append(addChapterDiv({i : i}));
+  var i = $(".chapterNumRow").length + 1;
+  console.log(i);
+  $("#detailTable").append(addChapterDiv({i : i}));
   $("#chapter-count").val(i);
   CKEDITOR.replace( 'chapter-content-' + i.toString(),{
     width: "480px",
   });
 }
 
-function removeStory(storyId, storyName, accessToken) {
+function removeStory(storyId, storyName) {
   var confirmBox = confirm("Xoá truyện: " + storyName + " ?");
   if (confirmBox == true) {
-    $.ajax( "/removeStory?id=" + storyId + "&accessToken=" + accessToken)
+    $.ajax( "/removeStory?id=" + storyId)
       .done(function(response) {
         if (response.data == 'success') {
-          window.location.replace("/admin?accessToken=" + accessToken);
+          window.location.replace("/listStory");
         } else {
           alert('Không có quyền xoá!');
         }
       })
       .fail(function() {
-        window.location.replace("/admin?accessToken=" + accessToken);
+        window.location.replace("/listStory?");
       })
   }
 }
@@ -140,14 +151,6 @@ function removeAudio(audioId, audioName) {
         window.location.replace("/listAudio");
       })
   }
-}
-
-function openAddStoryChapterPage(storyId) {
-  window.location.replace('/addStoryChapter?id=' + storyId);
-}
-
-function openListChaptersPage(storyId) {
-  window.location.replace('/listStoryChapters?id=' + storyId);
 }
 
 function removeStoryChapter(storyId, chapterId, chapterTitle) {

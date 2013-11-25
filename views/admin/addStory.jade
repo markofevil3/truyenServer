@@ -9,38 +9,40 @@ block textEditor
     // };
 block content
   div(id="addStory-page")
-    a(href="/admin?type=story") List Truyện Chữ
-    br
-    br
-    form(action="addStory", method="POST", enctype="multipart/form-data")
-      span Tên Truyện:
-      br
-      input(name="story-title", id="story-title", class="story-titles editables", type="text", value="")
-      button(type="button", onClick="checkStory()") Check
-      div(id="check-results")
-      span Tác Giả:
-      br
-      input(name="story-author", id="story-author", class="story-author editables", type="text", value="")
-      br
-      span Thể Loại
-      br
-      select(name="story-cate", id="story-cate")
-        option(value="0") Ngôn Tình
-      br
-      span Cover Link
-      br
-      input(name="story-cover", id="story-cover", class="story-cover editables", type="text", value="")
-      br
-      span Giới Thiệu:
-      br
-      textarea(name="story-shortDes", id="story-shortDes", class="story-shortDes editables", value="")
-      br
+    div(id="pageTitle") Nhập Sách Truyện
+    form(action="addStory", method="POST", enctype="multipart/form-data", style="width:90%; margin:auto")
       input(name="chapter-count", id="chapter-count", type="hidden", value="")
-      div(id="chapters-wapper")
-      button(type="button", onClick="addMoreChapter()") Thêm Chương
+      table(id="detailTable", class="detailTable")
+        tr
+          td(class="detailTableTexts") Tên Truyện:
+          td(class="detailTableInputRows")
+            input(name="story-title", id="story-title", class="detailTableInputs", type="text", value="")
+            button(type="button", onClick="checkStory()") Check
+            div(id="check-results")
+        tr
+          td(class="detailTableTexts") Tác Giả:
+          td(class="detailTableInputRows")
+            input(name="story-author", id="story-author", class="detailTableInputs", type="text", value="")
+        tr
+          td(class="detailTableTexts") Thể Loại:
+          td(class="detailTableInputRows")
+            - each cate, index in storyCates
+              input(name="storyCategory", id="storyCategory", type="checkbox", value="#{index}")
+              span #{cate}
+              br
+        tr
+          td(class="detailTableTexts") Ảnh Bìa:
+          td(class="detailTableInputRows")
+            input(name="story-cover", id="story-cover", class="detailTableInputs", type="text", value="")
+        tr
+          td(class="detailTableTexts") Giới Thiệu:
+          td(class="detailTableInputRows")
+            textarea(name="story-shortDes", id="story-shortDes", class="detailTableInputs", value="")
+      // div(id="chapters-wapper")
+      button(type="button", onClick="addMoreChapter()", class="btnAddChapter") Thêm Chương
       br
       br
-      input(type="submit", name="submit", value="Save")
+      input(type="submit", name="submit", value="Save", class="submitButton")
       // span asdsad
       // br
       // textarea(id="msgpost", name="msgpost", class="input-panel")

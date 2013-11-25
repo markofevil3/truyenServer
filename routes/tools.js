@@ -20,9 +20,12 @@ var mangaDir = [];
 var clone;
 
 function autoDownloadChapters(startIndex, callback) {
-  var autoDownloadLink = 'http://truyentranhtuan.com/moi-cap-nhat/' + startIndex + '/index.html';
+  // var autoDownloadLink = 'http://truyentranhtuan.com/moi-cap-nhat/' + startIndex + '/index.html';
+  var autoDownloadLink = 'http://truyentranhtuan.com/page/' + startIndex;
+  
   deleteFolderRecursive("public/downloadNewChapter");
-  var child = exec("wget " + autoDownloadLink + " --directory-prefix=" + __dirname + "/../public/downloadNewChapter/",
+  fs.mkdirSync("public/downloadNewChapter", 0777);
+  var child = exec("wget " + autoDownloadLink + " -O public/downloadNewChapter/index.html",
   function (error, stdout, stderr) {
     if (error !== null) {
       console.log("ERROR: " + autoDownloadLink + "/index.html");
@@ -30,8 +33,8 @@ function autoDownloadChapters(startIndex, callback) {
     else {
       console.log("DOWNLOADED LIST NEW CHAPTERS FILE");
       // inspect file and download newest chapter
-      var chapterList = getChapterListFromString(fs.readFileSync("public/downloadNewChapter/index.html", 'utf8'));
-      console.log(chapterList);
+      // var chapterList = getChapterListFromString(fs.readFileSync("public/downloadNewChapter/index.html", 'utf8'));
+      var chapterList = getNewChapterListFromString(fs.readFileSync("public/downloadNewChapter/index.html", 'utf8'));
       downloadAndSaveChapter(chapterList, callback);
     }
   });
@@ -42,7 +45,11 @@ schedule.scheduleJob('0 */12 * * *', function(){
   autoDownloadChapters(1, function() {
     autoDownloadChapters(2, function() {
       autoDownloadChapters(3, function() {
-        console.log("FINISH DOWNLOAD 3 NEW CHAPTER PAGES!!");
+        autoDownloadChapters(4, function() {
+          autoDownloadChapters(5, function() {
+            console.log("FINISH DOWNLOAD 5 NEW CHAPTER PAGES!!");
+          });
+        });
       });
     });
   });
@@ -82,14 +89,16 @@ function downloadAndSaveChapter(chapterList, callback) {
           }
         }
         // start download
-        var root = "truyentranhtuan.com/" + mangaData.link;
-        var child = exec("wget http://" + root + "doc-truyen/index.html --directory-prefix=" + __dirname + "/../public/downloadNewChapter/" + root + "/",
+        // var root = "truyentranhtuan.com/" + mangaData.link;
+        var root = mangaData.link;
+        fs.mkdirSync("public/downloadNewChapter/" + mangaData.mangaName, 0777);
+        var child = exec("wget " + root + " -O \"public/downloadNewChapter/" + mangaData.mangaName + "/" + mangaData.chapter + ".html\"",
          function (error, stdout, stderr) {
            if (error !== null) {
-             console.log("ERROR: " + root + "/doc-truyen/index.html");
+             console.log("ERROR: " + root);
              downloadAndSaveChapter(chapterList, callback);
            } else {
-             var contents = fs.readFileSync("public/downloadNewChapter/" + root + "index.html", 'utf8');
+             var contents = fs.readFileSync("public/downloadNewChapter/" + mangaData.mangaName + "/" + mangaData.chapter + ".html", 'utf8');
              inspectFile(contents, function(imageLinks) {
                if (imageLinks.length > 0) {
                  manga.chapters.push({
@@ -120,17 +129,42 @@ function downloadAndSaveChapter(chapterList, callback) {
 // get images link from content
 function inspectFile(contents, callback) {
   // is reading managa page
-  if (contents.indexOf('slides2=[') != -1) {
+  if (contents.indexOf('slides_page = [') != -1) {
     // get image links 
-    var start = contents.indexOf('slides2=[');
+    var start = contents.indexOf('slides_page = [');
     var end = contents.indexOf('];', start);
-    var n = contents.substr(start + 9, end - start - 9);
+    var n = contents.substr(start + 15, end - start - 15);
     n = n.replace(/"/g, '');
     var arr = n.split(',');
     callback(arr);
   } else {
     callback([]);
   }
+}
+
+function getNewChapterListFromString(contents) {
+  var chapterList = [];
+  // get image links
+  var startIndex = 0;
+  while(contents.indexOf('<span class="manga easy-tooltip">', startIndex) != -1 && startIndex != -1) {
+    // get download link
+    startIndex = contents.indexOf('<span class="manga easy-tooltip">', startIndex);    
+    var start = contents.indexOf('">', startIndex + 33);
+    var end = contents.indexOf('</a>', start);
+    var mangaName = contents.substr(start + 2, end - start - 2);
+    start = contents.indexOf('<a href="', end);
+    end = contents.indexOf('">', start);
+    var chapterLink = contents.substr(start + 9, end - start - 9);
+    start = end;
+    end = contents.indexOf('</a>', start);
+    var chapter = contents.substr(start + 2, end - start - 2).replace("Chương ", "").trim();
+    // // get manga name
+    // var nameEnd = contents.indexOf('</a>', end);
+    // var mangaNameChapter = contents.substr(end + 2, nameEnd - end - 2);
+    chapterList.push({link: chapterLink, chapter: chapter, mangaName: mangaName});
+    startIndex = end;
+  }
+  return chapterList;
 }
 
 function getChapterListFromString(contents) {

@@ -99,7 +99,6 @@ app.get('/editStory', check_auth, adminRoute.editStoryPage);
 app.get('/checkStory', check_auth, adminRoute.checkStory);
 app.get('/removeStory', check_auth, adminRoute.removeStory);
 app.get('/addStoryChapter', check_auth, adminRoute.addStoryChapterPage);
-app.get('/listStoryChapters', check_auth, adminRoute.listStoryChapters);
 app.get('/removeStoryChapter', check_auth, adminRoute.removeStoryChapter);
 app.get('/editStoryChapter', check_auth, adminRoute.editStoryChapterPage);
 app.get('/listStory', check_auth, adminRoute.listStory);

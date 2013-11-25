@@ -3,33 +3,32 @@ extends layout
 block textEditor
   script(src="/ckeditor/ckeditor.js")
 block content
-  div(id="index-page")
-    a(href="/listStoryChapters?id=#{story._id}") Quay lại
-    br
-    br
-    span Truyện: #{story.title} - #{chapter.title}
-    br
-    br
-    form(action="editStoryChapter", method="POST", enctype="multipart/form-data")
-      input(type="submit", name="submit", value="Update")
+  div(id="editStoryChapter-page")
+    div(id="button-wrapper")
+      a(href="/editStory?id=#{story._id}", class="button_link", id="btnEditStory") Quay lại
+    form(action="editStoryChapter", method="POST", enctype="multipart/form-data", style="width:90%; margin:auto")
+      span(style="font-weight: bold; font-size: 20px") #{story.title} : #{chapter.title}
+      br
+      br
+      input(type="submit", name="submit", value="Update", class="submitButton")
       br
       br
       input(name="storyId", id="storyId", type="hidden", value="#{story._id}")
       input(name="chapterId", id="chapterId", type="hidden", value="#{chapter._id}")
-      span Chương:
-      br
-      input(name="chapter-chapter", id="chapter-chapter", class="editables", type="text", value="#{chapter.chapter}")
-      br
-      br
-      span Title:
-      br
-      input(name="chapter-title", id="chapter-title", class="editables", type="text", value="#{chapter.title}")
-      br
-      br
-      span Nội Dung:
-      br
-      textarea(id="msgpost", name="msgpost", class="input-panel")      
-        | #{chapter.content}
+      table(class="detailTable")
+        tr
+          td(class="detailTableTexts") STT Chương:
+          td(class="detailTableInputRows")
+            input(name="chapter-chapter", id="chapter-chapter", class="detailTableInputs", type="text", value="#{chapter.chapter}")
+        tr
+          td(class="detailTableTexts") Tên Chương:
+          td(class="detailTableInputRows")
+            input(name="chapter-title", id="chapter-title", class="detailTableInputs", type="text", value="#{chapter.title}")
+        tr
+          td(class="detailTableTexts") Nội Dung:
+          td(class="detailTableInputRows")
+            textarea(id="msgpost", name="msgpost", class="input-panel")      
+              | #{chapter.content}
 block afterScript
   script
     // ##### edit story chapter content

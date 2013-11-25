@@ -201,117 +201,23 @@ exports.addStory = function(req, res) {
 }
 
 exports.removeStory = function(req, res) {
-  // Story.findByIdAndRemove(req.query.id, function(error) {
-  //   console.log(error);
-  // });
-  if (req.query.accessToken == 'hgl4vs4oyk6b') {
-    Story.findById(req.query.id, function (err, story) {
-      if (!err) {
-        story.remove();
-      }
-      res.json({ data: "success" });
-    });
-  } else {
-    res.json({ data: "fail"});
-  }
+  StoryController.removeStory(req, res);
 }
 
 exports.addStoryChapter = function(req, res) {
-  Story.findOne({'_id': req.body["chapter-id"]}).exec(function(error, story) {
-    if (error) {
-      console.log(error);
-    }
-    if (story != null) {
-      story.title = req.body["story-title"];
-      story.author = req.body["story-author"];
-      story.cover = req.body["story-cover"];
-      story.shortDes = req.body["story-shortDes"];
-      for (var i = 1; i <= parseInt(req.body["chapter-count"]); i++) {
-        var inputChapter = {
-          chapter: req.body["chapter-chapter-" + i],
-          title: req.body["chapter-title-" + i],
-          content: req.body["chapter-content-" + i],
-          datePost: Date.now()
-        }
-        story.chapters.push(inputChapter);
-      }
-      story.save(function(error) {
-        if (error) {
-          console.log(error);
-        }
-        console.log("########## Add Chapter " + story.title);
-        adminRoute.index(req, res);
-      });
-    }
-  });
+  StoryController.addStoryChapter(req, res);
 }
 
 exports.addStoryChapterPage = function(req, res) {
-  Story.findOne({'_id': req.query.id}, '_id title author datePost numView shortDes cover type chapters.chapter chapters.title chapters._id').exec(function(error, story) {
-    if (error) {
-      console.log(error);
-    }
-    res.render('admin/addStoryChapterPage', { 
-      title: 'Full Truyện',
-      story: story
-    });
-  });
-}
-
-exports.listStoryChapters = function(req, res) {
-  Story.findOne({'_id': req.query.id}, '_id title datePost type chapters.chapter chapters.title chapters._id').exec(function(error, story) {
-    if (error) {
-      console.log(error);
-    }
-    res.render('admin/storyListChaptersPage', { 
-      title: 'Full Truyện',
-      story: story
-    });
-  });
+  StoryController.addStoryChapterPage(req, res);
 }
 
 exports.removeStoryChapter = function(req, res) {
-  Story.findOne({'_id': req.query.storyId}, '_id title datePost type chapters.chapter chapters.title chapters._id').exec(function(error, story) {
-    if (error) {
-      console.log(error);
-    }
-    if (story != null) {
-      var chapter = story.chapters.id(req.query.chapterId);
-      if (chapter != null) {
-        chapter.remove();
-      }
-      story.save(function() {
-        res.render('admin/storyListChaptersPage', { 
-          title: 'Full Truyện',
-          story: story
-        });
-      });
-    } else {
-      adminRoute.index(req, res);
-    }
-  });
+  StoryController.removeStoryChapter(req, res);
 }
 
 exports.editStoryChapterPage = function(req, res) {
-  Story.findOne({'_id': req.query.storyId}, '_id title chapters.chapter chapters.title chapters._id chapters.content').exec(function(error, story) {
-    if (error) {
-      console.log(error);
-    }
-    if (story != null) {
-      var chapter = story.chapters.id(req.query.chapterId);
-      if (chapter != null) {
-        res.render('admin/storyEditChapter', { 
-          title: 'Full Truyện',
-          story: story,
-          chapter: chapter
-        });
-      } else {
-        adminRoute.index(req, res);
-      }
-    } else {
-      adminRoute.index(req, res);
-    }
-  });
+  StoryController.editStoryChapterPage(req, res);
 }
 
 exports.editStoryChapter = function(req, res) {
