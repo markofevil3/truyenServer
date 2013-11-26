@@ -125,11 +125,12 @@ exports.editStory = function(req, res) {
         }
       }
       story.save(function(err) {
-        res.render('admin/listStory', { 
-          title: 'Full Truyện'
-          // story: story,
-          // storyCates: Util.storyCate
-        });
+        adminRoute.listStory(req, res);
+        // res.render('admin/listStory', { 
+        //   title: 'Full Truyện'
+        //   // story: story,
+        //   // storyCates: Util.storyCate
+        // });
       });
     } else {
       adminRoute.listStory(req, res);
