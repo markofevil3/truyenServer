@@ -99,11 +99,11 @@ exports.getStory = function(req, res) {
       } else {
         story.numView = 1;
       }
-      for (var i = 0; i < story.chapters.length; i++) {
-        if (story.chapters[i].chapter != story.chapters[i].title) {
-          story.chapters[i].chapter = story.chapters[i].title;
-        }
-      }
+      // for (var i = 0; i < story.chapters.length; i++) {
+      //   if (story.chapters[i].chapter != story.chapters[i].title) {
+      //     story.chapters[i].chapter = story.chapters[i].title;
+      //   }
+      // }
       story.save(function() {
         console.log("getStory - " + story.title);
         User.findOne({ 'userId': req.query.userId }, function(error, user) {
