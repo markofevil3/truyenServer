@@ -125,10 +125,10 @@ exports.editStory = function(req, res) {
         }
       }
       story.save(function(err) {
-        res.render('admin/editStory', { 
-          title: 'Full Truyện',
-          story: story,
-          storyCates: Util.storyCate
+        res.render('admin/listStory', { 
+          title: 'Full Truyện'
+          // story: story,
+          // storyCates: Util.storyCate
         });
       });
     } else {
