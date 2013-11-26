@@ -106,7 +106,7 @@ exports.editStory = function(req, res) {
         var chapter = story.chapters[i];
         story.title = req.body.storyTitle;
         story.author = req.body.storyAuthor;
-        story.storyCover = req.body.cover;
+        story.cover = req.body.storyCover;
         story.cate = req.body.storyCategory;
         story.numView = parseInt(req.body.storyNumView);
         if (req.body['chapter-chapter-' + chapter._id]) {
