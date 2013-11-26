@@ -45,6 +45,31 @@ exports.listManga = function(req, res) {
   });
 }
 
+exports.updateMangas = function(req, res) {
+  Manga.find({}, '_id title author cover').exec(function(error, mangas) {
+    if (error) {
+      console.log(error);
+    }
+    var count = 0;
+    for (var i = 0; i < mangas.length; i++) {
+      if (mangas[i].cover != req.body["manga-cover-" + mangas[i]._id]) {
+        mangas[i].cover = req.body["manga-cover-" + mangas[i]._id];
+        mangas[i].save(function() {
+          count++;
+          if (count == mangas.length) {
+            adminRoute.listManga(req, res);
+          }
+        });
+      } else {
+        count++;
+        if (count == mangas.length) {
+          adminRoute.listManga(req, res);
+        }
+      }
+    }
+  });
+}
+
 exports.listAudio = function(req, res) {
   StoryAudio.find({}).sort( 'title', -1 ).exec(function(error, audios) {
     if (error) {

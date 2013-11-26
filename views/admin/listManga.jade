@@ -3,17 +3,26 @@ extends layout
 block content
   div(id="listManga-page", class="contentPages")
     - if (mangas.length > 0)
-      table
-        tr
-          td 
-            span(class="row-title") STT
-          td
-            span(class="row-title") Tên Truyện
-          td
-            span Tác Giả
-        - each manga,i in mangas
+      form(id="updateMangasForm", action="updateMangas", method="POST", enctype="multipart/form-data")
+        input(type="submit", name="submit", value="Save", class="submitButton")
+        table(id="detailTable", class="detailTable")
           tr
-            td #{i}
-            td #{manga.title}
-            td #{manga.author}
-            td #{manga.cover}
+            // td
+            th(class="listTableHeader", style="width:20px")
+              span(class="row-title listTableRowSTT") STT
+            th(class="listTableHeader")
+              span(class="row-title") Tên Truyện
+            th(class="listTableHeader", style="width:130px")
+              span Tác Giả
+            th(class="listTableHeader", style="width:80px")
+              span Lượt Xem
+            th(class="listTableHeader")
+              span Cover Link
+          - each manga,i in mangas
+            tr
+              td(class="listTableRowSTT") #{i}
+              td(class="detailTableInputRows", style="width:400px") #{manga.title}
+              td(class="detailTableInputRows") #{manga.author}
+              td(class="detailTableInputRows") #{manga.numView}
+              td(class="detailTableInputRows")
+                input(name="manga-cover-#{manga._id}", id="manga-cover-#{manga._id}", type="text", value="#{manga.cover}", style="width: 400px")

@@ -109,6 +109,7 @@ app.post('/updateStories', check_auth, adminRoute.updateStories);
 app.post('/editStoryChapter', check_auth, adminRoute.editStoryChapter);
 app.post('/updateAudios', check_auth, adminRoute.updateAudios);
 app.post('/addAudio', check_auth, adminRoute.addAudio);
+app.post('/updateMangas', check_auth, adminRoute.updateMangas);
 //###################
 
 http.createServer(app).listen(app.get('port'), function(){
