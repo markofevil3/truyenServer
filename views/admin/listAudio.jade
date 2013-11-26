@@ -18,6 +18,8 @@ block content
             td
               span Người Đọc      
             td
+              span Lượt Xem
+            td
               span Cover Link
             td
               span Độ dài(giây) 
@@ -36,6 +38,8 @@ block content
                 input(name="audio-author-#{audio._id}", id="audio-author-#{audio._id}", class="audio-authors", type="text", value="#{audio.author}")
               td(class="input-rows")
                 input(name="audio-reader-#{audio._id}", id="audio-reader-#{audio._id}", class="audio-readers", type="text", value="#{audio.reader}")
+              td(class="input-rows")
+                span #{audio.numView}
               td(class="input-rows")
                 - if (typeof(audio.cover) != 'undefined')
                   input(name="audio-cover-#{audio._id}", id="audio-cover-#{audio._id}", class="audio-covers", type="text", value="#{audio.cover}")
