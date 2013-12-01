@@ -58,15 +58,19 @@ block content
           th(class="listTableHeader", style="width:30px")
             span(class="row-title listTableRowSTT") STT
           th(class="listTableHeader")
-            span(class="row-title") Tên Chương:
+            span(class="row-title") Tên Chương
+          th(class="listTableHeader", style="width:100px") 
+            span(class="row-title") Poster
           th(class="listTableHeader", style="width:100px")
-            span(class="row-title") Chức Năng:
+            span(class="row-title") Chức Năng
         - each chapter,i in story.chapters
           tr
             td(class="")
               input(name="chapter-chapter-#{chapter._id}", id="chapter-chapter-#{chapter._id}", class="", type="text", value="#{chapter.chapter}")
             td(class="")
               input(name="chapter-title-#{chapter._id}", id="chapter-title-#{chapter._id}", class="", type="text", value="#{chapter.title}")
+            td(style="text-align:center; vertical-align:middle")
+              span #{chapter.poster}
             td(class="listTableRowButtons")
               button(id="btnEditChapter", onClick="openEditStoryChapterPage('#{story._id}', '#{chapter._id}'); return false;") Sửa
               button(id="btnRemove", onClick="removeStoryChapter('#{story._id}', '#{chapter._id}', '#{chapter.title}'); return false;") Xoá

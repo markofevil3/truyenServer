@@ -51,7 +51,8 @@ exports.addStory = function(req, res) {
       chapter: Util.checkChapterNumber(req.body["chapter-chapter-" + i]),
       title: req.body["chapter-title-" + i],
       content: req.body["chapter-content-" + i],
-      datePost: Date.now()
+      datePost: Date.now(),
+      poster: req.session.user.username
     }
     story.chapters.push(inputChapter);
   }
@@ -80,7 +81,7 @@ exports.checkStory = function(req, res) {
 };
 
 exports.editStoryPage = function(req, res) {
-  Story.findOne({'_id': req.query.id}, '_id title author datePost numView cover cate type chapters.chapter chapters.title chapters._id').exec(function(error, story) {
+  Story.findOne({'_id': req.query.id}, '_id title author datePost numView cover cate type chapters.poster chapters.chapter chapters.title chapters._id').exec(function(error, story) {
     if (error) {
       console.log(error);
     }
@@ -97,7 +98,7 @@ exports.editStoryPage = function(req, res) {
 }
 
 exports.editStory = function(req, res) {
-  Story.findOne({'_id': req.body.id}, '_id title author numView datePost cover cate type chapters.chapter chapters.title chapters._id').exec(function(error, story) {
+  Story.findOne({'_id': req.body.id}, '_id title author numView datePost cover cate type chapers.poster chapters.chapter chapters.title chapters._id').exec(function(error, story) {
     if (error) {
       console.log(error);
     }
@@ -171,7 +172,7 @@ exports.removeStoryChapter = function(req, res) {
 }
 
 exports.addStoryChapterPage = function(req, res) {
-  Story.findOne({'_id': req.query.id}, '_id title chapters.chapter chapters.title chapters._id').exec(function(error, story) {
+  Story.findOne({'_id': req.query.id}, '_id title chapters.chapter chapters.title chapters._id chapters.poster').exec(function(error, story) {
     if (error) {
       console.log(error);
     }
@@ -190,11 +191,13 @@ exports.addStoryChapter = function(req, res) {
     if (story != null) {
       for (var i = 1; i <= parseInt(req.body["chapter-count"]); i++) {
         if (req.body["chapter-content-" + i] != null && req.body["chapter-content-" + i] != "") {
+          console.log(req.session.user.username);
           var inputChapter = {
             chapter: Util.checkChapterNumber(req.body["chapter-chapter-" + i]),
             title: req.body["chapter-title-" + i],
             content: req.body["chapter-content-" + i],
-            datePost: Date.now()
+            datePost: Date.now(),
+            poster: req.session.user.username
           }
           story.chapters.push(inputChapter);
         }

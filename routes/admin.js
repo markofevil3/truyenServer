@@ -74,6 +74,27 @@ exports.userInfo = function(req, res) {
   });
 };
 
+exports.updateUserInfo = function(req, res) {
+  Admin.findOne({ 'username': req.body.username }, function (err, admin) {
+    if (admin != null) {
+      admin.password = req.body.newPassword;
+      admin.save(function() {
+        res.render('admin/userInfo', {
+          title: 'Full Truyện',
+          success: 'Đổi Password Thành Công!',
+          userInfo: admin,
+          admin: admin
+        });
+      })
+    } else {
+      res.render('admin/userInfo', {
+        title: 'Full Truyện',
+        error: 'Không Tìm Thấy ' + req.body.username + '!'
+      });
+    }
+  });
+};
+
 exports.index = function(req, res) {
   res.render('admin/index', { 
     title: 'Full Truyện',

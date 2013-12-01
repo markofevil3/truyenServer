@@ -106,6 +106,7 @@ app.get('/editStoryChapter', check_auth, adminRoute.editStoryChapterPage);
 app.get('/listStory', check_auth, adminRoute.listStory);
 
 app.post('/authenticate', adminRoute.authenticate);
+app.post('/updateUserInfo', check_auth, adminRoute.updateUserInfo);
 app.post('/addStory', check_auth, adminRoute.addStory);
 app.post('/editStory', check_auth, adminRoute.editStory);
 app.post('/addStoryChapter', check_auth, adminRoute.addStoryChapter);
