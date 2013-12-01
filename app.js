@@ -90,6 +90,7 @@ app.get('/resize', tools.resizeImages);
 app.get('/login', adminRoute.login);
 app.get('/logout', adminRoute.logout);
 app.get('/userInfo', check_auth, adminRoute.userInfo);
+app.get('/listUser', check_auth, adminRoute.listUser);
 
 app.get('/admin', check_auth, adminRoute.index);
 app.get('/listManga', check_auth, adminRoute.listManga);

@@ -95,6 +95,23 @@ exports.updateUserInfo = function(req, res) {
   });
 };
 
+exports.listUser = function(req, res) {
+  if (Util.checkAccessRight("addRemoveAdmin", req.session.user.accessable)) {
+    Admin.find({}, function (err, admins) {
+      res.render('admin/listUser', { 
+        title: 'Full Truyện',
+        admin: req.session.user,
+        listAdmin: admins
+      });
+    });
+  } else {
+    res.render('admin/index', { 
+      title: 'Full Truyện',
+      admin: req.session.user
+    });
+  }
+}
+
 exports.index = function(req, res) {
   res.render('admin/index', { 
     title: 'Full Truyện',

@@ -34,35 +34,43 @@ exports.addStoryPage = function(req, res) {
 }
 
 exports.addStory = function(req, res) {
-  console.log(req.body);
-  var story = new Story({});
-  story.title = req.body["story-title"];
-  story.author = req.body["story-author"];
-  story.cate = parseInt(req.body["story-cate"]);
-  story.datePost = Date.now();
-  story.updatedAt = Date.now();
-  story.numView = 0;
-  story.shortDes = req.body["story-shortDes"];
-  story.type = 1;
-  story.cate = req.body.storyCategory;
-  
-  for (var i = 1; i <= parseInt(req.body["chapter-count"]); i++) {
-    var inputChapter = {
-      chapter: Util.checkChapterNumber(req.body["chapter-chapter-" + i]),
-      title: req.body["chapter-title-" + i],
-      content: req.body["chapter-content-" + i],
-      datePost: Date.now(),
-      poster: req.session.user.username
+  if (Util.checkAccessRight("addEditStory", req.session.user.accessable)) {
+    console.log(req.body);
+    var story = new Story({});
+    story.title = req.body["story-title"];
+    story.author = req.body["story-author"];
+    story.cate = parseInt(req.body["story-cate"]);
+    story.datePost = Date.now();
+    story.updatedAt = Date.now();
+    story.numView = 0;
+    story.shortDes = req.body["story-shortDes"];
+    story.type = 1;
+    story.cate = req.body.storyCategory;
+
+    for (var i = 1; i <= parseInt(req.body["chapter-count"]); i++) {
+      var inputChapter = {
+        chapter: Util.checkChapterNumber(req.body["chapter-chapter-" + i]),
+        title: req.body["chapter-title-" + i],
+        content: req.body["chapter-content-" + i],
+        datePost: Date.now(),
+        poster: req.session.user.username
+      }
+      story.chapters.push(inputChapter);
     }
-    story.chapters.push(inputChapter);
+    story.save(function(error) {
+      console.log("########## Add Story " + story.title);
+      if (error) {
+        console.log(error);
+      }
+      adminRoute.addStoryPage(req, res);
+    });
+  } else {
+    res.render('admin/addStory', { 
+      title: 'Full Truyện',
+      storyCates: Util.storyCate,
+      error: "Không Có Quyền!"
+    });
   }
-  story.save(function(error) {
-    console.log("########## Add Story " + story.title);
-    if (error) {
-      console.log(error);
-    }
-    adminRoute.addStoryPage(req, res);
-  });
 }
 
 exports.checkStory = function(req, res) {

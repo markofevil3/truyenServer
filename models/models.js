@@ -78,7 +78,7 @@ var storyAudioSchema = new Schema({
 var adminSchema = new Schema({
   username: { type: String, index: true },
   password: String,
-  accessable: [Number]
+  accessable: [String]
 })
 
 module.exports = {
