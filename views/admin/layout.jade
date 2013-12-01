@@ -17,6 +17,11 @@ html
       div(id="wrapper")
         a(href="/admin")
           img(id="logo", src="/images/website/logo.jpg")
+        - if (typeof(admin) != 'undefined')
+          div(id="adminWrapper")
+            div(id="gap")
+            a(id="adminInfoLink", href="/userInfo?username=#{admin.username}") #{admin.username}
+            a(id="btnLogout", href="/logout", class="button_link") Logout
     div(id="navBar-content")
       ul(class="category")
         li(class="mainCates")

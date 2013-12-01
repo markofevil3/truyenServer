@@ -91,6 +91,7 @@ function downloadAndSaveChapter(chapterList, callback) {
         // start download
         // var root = "truyentranhtuan.com/" + mangaData.link;
         var root = mangaData.link;
+        mangaData.mangaName = mangaData.mangaName.replace(/[&\/\\#,+()$~%.'":*?<>{}]/g,'_');        
         fs.mkdirSync("public/downloadNewChapter/" + mangaData.mangaName, 0777);
         var child = exec("wget " + root + " -O \"public/downloadNewChapter/" + mangaData.mangaName + "/" + mangaData.chapter + ".html\"",
          function (error, stdout, stderr) {

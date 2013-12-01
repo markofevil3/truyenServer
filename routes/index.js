@@ -266,8 +266,8 @@ exports.checkUnlockFunction = function(req, res) {
           console.log(error);
           res.json({ 'data': error, 'advPublisher': advPublisher, 'admobPublisher': admobPublisher });
         }
-        // res.json({ 'data': {isPurchased: check, time: user.pTime}, 'advPublisher': advPublisher, 'admobPublisher': admobPublisher });
-        res.json({ 'data': {isPurchased: true, time: user.pTime}, 'advPublisher': advPublisher, 'admobPublisher': admobPublisher });
+        res.json({ 'data': {isPurchased: check, time: user.pTime}, 'advPublisher': advPublisher, 'admobPublisher': admobPublisher });
+        // res.json({ 'data': {isPurchased: true, time: user.pTime}, 'advPublisher': advPublisher, 'admobPublisher': admobPublisher });
       });
     });
   } else {

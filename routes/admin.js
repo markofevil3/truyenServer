@@ -6,6 +6,7 @@ var request = require('request');
 var adminRoute = require('./admin');
 
 var User = require('../models/models').User;
+var Admin = require('../models/models').Admin;
 var Chapter = require('../models/models').Chapter;
 var Favorite = require('../models/models').Favorite;
 var Manga = require('../models/models').Manga;
@@ -19,16 +20,64 @@ var StoryController = require('./storyController');
 // 1:
 
 exports.login = function(req, res) {
-  
+  // if (req.session.authenticated) {
+  //   if (req.session.user.admin) {
+  //     routes.adminPanel(req, res);
+  //   } else {
+  //     routes.userPanel(req, res);
+  //   }
+  // } else {
+    res.render('admin/login', {
+      title: 'Full Truyện',
+    });
+  // }
 };
 
 exports.logout = function(req, res) {
-  
+  delete req.session.authenticated;
+  delete req.session.user;
+  res.redirect("/login");
+};
+
+exports.authenticate = function(req, res) {
+  Admin.findOne({ '$and': [{ username: req.body.username }, { password: req.body.password }] }, function (err, admin) {
+    if (err) {
+      console.log(err);
+    }
+    if (admin != null) {
+      req.session.authenticated = true;
+      req.session.user = admin;
+      adminRoute.index(req, res);
+    } else {
+      res.render('admin/login', {
+        title: 'Full Truyện',
+        error: 'Wrong username or password!'
+      });
+    }
+  });
+};
+
+exports.userInfo = function(req, res) {
+  Admin.findOne({ 'username': req.query.username }, function (err, admin) {
+    if (admin != null) {
+      res.render('admin/userInfo', {
+        title: 'Full Truyện',
+        admin: req.session.user,
+        userInfo: admin
+      });
+    } else {
+      res.render('admin/userInfo', {
+        title: 'Full Truyện',
+        error: 'Không Tìm Thấy ' + req.query.username + '!'
+      });
+    }
+  });
 };
 
 exports.index = function(req, res) {
   res.render('admin/index', { 
     title: 'Full Truyện',
+    admin: req.session.user
   });
 };
 

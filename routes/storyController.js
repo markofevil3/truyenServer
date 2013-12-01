@@ -189,13 +189,15 @@ exports.addStoryChapter = function(req, res) {
     }
     if (story != null) {
       for (var i = 1; i <= parseInt(req.body["chapter-count"]); i++) {
-        var inputChapter = {
-          chapter: req.body["chapter-chapter-" + i],
-          title: req.body["chapter-title-" + i],
-          content: req.body["chapter-content-" + i],
-          datePost: Date.now()
+        if (req.body["chapter-content-" + i] != null && req.body["chapter-content-" + i] != "") {
+          var inputChapter = {
+            chapter: Util.checkChapterNumber(req.body["chapter-chapter-" + i]),
+            title: req.body["chapter-title-" + i],
+            content: req.body["chapter-content-" + i],
+            datePost: Date.now()
+          }
+          story.chapters.push(inputChapter);
         }
-        story.chapters.push(inputChapter);
       }
       story.save(function(error) {
         if (error) {

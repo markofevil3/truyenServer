@@ -1,0 +1,19 @@
+extends layout
+
+block content
+  div(id="login-page", class="contentPages")
+    form(action="authenticate", method="post")
+      table(id="detailTable", class="detailTable", style="width: 40%; margin:auto")
+        tr
+          td(style="width:100px; padding: 10px") Username:
+          td
+            input(type="text", id="username", name="username", style="width: 200px; margin: 10px")
+        tr
+          td(style="width:100px; padding: 10px") Password:
+          td
+            input(type="password", id="password", name="password", style="width: 200px; margin: 10px")
+      div(id="submit-button", style="width: 100%; text-align:center")
+        div(id="bottom")
+          - if (typeof(error) != 'undefined')
+            div(id="error-display", style="color:red") #{error}
+        input(type="submit", name="submit", value="Login")

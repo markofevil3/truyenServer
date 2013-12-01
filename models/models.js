@@ -13,7 +13,8 @@ var chapterSchema = new Schema({
   title: String,
   numPages: Number,
   datePost: Date,
-  pages: []
+  pages: [],
+  poster: String
 });
 
 var userSchema = new Schema({
@@ -22,7 +23,7 @@ var userSchema = new Schema({
   fullName: String,
   favorites: [ favoriteSchema ],
   unlock: [String],
-  pTime: String
+  pTime: String //purchase time
 });
 
 var mangaSchema = new Schema({
@@ -42,7 +43,8 @@ var chapterStorySchema = new Schema({
   title: String,
   content: String,
   datePost: Date,
-  folder: String
+  folder: String,
+  poster: String,
 });
 
 var storySchema = new Schema({
@@ -69,11 +71,19 @@ var storyAudioSchema = new Schema({
   length: Number,
   link: String,
   fileName: String,
-  type: Number
+  type: Number,
+  poster: String
 });
+
+var adminSchema = new Schema({
+  username: { type: String, index: true },
+  password: String,
+  accessable: [Number]
+})
 
 module.exports = {
   'User': mongoose.model('User', userSchema),
+  'Admin': mongoose.model('Admin', adminSchema),
   'Favorite': mongoose.model('Favorite', favoriteSchema),
   'Manga': mongoose.model('Manga', mangaSchema),
   'Chapter': mongoose.model('Chapter', chapterSchema),

@@ -13,6 +13,7 @@ var MongoStore = require('connect-mongo')(express);
 var app = express();
 
 mongoose.connect('mongodb://localhost/truyen');
+// mongoose.connect('mongodb://www.fulltruyen.com/truyen');
 
 app.configure(function(){
   app.set('port', process.env.PORT || 3000);
@@ -39,10 +40,10 @@ app.configure('development', function(){
 });
 
 function check_auth(req, res, next) {
-  // if(!req.session.authenticated) {
-  //   res.redirect("/login");
-  //   return;
-  // }
+  if(!req.session.authenticated) {
+    res.redirect("/login");
+    return;
+  }
   next();
 }
 
@@ -88,6 +89,7 @@ app.get('/resize', tools.resizeImages);
 //# ADMIN ############
 app.get('/login', adminRoute.login);
 app.get('/logout', adminRoute.logout);
+app.get('/userInfo', check_auth, adminRoute.userInfo);
 
 app.get('/admin', check_auth, adminRoute.index);
 app.get('/listManga', check_auth, adminRoute.listManga);
@@ -102,6 +104,8 @@ app.get('/addStoryChapter', check_auth, adminRoute.addStoryChapterPage);
 app.get('/removeStoryChapter', check_auth, adminRoute.removeStoryChapter);
 app.get('/editStoryChapter', check_auth, adminRoute.editStoryChapterPage);
 app.get('/listStory', check_auth, adminRoute.listStory);
+
+app.post('/authenticate', adminRoute.authenticate);
 app.post('/addStory', check_auth, adminRoute.addStory);
 app.post('/editStory', check_auth, adminRoute.editStory);
 app.post('/addStoryChapter', check_auth, adminRoute.addStoryChapter);
