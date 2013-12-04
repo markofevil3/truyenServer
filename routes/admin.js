@@ -57,13 +57,69 @@ exports.authenticate = function(req, res) {
   });
 };
 
+exports.editUserPage = function(req, res) {
+  if (isSuperAdmin(req.session.user)) {
+    Admin.findOne({ 'username': req.query.username }, function (err, admin) {
+      if (admin != null) {
+        res.render('admin/editUser', {
+          title: 'Full Truyện',
+          admin: req.session.user,
+          userInfo: admin,
+          accessable: Util.accessable
+        });
+      } else {
+        res.render('admin/editUser', {
+          title: 'Full Truyện',
+          error: 'Không Tìm Thấy ' + req.query.username + '!'
+        });
+      }
+    });
+  } else {
+    res.render('admin/editUser', {
+      title: 'Full Truyện',
+      error: 'Không Có Quyền!'
+    });
+  }
+};
+
+exports.editUser = function(req, res) {
+  if (isSuperAdmin(req.session.user)) {
+    Admin.findOne({ 'username': req.body.username }, function (err, admin) {
+      if (admin != null) {
+        admin.accessable = req.body.userAccess;
+        console.log(admin);
+        admin.save(function() {
+          res.render('admin/editUser', {
+            title: 'Full Truyện',
+            admin: req.session.user,
+            userInfo: admin,
+            accessable: Util.accessable,
+            success: 'Đã Thay Đổi Quyền Của Admin!'
+          });
+        })
+      } else {
+        res.render('admin/editUser', {
+          title: 'Full Truyện',
+          error: 'Không Tìm Thấy ' + req.body.username + '!'
+        });
+      }
+    });
+  } else {
+    res.render('admin/editUser', {
+      title: 'Full Truyện',
+      error: 'Không Có Quyền!'
+    });
+  }
+}
+
 exports.userInfo = function(req, res) {
   Admin.findOne({ 'username': req.query.username }, function (err, admin) {
     if (admin != null) {
       res.render('admin/userInfo', {
         title: 'Full Truyện',
         admin: req.session.user,
-        userInfo: admin
+        userInfo: admin,
+        isMe: isMe(admin, req.session.user)
       });
     } else {
       res.render('admin/userInfo', {
@@ -73,6 +129,14 @@ exports.userInfo = function(req, res) {
     }
   });
 };
+
+function isSuperAdmin(user) {
+  return Util.checkAccessRight("all", user.accessable);
+}
+
+function isMe(user, sessionUser) {
+  return user.username == sessionUser.username;
+}
 
 exports.updateUserInfo = function(req, res) {
   Admin.findOne({ 'username': req.body.username }, function (err, admin) {
@@ -110,6 +174,38 @@ exports.listUser = function(req, res) {
       admin: req.session.user
     });
   }
+}
+
+exports.addUserPage = function(req, res) {
+  res.render('admin/addUser', { 
+    title: 'Full Truyện',
+    admin: req.session.user,
+    accessable: Util.accessable
+  });
+};
+
+exports.addUser = function(req, res) {
+  Admin.findOne({ 'username': req.body.username }, function (err, admin) {
+    if (admin == null) {
+      admin = new Admin();
+      admin.username = req.body.username;
+      admin.password = '123456';
+      admin.accessable = req.body.userAccess;
+      admin.save(function() {
+        res.render('admin/addUser', {
+          title: 'Full Truyện',
+          success: 'Đã thêm admin: ' + admin.username + '!',
+          accessable: Util.accessable,
+        });
+      })
+    } else {
+      res.render('admin/addUser', {
+        title: 'Full Truyện',
+        accessable: Util.accessable,
+        error: 'Username đã tồn tại!'
+      });
+    }
+  });
 }
 
 exports.index = function(req, res) {

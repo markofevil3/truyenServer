@@ -1,0 +1,42 @@
+extends layout
+
+block content
+  div(id="addUser-page")
+    div(class="pageTitle") Thêm Admin
+    - if (typeof(error) != 'undefined')
+      div(class="errorText", style="text-align:center") #{error}
+    - if (typeof(success) != 'undefined')
+      div(class="successDiv") #{success}
+    form(id="addUserForm", action="addUser", method="POST", enctype="multipart/form-data", style="width:90%; margin:auto")
+      table(id="detailTable", class="detailTable")
+        tr
+          td(class="detailTableTexts") Username:
+          td(class="detailTableInputRows")
+            input(name="username", id="username", class="detailTableInputs", type="text", value="")
+        tr
+          td(class="detailTableTexts") Password:
+          td(class="detailTableInputRows") 123456
+        tr
+          td(class="detailTableTexts") Quyền:
+          td(class="detailTableInputRows")
+            - each access, index in accessable
+              input(name="userAccess", id="userAccess", type="checkbox", value="#{index}")
+              span #{access}
+              br
+      div(id="btnSubmit")
+        input(type="submit", name="submit", value="Save", class="submitButton")
+  script
+    $("document").ready(function(){
+      $("#addUserForm").validate({
+        rules: {
+          username: {
+            required: true,
+          },
+        },
+        messages: {
+          username: {
+            required: "Chưa Điền Username!",
+          },
+        }
+      });
+    });

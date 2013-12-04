@@ -3,29 +3,17 @@ extends layout
 block content
   div(id="listUser-page", class="contentPages")
     div(id="button-wrapper")
-      a(href="/addStory", class="button_link", id="btnAddStory") Thêm User
+      a(href="/addUser", class="button_link", id="btnAddUser") Thêm User
     - if (listAdmin.length > 0)
       table(class="listTable")
         tr
           th(class="listTableHeader", style="width:20px")
             span(class="row-title listTableRowSTT") STT
           th(class="listTableHeader")
-            span(class="row-title") Tên Truyện
-          // th(class="listTableHeader", style="width:130px")
-          //   span Tác Giả
-          // th(class="listTableHeader", style="width:80px")
-          //   span Lượt Xem
-          // th(class="listTableHeader")
+            span(class="row-title") Danh Sách Admin
             span Cover Link
         - each adminInfo,i in listAdmin
           tr(class="listTableTR")
             td(class="listTableRow listTableRowSTT") #{i}
             td(class="listTableRow listTableRowTitle")
-              a(href="") #{adminInfo.username}
-            // td(class="listTableRow listTableRowAuthor")
-            //   span #{story.author}
-            // td(class="listTableRow listTableRowNumView")
-            //   span #{story.numView}
-            // td(class="listTableRow listTableRowCoverLink")
-            //   - if (typeof(story.cover) != 'undefined')
-            //     a(href="#{story.cover}", onclick="window.open(this.href); return false;") #{story.cover}
+              a(href="/editUser?username=#{adminInfo.username}") #{adminInfo.username}

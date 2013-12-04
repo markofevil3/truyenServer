@@ -91,6 +91,10 @@ app.get('/login', adminRoute.login);
 app.get('/logout', adminRoute.logout);
 app.get('/userInfo', check_auth, adminRoute.userInfo);
 app.get('/listUser', check_auth, adminRoute.listUser);
+app.get('/addUser', check_auth, adminRoute.addUserPage);
+app.get('/editUser', check_auth, adminRoute.editUserPage);
+app.post('/editUser', check_auth, adminRoute.editUser);
+app.post('/addUser', check_auth, adminRoute.addUser);
 
 app.get('/admin', check_auth, adminRoute.index);
 app.get('/listManga', check_auth, adminRoute.listManga);

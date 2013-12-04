@@ -9,7 +9,7 @@ block textEditor
     // };
 block content
   div(id="addStory-page")
-    div(id="pageTitle") Nhập Sách Truyện
+    div(class="pageTitle") Nhập Sách Truyện
     - if (typeof(error) != 'undefined')
       div(class="errorText", style="text-align:center") #{error}
     form(action="addStory", method="POST", enctype="multipart/form-data", style="width:90%; margin:auto")
