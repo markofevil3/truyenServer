@@ -388,10 +388,6 @@ exports.listStory = function(req, res) {
   StoryController.listStory(req, res);
 };
 
-exports.updateStories = function(req, res) {
-  StoryController.updateStories(req, res);
-}
-
 exports.addStoryPage = function(req, res) {
   StoryController.addStoryPage(req, res);
 }

@@ -115,7 +115,6 @@ app.post('/updateUserInfo', check_auth, adminRoute.updateUserInfo);
 app.post('/addStory', check_auth, adminRoute.addStory);
 app.post('/editStory', check_auth, adminRoute.editStory);
 app.post('/addStoryChapter', check_auth, adminRoute.addStoryChapter);
-app.post('/updateStories', check_auth, adminRoute.updateStories);
 app.post('/editStoryChapter', check_auth, adminRoute.editStoryChapter);
 app.post('/updateAudios', check_auth, adminRoute.updateAudios);
 app.post('/addAudio', check_auth, adminRoute.addAudio);

@@ -9,23 +9,28 @@ block textEditor
     // };
 block content
   div(id="addStoryChapter-page")
-    div(id="button-wrapper")
-      a(href="/editStory?id=#{story._id}", style="font-weight: bold; font-size: 20px") #{story.title}
-    form(action="addStoryChapter", method="POST", enctype="multipart/form-data", style="width:90%; margin:auto")
-      input(name="storyId", id="storyId", type="hidden", value="#{story._id}")
-      input(name="chapter-count", id="chapter-count", type="hidden", value="")
-      table(id="detailTable", class="detailTable")
-        tr
-          td(class="detailTableTexts") Các Chương Đã Có:
-          td(class="detailTableInputRows")
-            select(name="story-chapters", id="story-chapters")
-              - each chapter in story.chapters
-                option STT #{chapter.chapter}: #{chapter.title}
-      button(type="button", onClick="addMoreChapter()", class="btnAddChapter") Thêm Chương
-      br
-      br
-      input(type="submit", name="submit", value="Save", class="submitButton")
-  script
-    $("document").ready(function(){
-      addMoreChapter();
-    });
+    - if (typeof(success) != 'undefined')
+      div(class="successDiv") #{success}
+    - if (typeof(error) != 'undefined')
+      div(class="errorText", style="text-align:center") #{error}
+    - if (typeof(story) != 'undefined')
+      div(id="button-wrapper")
+        a(href="/editStory?id=#{story._id}", style="font-weight: bold; font-size: 20px") #{story.title}
+      form(action="addStoryChapter", method="POST", enctype="multipart/form-data", style="width:90%; margin:auto")
+        input(name="storyId", id="storyId", type="hidden", value="#{story._id}")
+        input(name="chapter-count", id="chapter-count", type="hidden", value="")
+        table(id="detailTable", class="detailTable")
+          tr
+            td(class="detailTableTexts") Các Chương Đã Có:
+            td(class="detailTableInputRows")
+              select(name="story-chapters", id="story-chapters")
+                - each chapter in story.chapters
+                  option STT #{chapter.chapter}: #{chapter.title}
+        button(type="button", onClick="addMoreChapter()", class="btnAddChapter") Thêm Chương
+        br
+        br
+        input(type="submit", name="submit", value="Save", class="submitButton")
+      script
+        $("document").ready(function(){
+          addMoreChapter();
+        });
