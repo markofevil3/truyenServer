@@ -87,9 +87,9 @@ block content
         if ((file = this.files[0])) {
           img = new Image();
           img.onload = function() {
-            if (this.width < 400 || this.height < 600) {
+            if (this.width < 200 || this.height < 300) {
               $("#storyCoverUpload").replaceWith($("#storyCoverUpload").val('').clone(true));
-              alert("Ảnh size tối thiểu là 400x600!");
+              alert("Ảnh size tối thiểu là 200x300!");
             }
             // alert(this.width + " " + this.height);
           };

@@ -4,6 +4,7 @@ var Util = require('../lib/util');
 var email   = require('emailjs/email');
 var request = require('request');
 var adminRoute = require('./admin');
+var fs = require('fs');
 
 var User = require('../models/models').User;
 var Chapter = require('../models/models').Chapter;
@@ -35,20 +36,26 @@ exports.addStoryPage = function(req, res) {
 
 exports.addStory = function(req, res) {
   if (Util.checkAccessRight("addEditStory", req.session.user.accessable)) {
-    // console.log(req.files);
     var story = new Story({});
     story.title = req.body["storyTitle"];
     story.author = req.body["storyAuthor"];
     story.source = req.body["storySource"];
     story.translator = req.body["storyTranslator"];
     story.cate = parseInt(req.body["storyCate"]);
+    story.cover = req.body["storyCover"];
     story.datePost = Date.now();
     story.updatedAt = Date.now();
     story.numView = 0;
     story.shortDes = req.body["storyShortDes"];
     story.type = 1;
     story.cate = req.body.storyCategory;
-
+    if (req.files.storyCoverUpload.size > 0) {
+      var data = fs.readFileSync(req.files.storyCoverUpload.path);
+      var coverFileName = story.title + "." + Util.getFileExtension(req.files.storyCoverUpload.name);
+      var newPath = __dirname + "/../public/images/story/cover/" + coverFileName;
+      fs.writeFileSync(newPath, data);
+      story.cover = "/images/story/cover/" + coverFileName;
+    }
     for (var i = 1; i <= parseInt(req.body["chapter-count"]); i++) {
       var inputChapter = {
         chapter: Util.checkChapterNumber(req.body["chapter-chapter-" + i]),
@@ -95,6 +102,7 @@ exports.editStoryPage = function(req, res) {
     if (error) {
       console.log(error);
     }
+    story.chapters.sort(Util.dynamicSort('chapter', 1));
     if (story != null) {
       res.render('admin/editStory', { 
         title: 'Full Truyện',
@@ -122,6 +130,13 @@ exports.editStory = function(req, res) {
         story.source = req.body.storySource;
         story.translator = req.body.storyTranslator;
         story.numView = parseInt(req.body.storyNumView);
+        if (req.files.storyCoverUpload.size > 0) {
+          var data = fs.readFileSync(req.files.storyCoverUpload.path);
+          var coverFileName = story.title + "." + Util.getFileExtension(req.files.storyCoverUpload.name);
+          var newPath = __dirname + "/../public/images/story/cover/" + coverFileName;
+          fs.writeFileSync(newPath, data);
+          story.cover = "/images/story/cover/" + coverFileName;
+        }
         for (var i = 0; i < story.chapters.length; i++) {
           var chapter = story.chapters[i];
           if (req.body['chapter-chapter-' + chapter._id]) {
@@ -163,6 +178,10 @@ exports.editStory = function(req, res) {
 exports.removeStory = function(req, res) {
   if (Util.checkAccessRight("removeStory", req.session.user.accessable)) {
     Story.findById(req.query.id, function (err, story) {
+      var coverDir = __dirname + "/../public" + story.cover;
+      if (fs.existsSync(coverDir)) {
+        fs.unlinkSync(coverDir);
+      }
       if (!err) {
         story.remove();
       }

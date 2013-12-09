@@ -7,7 +7,7 @@ block content
     - if (typeof(error) != 'undefined')
       div(class="errorText", style="text-align:center") #{error}
     - if (typeof(story) != 'undefined')
-      form(action="editStory", method="POST", enctype="multipart/form-data", style="width:90%; margin:auto")
+      form(id="editStoryForm", action="editStory", method="POST", enctype="multipart/form-data", style="width:90%; margin:auto")
         input(type="submit", name="submit", value="Update", class="submitButton", style="margin-top: 10px")
         button(id="btnRemoveStory", onClick="removeStory('#{story._id}', '#{story.title}'); return false;") Remove
         input(name="id", id="id", type="hidden", value="#{story._id}")
@@ -35,10 +35,16 @@ block content
           tr
             td(class="detailTableTexts") Ảnh Bìa:
             td(class="detailTableInputRows")
+              span Nhập Link:
+              br
               - if (typeof(story.cover) != 'undefined')
                 input(name="storyCover", id="storyCover", class="detailTableInputs", type="text", value="#{story.cover}")
               - else
                 input(name="storyCover", id="storyCover", class="detailTableInputs", type="text", value="")
+              br 
+              span Hoặc Upload Ảnh:
+              br
+              input(type="file", name="storyCoverUpload", id="storyCoverUpload")
           tr
             td(class="detailTableTexts") Thể Loại:
             td(class="detailTableInputRows")
@@ -87,3 +93,41 @@ block content
               td(class="listTableRowButtons")
                 button(id="btnEditChapter", onClick="openEditStoryChapterPage('#{story._id}', '#{chapter._id}'); return false;") Sửa
                 button(id="btnRemove", onClick="removeStoryChapter('#{story._id}', '#{chapter._id}', '#{chapter.title}'); return false;") Xoá
+  script
+    $("document").ready(function(){
+      $("#editStoryForm").validate({
+        rules: {
+          storyTitle: {
+            required: true,
+          },
+          storyCoverUpload: {
+            accept: "image/*"
+          }
+        },
+        messages: {
+          storyTitle: {
+            required: "Chưa Điền Tên Truyện!",
+          },
+          storyCoverUpload: {
+            accept: "Không Đúng File!"
+          }
+        }
+      });
+      // check file size
+      var _URL = window.URL || window.webkitURL;
+
+      $("#storyCoverUpload").change(function(e) {
+        var file, img;
+        if ((file = this.files[0])) {
+          img = new Image();
+          img.onload = function() {
+            if (this.width < 200 || this.height < 300) {
+              $("#storyCoverUpload").replaceWith($("#storyCoverUpload").val('').clone(true));
+              alert("Ảnh size tối thiểu là 200x300!");
+            }
+          };
+          img.src = _URL.createObjectURL(file);
+        }
+      });
+    });              
+  
