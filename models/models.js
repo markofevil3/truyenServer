@@ -57,6 +57,8 @@ var storySchema = new Schema({
   cate: [String],
   shortDes: String,
   content: String,
+  source: String,
+  translator: String,
   cover: String,
   chapters: [ chapterStorySchema ]
 });

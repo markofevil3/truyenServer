@@ -63,11 +63,10 @@ $("document").ready(function(){
 });
 
 function checkStory() {
-  var titleInput = document.getElementById("story-title");
+  var titleInput = document.getElementById("storyTitle");
   if (titleInput.value != null && titleInput.value != "") {
     $.ajax( "/checkStory?title=" + titleInput.value)
       .done(function(response) {
-        console.log(response);
         if (response.data.length > 0) {
           var rows = '';
           for (var i = 0; i < response.data.length; i++) {

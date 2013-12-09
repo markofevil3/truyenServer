@@ -25,6 +25,14 @@ block content
             td(class="detailTableInputRows")
               input(name="storyAuthor", id="storyAuthor", class="detailTableInputs", type="text", value="#{story.author}")
           tr
+            td(class="detailTableTexts") Nguồn:
+            td(class="detailTableInputRows")
+              input(name="storySource", id="storySource", class="detailTableInputs", type="text", value="#{story.source}")
+          tr
+            td(class="detailTableTexts") Người Dịch:
+            td(class="detailTableInputRows")
+              input(name="storyTranslator", id="storyTranslator", class="detailTableInputs", type="text", value="#{story.translator}")
+          tr
             td(class="detailTableTexts") Ảnh Bìa:
             td(class="detailTableInputRows")
               - if (typeof(story.cover) != 'undefined')
@@ -44,7 +52,7 @@ block content
           tr
             td(class="detailTableTexts") Giới Thiệu:
             td(class="detailTableInputRows")
-              textArea(class="shortDesInput")
+              textArea(name="storyShortDes", id="storyShortDes", class="shortDesInput")
                 | #{story.shortDes}
           tr
             td(class="detailTableTexts") Lượt View:

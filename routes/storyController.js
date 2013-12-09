@@ -35,15 +35,17 @@ exports.addStoryPage = function(req, res) {
 
 exports.addStory = function(req, res) {
   if (Util.checkAccessRight("addEditStory", req.session.user.accessable)) {
-    console.log(req.body);
+    // console.log(req.files);
     var story = new Story({});
-    story.title = req.body["story-title"];
-    story.author = req.body["story-author"];
-    story.cate = parseInt(req.body["story-cate"]);
+    story.title = req.body["storyTitle"];
+    story.author = req.body["storyAuthor"];
+    story.source = req.body["storySource"];
+    story.translator = req.body["storyTranslator"];
+    story.cate = parseInt(req.body["storyCate"]);
     story.datePost = Date.now();
     story.updatedAt = Date.now();
     story.numView = 0;
-    story.shortDes = req.body["story-shortDes"];
+    story.shortDes = req.body["storyShortDes"];
     story.type = 1;
     story.cate = req.body.storyCategory;
 
@@ -58,7 +60,7 @@ exports.addStory = function(req, res) {
       story.chapters.push(inputChapter);
     }
     story.save(function(error) {
-      console.log("########## Add Story " + story.title);
+      // console.log("########## Add Story " + story.title);
       if (error) {
         console.log(error);
       }
@@ -89,7 +91,7 @@ exports.checkStory = function(req, res) {
 };
 
 exports.editStoryPage = function(req, res) {
-  Story.findOne({'_id': req.query.id}, '_id title author datePost numView cover cate type chapters.poster chapters.chapter chapters.title chapters._id').exec(function(error, story) {
+  Story.findOne({'_id': req.query.id}, '_id title source translator shortDes author datePost numView cover cate type chapters.poster chapters.chapter chapters.title chapters._id').exec(function(error, story) {
     if (error) {
       console.log(error);
     }
@@ -107,18 +109,21 @@ exports.editStoryPage = function(req, res) {
 
 exports.editStory = function(req, res) {
   if (Util.checkAccessRight("addEditStory", req.session.user.accessable)) {
-    Story.findOne({'_id': req.body.id}, '_id title author numView datePost cover cate type chapers.poster chapters.chapter chapters.title chapters._id').exec(function(error, story) {
+    Story.findOne({'_id': req.body.id}, '_id title source translator shortDes author numView datePost cover cate type chapers.poster chapters.chapter chapters.title chapters._id').exec(function(error, story) {
       if (error) {
         console.log(error);
       }
       if (story != null) {
+        story.title = req.body.storyTitle;
+        story.author = req.body.storyAuthor;
+        story.cover = req.body.storyCover;
+        story.cate = req.body.storyCategory;
+        story.shortDes = req.body.storyShortDes;
+        story.source = req.body.storySource;
+        story.translator = req.body.storyTranslator;
+        story.numView = parseInt(req.body.storyNumView);
         for (var i = 0; i < story.chapters.length; i++) {
           var chapter = story.chapters[i];
-          story.title = req.body.storyTitle;
-          story.author = req.body.storyAuthor;
-          story.cover = req.body.storyCover;
-          story.cate = req.body.storyCategory;
-          story.numView = parseInt(req.body.storyNumView);
           if (req.body['chapter-chapter-' + chapter._id]) {
             var tempChapter = Util.checkChapterNumber(req.body['chapter-chapter-' + chapter._id]);
             var tempChapterTitle = req.body['chapter-title-' + chapter._id];

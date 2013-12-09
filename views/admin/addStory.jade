@@ -12,19 +12,27 @@ block content
     div(class="pageTitle") Nhập Sách Truyện
     - if (typeof(error) != 'undefined')
       div(class="errorText", style="text-align:center") #{error}
-    form(action="addStory", method="POST", enctype="multipart/form-data", style="width:90%; margin:auto")
+    form(id="addStoryForm", action="addStory", method="POST", enctype="multipart/form-data", style="width:90%; margin:auto")
       input(name="chapter-count", id="chapter-count", type="hidden", value="")
       table(id="detailTable", class="detailTable")
         tr
           td(class="detailTableTexts") Tên Truyện:
           td(class="detailTableInputRows")
-            input(name="story-title", id="story-title", class="detailTableInputs", type="text", value="")
+            input(name="storyTitle", id="storyTitle", class="detailTableInputs", type="text", value="")
             button(type="button", onClick="checkStory()") Check
             div(id="check-results")
         tr
           td(class="detailTableTexts") Tác Giả:
           td(class="detailTableInputRows")
-            input(name="story-author", id="story-author", class="detailTableInputs", type="text", value="")
+            input(name="storyAuthor", id="storyAuthor", class="detailTableInputs", type="text", value="")
+        tr
+          td(class="detailTableTexts") Nguồn:
+          td(class="detailTableInputRows")
+            input(name="storySource", id="storySource", class="detailTableInputs", type="text", value="")
+        tr
+          td(class="detailTableTexts") Người Dịch:
+          td(class="detailTableInputRows")
+            input(name="storyTranslator", id="storyTranslator", class="detailTableInputs", type="text", value="")
         tr
           td(class="detailTableTexts") Thể Loại:
           td(class="detailTableInputRows")
@@ -35,17 +43,58 @@ block content
         tr
           td(class="detailTableTexts") Ảnh Bìa:
           td(class="detailTableInputRows")
-            input(name="story-cover", id="story-cover", class="detailTableInputs", type="text", value="")
+            span Nhập Link:
+            br
+            input(name="storyCover", id="storyCover", class="detailTableInputs", type="text", value="")
+            br 
+            span Hoặc Upload Ảnh:
+            br
+            input(type="file", name="storyCoverUpload", id="storyCoverUpload")
         tr
           td(class="detailTableTexts") Giới Thiệu:
           td(class="detailTableInputRows")
-            textarea(name="story-shortDes", id="story-shortDes", class="detailTableInputs", value="")
+            textarea(name="storyShortDes", id="storyShortDes", class="detailTableInputs", value="")
       // div(id="chapters-wapper")
       button(type="button", onClick="addMoreChapter()", class="btnAddChapter") Thêm Chương
       br
       br
       input(type="submit", name="submit", value="Save", class="submitButton")
-      // span asdsad
-      // br
-      // textarea(id="msgpost", name="msgpost", class="input-panel")
+  script
+    $("document").ready(function(){
+      $("#addStoryForm").validate({
+        rules: {
+          storyTitle: {
+            required: true,
+          },
+          storyCoverUpload: {
+            accept: "image/*"
+          }
+        },
+        messages: {
+          storyTitle: {
+            required: "Chưa Điền Tên Truyện!",
+          },
+          storyCoverUpload: {
+            accept: "Không Đúng File!"
+          }
+        }
+      });
+      // check file size
+      var _URL = window.URL || window.webkitURL;
+
+      $("#storyCoverUpload").change(function(e) {
+        var file, img;
+        if ((file = this.files[0])) {
+          img = new Image();
+          img.onload = function() {
+            if (this.width < 400 || this.height < 600) {
+              $("#storyCoverUpload").replaceWith($("#storyCoverUpload").val('').clone(true));
+              alert("Ảnh size tối thiểu là 400x600!");
+            }
+            // alert(this.width + " " + this.height);
+          };
+          img.src = _URL.createObjectURL(file);
+        }
+      });
+    });
       
