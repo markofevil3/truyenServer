@@ -178,9 +178,11 @@ exports.editStory = function(req, res) {
 exports.removeStory = function(req, res) {
   if (Util.checkAccessRight("removeStory", req.session.user.accessable)) {
     Story.findById(req.query.id, function (err, story) {
-      var coverDir = __dirname + "/../public" + story.cover;
-      if (fs.existsSync(coverDir)) {
-        fs.unlinkSync(coverDir);
+      if (story.cover && story.cover != null && story.cover != "") {
+        var coverDir = __dirname + "/../public" + story.cover;
+        if (fs.existsSync(coverDir)) {
+          fs.unlinkSync(coverDir);
+        }
       }
       if (!err) {
         story.remove();
