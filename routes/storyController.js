@@ -14,15 +14,37 @@ var Story = require('../models/models').Story;
 var StoryAudio = require('../models/models').StoryAudio;
 
 exports.listStory = function(req, res) {
-  Story.find({}, '_id title author datePost numView shortDes cover type').sort( 'author', 1 ).exec(function(error, stories) {
+  Story.find({}, '_id title author datePost numView shortDes cover type').exec(function(error, stories) {
     if (error) {
       console.log(error);
+    }
+    if (req.query.orderBy) {
+      switch(req.query.orderBy) {
+        case "title":
+          stories.sort(Util.dynamicSort('title', req.query.oType == "asc" ? 1 : -1));
+        break;
+        case "author":
+          stories.sort(Util.dynamicSort('author', req.query.oType == "asc" ? 1 : -1));
+        break;
+        case "numView":
+          stories.sort(Util.dynamicSortNumber('numView', req.query.oType == "asc" ? 1 : -1));
+        break;
+        case "datePost":
+          stories.sort(Util.dynamicSort('datePost', req.query.oType == "asc" ? 1 : -1));
+        break;
+      }
+    } else {
+      req.query.orderBy = 'title';
+      req.query.oType = 'title';
+      stories.sort(Util.dynamicSort('title', 1));
     }
     res.render('admin/listStory', { 
       title: 'Full Truyện',
       error: '',
       accessToken: req.query.accessToken,
-      stories: stories
+      stories: stories,
+      orderBy: req.query.orderBy,
+      oType: req.query.oType
     });
   });
 };
@@ -71,7 +93,9 @@ exports.addStory = function(req, res) {
       if (error) {
         console.log(error);
       }
-      adminRoute.addStoryPage(req, res);
+      // adminRoute.addStoryPage(req, res);
+      req.query.id = story._id;
+      adminRoute.addStoryChapterPage(req, res);
     });
   } else {
     res.render('admin/addStory', { 

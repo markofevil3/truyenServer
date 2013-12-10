@@ -10,14 +10,40 @@ block content
           // td
           th(class="listTableHeader", style="width:20px")
             span(class="row-title listTableRowSTT") STT
-          th(class="listTableHeader")
-            span(class="row-title") Tên Truyện
-          th(class="listTableHeader", style="width:130px")
-            span Tác Giả
-          th(class="listTableHeader", style="width:80px")
-            span Lượt Xem
+          - if (orderBy == "title")
+            th(class="listTableHeader")
+              a(class="row-title link-row-title", href="/listStory?orderBy=title&oType=#{oType == 'asc' ? 'des' : 'asc'}") Tên Truyện
+              img(src="/images/website/#{oType == 'asc' ? 'ascending.png' : 'descending.png'}", class="order-img-row-title")
+          - else
+            th(class="listTableHeader")
+              a(class="row-title link-row-title", href="/listStory?orderBy=title&oType=asc") Tên Truyện
+          - if (orderBy == "author")
+            th(class="listTableHeader", style="width:100px")
+              a(class="row-title link-row-title", href="/listStory?orderBy=author&oType=#{oType == 'asc' ? 'des' : 'asc'}") Tác Giả
+              img(src="/images/website/#{oType == 'asc' ? 'ascending.png' : 'descending.png'}", class="order-img-row-title")
+          - else
+            th(class="listTableHeader", style="width:100px")
+              a(class="row-title link-row-title", href="/listStory?orderBy=author&oType=asc") Tác Giả
+          // th(class="listTableHeader", style="width:80px")
+          //   span Lượt Xem
+          - if (orderBy == "numView")
+            th(class="listTableHeader", style="width:80px")
+              a(class="row-title link-row-title", href="/listStory?orderBy=numView&oType=#{oType == 'asc' ? 'des' : 'asc'}") Lượt Xem
+              img(src="/images/website/#{oType == 'asc' ? 'ascending.png' : 'descending.png'}", class="order-img-row-title")
+          - else
+            th(class="listTableHeader", style="width:80px")
+              a(class="row-title link-row-title", href="/listStory?orderBy=numView&oType=asc") Lượt Xem
           th(class="listTableHeader")
             span Cover Link
+          // th(class="listTableHeader", style="width:80px")
+          //   span Ngày Post 
+          - if (orderBy == "datePost")
+            th(class="listTableHeader", style="width:80px")
+              a(class="row-title link-row-title", href="/listStory?orderBy=datePost&oType=#{oType == 'asc' ? 'des' : 'asc'}") Ngày Post 
+              img(src="/images/website/#{oType == 'asc' ? 'ascending.png' : 'descending.png'}", class="order-img-row-title")
+          - else
+            th(class="listTableHeader", style="width:80px")
+              a(class="row-title link-row-title", href="/listStory?orderBy=datePost&oType=asc") Ngày Post 
         - each story,i in stories
           tr(class="listTableTR")
             td(class="listTableRow listTableRowSTT") #{i}
@@ -30,3 +56,5 @@ block content
             td(class="listTableRow listTableRowCoverLink")
               - if (typeof(story.cover) != 'undefined')
                 a(href="#{story.cover}", onclick="window.open(this.href); return false;") #{story.cover}
+            td(class="listTableRow listTableRowNumView")
+              span #{prettyDate(story.datePost)}

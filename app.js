@@ -39,6 +39,15 @@ app.configure('development', function(){
   app.use(express.errorHandler());
 });
 
+app.locals.prettyDate = function(dateString){
+  var date = new Date(dateString);
+  var d = date.getDate();
+  var monthNames = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
+  var m = date.getMonth() + 1;
+  var y = date.getFullYear();
+  return d + "/" + m + "/" + y;
+}
+
 function check_auth(req, res, next) {
   if(!req.session.authenticated) {
     res.redirect("/login");
