@@ -27,11 +27,25 @@ block content
         tr
           td(class="detailTableTexts") Nội Dung:
           td(class="detailTableInputRows")
-            textarea(id="msgpost", name="msgpost", class="input-panel")      
+            textarea(id="msgpost", name="msgpost", class="input-panel")
               | #{chapter.content}
+        tr
+          td(class="detailTableTexts") Preview:
+          td(class="detailTableInputRows")
+            div(id="btnPreview", class="btnPreview") Preview
+  div(id="previewPanel", class="previewPanel")
+    div(id="toPopup")
+      div(class="close")
+      div(id="popup_content")
+    div(class="loader")
+    div(id="backgroundPopup")
 block afterScript
   script
     // ##### edit story chapter content
     CKEDITOR.replace( 'msgpost',{
       width: "480px",
+    });
+    $("#btnPreview").click(function() {
+      console.log("####");
+      showPopupPreview(CKEDITOR.instances['msgpost'].getData());
     });

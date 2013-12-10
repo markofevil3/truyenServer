@@ -30,7 +30,13 @@ block content
         br
         br
         input(type="submit", name="submit", value="Save", class="submitButton")
-      script
-        $("document").ready(function(){
-          addMoreChapter();
-        });
+    div(id="previewPanel", class="previewPanel")
+      div(id="toPopup")
+        div(class="close")
+        div(id="popup_content")
+      div(class="loader")
+      div(id="backgroundPopup")
+  script
+    $("document").ready(function(){
+      addMoreChapter();
+    });

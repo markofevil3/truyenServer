@@ -59,6 +59,12 @@ block content
       br
       br
       input(type="submit", name="submit", value="Save", class="submitButton")
+    div(id="previewPanel", class="previewPanel")
+      div(id="toPopup")
+        div(class="close")
+        div(id="popup_content")
+      div(class="loader")
+      div(id="backgroundPopup")
   script
     $("document").ready(function(){
       $("#addStoryForm").validate({

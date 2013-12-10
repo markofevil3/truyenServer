@@ -425,30 +425,8 @@ exports.editStoryChapterPage = function(req, res) {
 }
 
 exports.editStoryChapter = function(req, res) {
-  Story.findOne({'_id': req.body.storyId}, '_id title chapters.chapter chapters.title chapters._id chapters.content').exec(function(error, story) {
-    if (error) {
-      console.log(error);
-    }
-    if (story != null) {
-      var chapter = story.chapters.id(req.body.chapterId);
-      if (chapter != null) {
-        chapter.chapter = Util.checkChapterNumber(req.body['chapter-chapter']);
-        chapter.title = req.body['chapter-title'];
-        chapter.content = req.body['msgpost'];
-        story.save(function() {
-          res.render('admin/storyListChaptersPage', { 
-            title: 'Full Truyện',
-            story: story,
-          });
-        })
-      } else {
-        adminRoute.index(req, res);
-      }
-    } else {
-      adminRoute.index(req, res);
-    }
-  });
-}
+  StoryController.editStoryChapter(req, res);
+};
 
 exports.checkStory = function(req, res) {
   StoryController.checkStory(req, res);

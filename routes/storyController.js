@@ -126,8 +126,8 @@ exports.editStoryPage = function(req, res) {
     if (error) {
       console.log(error);
     }
-    story.chapters.sort(Util.dynamicSort('chapter', 1));
     if (story != null) {
+      story.chapters.sort(Util.dynamicSort('chapter', 1));
       res.render('admin/editStory', { 
         title: 'Full Truyện',
         story: story,
@@ -318,6 +318,33 @@ exports.editStoryChapterPage = function(req, res) {
       }
     } else {
       adminRoute.listStory(req, res);
+    }
+  });
+};
+
+exports.editStoryChapter = function(req, res) {
+  Story.findOne({'_id': req.body.storyId}, '_id title chapters.chapter chapters.title chapters._id chapters.content').exec(function(error, story) {
+    if (error) {
+      console.log(error);
+    }
+    if (story != null) {
+      var chapter = story.chapters.id(req.body.chapterId);
+      if (chapter != null) {
+        chapter.chapter = Util.checkChapterNumber(req.body['chapter-chapter']);
+        chapter.title = req.body['chapter-title'];
+        chapter.content = req.body['msgpost'];
+        story.save(function() {
+          req.query.id = story._id;
+          adminRoute.editStoryPage(req, res);
+        })
+      } else {
+        console.log("##########");
+        adminRoute.index(req, res);
+      }
+    } else {
+      console.log("##########22");
+      
+      adminRoute.index(req, res);
     }
   });
 }

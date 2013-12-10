@@ -23,15 +23,24 @@ block content
           tr
             td(class="detailTableTexts") Tác Giả:
             td(class="detailTableInputRows")
-              input(name="storyAuthor", id="storyAuthor", class="detailTableInputs", type="text", value="#{story.author}")
+              - if (typeof(story.author) != 'undefined')
+                input(name="storyAuthor", id="storyAuthor", class="detailTableInputs", type="text", value="#{story.author}")
+              - else
+                input(name="storyAuthor", id="storyAuthor", class="detailTableInputs", type="text", value="")
           tr
             td(class="detailTableTexts") Nguồn:
             td(class="detailTableInputRows")
-              input(name="storySource", id="storySource", class="detailTableInputs", type="text", value="#{story.source}")
+              - if (typeof(story.source) != 'undefined')
+                input(name="storySource", id="storySource", class="detailTableInputs", type="text", value="#{story.source}")
+              - else
+                input(name="storySource", id="storySource", class="detailTableInputs", type="text", value="")
           tr
             td(class="detailTableTexts") Người Dịch:
             td(class="detailTableInputRows")
-              input(name="storyTranslator", id="storyTranslator", class="detailTableInputs", type="text", value="#{story.translator}")
+              - if (typeof(story.translator) != 'undefined')
+                input(name="storyTranslator", id="storyTranslator", class="detailTableInputs", type="text", value="#{story.translator}")
+              - else
+                input(name="storyTranslator", id="storyTranslator", class="detailTableInputs", type="text", value="")
           tr
             td(class="detailTableTexts") Ảnh Bìa:
             td(class="detailTableInputRows")
