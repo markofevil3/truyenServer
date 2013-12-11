@@ -34,9 +34,9 @@ exports.listStory = function(req, res) {
         break;
       }
     } else {
-      req.query.orderBy = 'title';
-      req.query.oType = 'title';
-      stories.sort(Util.dynamicSort('title', 1));
+      req.query.orderBy = 'datePost';
+      req.query.oType = 'des';
+      stories.sort(Util.dynamicSort('datePost', -1));
     }
     res.render('admin/listStory', { 
       title: 'Full Truyện',
