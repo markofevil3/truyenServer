@@ -90,7 +90,7 @@ app.get('/facebook', routes.facebook);
 
 // ## website
 app.get('/contactUs', websiteRoute.contactUs);
-app.get('/', websiteRoute.contactUs);
+app.get('/', websiteRoute.homePage);
 
 //## import manga
 app.get('/import', tools.importManga);

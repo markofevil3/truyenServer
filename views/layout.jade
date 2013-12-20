@@ -17,6 +17,20 @@ html
         div(id="registerPanel")
           span Hãy Đăng Nhập Hoặc đăng ký
         div(id="searchPanel")
+    div(id="category-content")
+      ul(id="categoryUl")
+        li(class="mainCates")
+          a(class="a-mainCates", href="#")
+            img(id="iconHome", src="/images/website/icon-home.png")
+            span Trang chủ
+        - for(key in category.mainCateList)
+          li(class="mainCates")
+            a(class="a-mainCates", href="#{key}") #{category.mainCateList[key].text}
+            - if (category.mainCateList[key].subCate.length > 0)
+              ul(class="subCategory")
+                - each subCate in category.mainCateList[key].subCate
+                  li(class="subCates")
+                    a(class="a-subCates", href="#{category.subCateList[subCate].link}") #{category.subCateList[subCate].text}
     div(id="main-content")
       block content
     div(id="footer-content")
@@ -24,15 +38,3 @@ html
         div(id="content")
           div Hỗ trợ: fulltruyen@gmail.com
           div Copyright@2013 Full Truyện
-    // div(id="header")
-    //   div(id="header-title") Content Management System
-    // - if (login != 'true')
-    //   div(id="main-panel")
-    //     div(id="left-panel")
-    //       div(class="left-menu #{productsActive}", id="menu-products")
-    //         a(href="manageProducts?page=display&startIndex=0") Sản Phẩm
-    //       div(class="left-menu #{servicesActive}", id="menu-services")
-    //         a(href="#") Dịch Vụ
-    //     div(id="right-panel")
-    //       block content
-    //     div(class="clear")
