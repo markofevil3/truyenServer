@@ -1,4 +1,33 @@
 extends layout
 
 block content
-  div(data-role="page") 
+  div(id="homePage")
+    div(id="imageSlider")
+      div(id="imageSliderWrapper")
+        div(class="pages")
+          div(class="books")
+          div(class="books")
+          div(class="books")
+          div(class="books")
+          div(class="books")
+          div(class="books")
+    div(id="pagingWrapper")
+      a(href="#", class="pagingItems")
+        img(src="/images/website/btnToStart.png", id="btnToStart", class="pagingImgs")
+      a(href="#", class="pagingItems")
+        img(src="/images/website/btnPrev.png", id="btnPrev", class="pagingImgs")
+      a(href="#", class="pagingItems pagingNumbs") 1
+      a(href="#", class="pagingItems pagingNumbs") 2
+      a(href="#", class="pagingItems pagingNumbs") 3
+      a(href="#", class="pagingItems pagingNumbs") 4
+      a(href="#", class="pagingItems pagingNumbs") 5
+      a(href="#", class="pagingItems")
+        img(src="/images/website/btnNext.png", id="btnNext", class="pagingImgs")
+      a(href="#", class="pagingItems")  
+        img(src="/images/website/btnToEnd.png", id="btnToEnd", class="pagingImgs")
+    div(id="bottomWrapper")
+      div(id="bottomLeft")
+      div(id="bottomMiddle")
+      div(id="bottomRight")
+        div(id="foldedTop")
+        div(id="foldedBottom")

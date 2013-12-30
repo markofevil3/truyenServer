@@ -119,6 +119,7 @@ html {
     }
     
     .subCategory {
+      z-index: 10;
       position: relative;
       width: 100%;
       top: 3px;
@@ -218,6 +219,113 @@ html {
   }
 }
 
+#homePage {
+  width: 100%;
+  
+  #imageSlider {
+    width: 830px;
+    height: 350px;
+    background: url('/images/website/backgroundRepeatGray.png') repeat;
+    margin: 20px auto 0 auto;
+    position: relative;
+    .rounded-corners(8px);
+    -moz-box-shadow:inset 0px 4px 16px #c2bfbd;
+    -webkit-box-shadow:inset 0px 4px 16px #c2bfbd;
+    box-shadow:inset 0px 4px 16px #c2bfbd;
+    
+    #imageSliderWrapper {
+      
+      .pages {
+        
+        .books {
+          width: 250px;
+          height: 151px;
+          background: url('/images/website/box.png') no-repeat;
+          margin-top: 16px;
+          margin-left: 20px;
+          position: relative;
+          float: left;
+        }
+      }
+    }
+  }
+  
+  #pagingWrapper {
+    text-align: center;
+    width: 100%;
+    margin: 15px 0;
+    
+    .pagingItems {
+      display: inline-block;
+    }
+    .pagingNumbs {
+      border: 1px solid #d7d7d7;
+      vertical-align: middle;
+      line-height: 23px;
+      text-decoration: none;
+      width: 20px;
+      height: 20px;
+      font-size: 14px;
+      margin: 0 5px;
+      color: #8d8d8e;
+    }
+    .pagingNumbs:hover {
+      background-color: floralwhite;
+    }
+    .pagingImgs {
+      margin: 0 5px;
+      width: 26px;
+      height: 27px;
+      vertical-align: middle;
+    }
+  }
+  
+  #bottomWrapper {
+    width: 100%;
+    position: relative;
+    margin-bottom: 50px;
+    
+    #bottomLeft {
+      width: 330px;
+      height: 509px;
+      float: left;
+      background: url('/images/website/bottomLeftBg.png') no-repeat;
+      margin-right: 9px;
+      margin-left: 27px;
+    }
+    
+    #bottomMiddle {
+      width: 293px;
+      height: 506px;
+      float: left;
+      background: url('/images/website/bottomMiddleBg.png') no-repeat;
+      margin-right: 9px;
+      margin-top: 3px;
+    }
+    
+    #bottomRight {
+      width: 198px;
+      height: 509px;
+      float: left;
+      
+      #foldedTop {
+        width: 100%;
+        height: 258px;
+        background: url('/images/website/foldedBgOrange.png') no-repeat;
+        margin-top: 4px;
+      }
+      
+      #foldedBottom {
+        width: 100%;
+        height: 221px;
+        background: url('/images/website/foldedBgRed.png') no-repeat;
+        margin-top: 26px;
+      }
+    }
+  }
+  #bottomWrapper:after { content: " "; display: block; clear: both;}
+}
+
 #main-content {
   width: 900px;
   margin: auto;
@@ -233,10 +341,11 @@ html {
 }
 
 #footer-content {
-  position:absolute;
+/*  position:absolute;*/
   bottom:0;
   width: 100%;
   background-color: #3a3a3a;
+  clear: both;
   height: 50px;
   
   #wrapper {

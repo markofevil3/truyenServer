@@ -60,6 +60,7 @@ var storySchema = new Schema({
   source: String,
   translator: String,
   cover: String,
+  status: { type: Number, default: 0 },
   chapters: [ chapterStorySchema ]
 });
 
