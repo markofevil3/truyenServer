@@ -51,7 +51,7 @@ exports.getAppVersion = function(req, res) {
 };
 
 exports.storyAudioList = function(req, res) {
-  StoryAudio.find({}).sort( 'title', 1 ).exec(function(error, storyAudios) {
+  StoryAudio.find({}).sort({'title': 1}).exec(function(error, storyAudios) {
     if (error) {
       console.log(error);
     }
@@ -78,7 +78,7 @@ exports.storyAudio = function(req, res) {
 }
 
 exports.storyList = function(req, res) {
-  Story.find({}, '_id title author datePost numView type cover cate').sort( 'title', 1 ).exec(function(error, stories) {
+  Story.find({}, '_id title author datePost numView type cover cate').sort({'title': 1}).exec(function(error, stories) {
     if (error) {
       console.log(error);
     }
@@ -143,7 +143,7 @@ exports.getStoryContent = function(req, res) {
 };
 
 exports.mangaList = function(req, res) {
-  Manga.find({}, '_id title author cover datePost numView source folder').sort( 'title', 1 ).exec(function(error, mangas) {
+  Manga.find({}, '_id title author cover datePost numView source folder').sort({'title': 1}).exec(function(error, mangas) {
     if (error) {
       console.log(error);
     }
@@ -377,7 +377,7 @@ exports.getFavorites = function(req, res) {
             break;
         }
       }
-      Manga.find({ '_id': { $in: mangaIds }}, '_id author folder cover title datePost numView chapters.chapter chapters.title chapters._id').sort('title', 1).exec(function(error, mangas) {
+      Manga.find({ '_id': { $in: mangaIds }}, '_id author folder cover title datePost numView chapters.chapter chapters.title chapters._id').sort({'title': 1}).exec(function(error, mangas) {
         if (error) {
           console.log(error);
           res.json({ 'data': false, 'advPublisher': advPublisher, 'admobPublisher': admobPublisher });
@@ -385,7 +385,7 @@ exports.getFavorites = function(req, res) {
         if (mangas != null) {
           favorites['manga'] = mangas;
         }
-        Story.find({ '_id': { $in: storyIds }}, '_id author title datePost numView shortDes chapters.chapter chapters.title chapters._id type').sort('title', 1).exec(function(error, stories) {
+        Story.find({ '_id': { $in: storyIds }}, '_id author title datePost numView shortDes chapters.chapter chapters.title chapters._id type').sort({'title': 1}).exec(function(error, stories) {
           if (error) {
             console.log(error);
             res.json({ 'data': false, 'advPublisher': advPublisher, 'admobPublisher': admobPublisher });

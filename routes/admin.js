@@ -216,7 +216,7 @@ exports.index = function(req, res) {
 };
 
 exports.listManga = function(req, res) {
-  Manga.find({}, '_id title author cover').sort( 'title', 1 ).exec(function(error, mangas) {
+  Manga.find({}, '_id title author cover').sort({'title': 1}).exec(function(error, mangas) {
     if (error) {
       console.log(error);
     }
@@ -254,7 +254,7 @@ exports.updateMangas = function(req, res) {
 }
 
 exports.listAudio = function(req, res) {
-  StoryAudio.find({}).sort( 'title', -1 ).exec(function(error, audios) {
+  StoryAudio.find({}).sort({'title': -1}).exec(function(error, audios) {
     if (error) {
       console.log(error);
     }
