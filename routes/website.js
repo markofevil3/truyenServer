@@ -56,6 +56,12 @@ var category = {
   mainCateList: mainCateList,
   subCateList: subCateList
 }
+var sliderBooks;
+Story.find({}, '_id title author shortDes cover').skip(0).limit(30).exec(function(error, stories) {
+  sliderBooks = stories;
+});
+
+var newBooks;
 
 exports.contactUs = function(req, res) {
   res.render('contactUs', { 
@@ -69,6 +75,7 @@ exports.homePage = function(req, res) {
   res.render('index', { 
     title: 'Full Truyện',
     error: '',
-    category: category
+    category: category,
+    sliderBooks: sliderBooks
   });
 }

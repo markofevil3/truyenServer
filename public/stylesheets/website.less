@@ -107,7 +107,7 @@ html {
       text-decoration: none;
       font-family: "Myriad Pro", Myriad, Helvetica, Arial, sans-serif;
 /*      font-weight: bold;*/
-      font-size: 18px;
+      font-size: 16px;
 /*      color: #218bca;*/
       color: #000;
 /*      text-shadow: 0px 1px 1px rgba(0,0,0,.5);*/
@@ -176,7 +176,7 @@ html {
           text-decoration: none;
 /*          font-family: Helvetica, Arial, sans-serif;*/
 /*          font-weight: bold;*/
-          font-size: 17px;
+          font-size: 16px;
           color: #000;
           text-align: center;
 /*          text-shadow: 0px 1px 1px #a3c98b;*/
@@ -245,6 +245,33 @@ html {
           margin-left: 20px;
           position: relative;
           float: left;
+          
+          #bookCoverWrapper {
+            float: left;
+            width: 88px;
+            height: 130px;
+            margin: 11px 9px 0 11px;
+            .box-shadow(0px 1px 1px #8a898b);
+            
+            #bookCover {
+              width: 100%;
+              height: 100%;
+            }
+          }
+          #bookDetails {
+            margin-top: 10px;
+            margin-right: 9px;
+           
+            #bookAuthor {
+              font-size: 14px;
+              color: #808080;
+            }
+          }
+          #bookDetails a {
+            text-decoration: none;
+            color: #3179ba;
+            line-height: 18px;
+          }
         }
       }
     }
@@ -292,6 +319,82 @@ html {
       background: url('/images/website/bottomLeftBg.png') no-repeat;
       margin-right: 9px;
       margin-left: 27px;
+      
+      #bottomLeftCateWrapper {
+        width: 324px;
+        .rounded-corners(7px);
+        border: 1px solid #bdbcbe;
+        margin-left: 3px;
+        
+        #bottomLeftCateUl {
+          width: 322px;
+          height: 33px;
+          .rounded-corners(7px);
+          border: 1px solid white;
+          /* IE10 Consumer Preview */ 
+          background-image: -ms-linear-gradient(top, #1EB1F9 0%, #0083BF 100%);
+
+          /* Mozilla Firefox */ 
+          background-image: -moz-linear-gradient(top, #1EB1F9 0%, #0083BF 100%);
+
+          /* Opera */ 
+          background-image: -o-linear-gradient(top, #1EB1F9 0%, #0083BF 100%);
+
+          /* Webkit (Safari/Chrome 10) */ 
+          background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #1EB1F9), color-stop(1, #0083BF));
+
+          /* Webkit (Chrome 11+) */ 
+          background-image: -webkit-linear-gradient(top, #1EB1F9 0%, #0083BF 100%);
+
+          /* W3C Markup, IE10 Release Preview */ 
+          background-image: linear-gradient(to bottom, #1EB1F9 0%, #0083BF 100%);
+          
+          .bottomLeftCateLi {
+            width: 80px;
+            height: 100%;
+            border-right: 1px solid white;
+            float: left;
+            text-align: center;
+            line-height: 34px;
+          }
+          .bottomLeftCateLi:last-child { 
+            border-right: none; 
+            width: 79px;
+            .rounded-corners-right(6px);
+          }
+          .bottomLeftCateLi:first-child { 
+            .rounded-corners-left(6px);
+          }
+          .bottomLeftCateLi:hover {
+            /* IE10 Consumer Preview */ 
+            background-image: -ms-linear-gradient(top, #8BDBFD 0%, #18BDF0 100%);
+
+            /* Mozilla Firefox */ 
+            background-image: -moz-linear-gradient(top, #8BDBFD 0%, #18BDF0 100%);
+
+            /* Opera */ 
+            background-image: -o-linear-gradient(top, #8BDBFD 0%, #18BDF0 100%);
+
+            /* Webkit (Safari/Chrome 10) */ 
+            background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #8BDBFD), color-stop(1, #18BDF0));
+
+            /* Webkit (Chrome 11+) */ 
+            background-image: -webkit-linear-gradient(top, #8BDBFD 0%, #18BDF0 100%);
+
+            /* W3C Markup, IE10 Release Preview */ 
+            background-image: linear-gradient(to bottom, #8BDBFD 0%, #18BDF0 100%);
+          }
+          .bottomLeftCateLi:hover > a {
+            color: black;
+            text-shadow: none;
+          }
+          .bottomLeftCateLi a {
+            color : #fff;
+            text-decoration: none;
+            text-shadow: 0px 1px 1px rgba(0,0,0,1);
+          }
+        }
+      }
     }
     
     #bottomMiddle {
@@ -301,6 +404,41 @@ html {
       background: url('/images/website/bottomMiddleBg.png') no-repeat;
       margin-right: 9px;
       margin-top: 3px;
+      
+      #bottomMiddleWrapper {
+        width: 285px;
+        .rounded-corners(7px);
+        border: 1px solid #bdbcbe;
+        margin-left: 3px;
+        margin-top: -3px;
+        
+        #bottomMiddleTitle {
+          color : #fff;
+          text-shadow: 0px 1px 1px rgba(0,0,0,1);
+          text-align: center;
+          line-height: 34px;
+          height: 33px;
+          .rounded-corners(7px);
+          border: 1px solid white;
+          /* IE10 Consumer Preview */ 
+          background-image: -ms-linear-gradient(top, #6CBD22 0%, #338E17 100%);
+
+          /* Mozilla Firefox */ 
+          background-image: -moz-linear-gradient(top, #6CBD22 0%, #338E17 100%);
+
+          /* Opera */ 
+          background-image: -o-linear-gradient(top, #6CBD22 0%, #338E17 100%);
+
+          /* Webkit (Safari/Chrome 10) */ 
+          background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #6CBD22), color-stop(1, #338E17));
+
+          /* Webkit (Chrome 11+) */ 
+          background-image: -webkit-linear-gradient(top, #6CBD22 0%, #338E17 100%);
+
+          /* W3C Markup, IE10 Release Preview */ 
+          background-image: linear-gradient(to bottom, #6CBD22 0%, #338E17 100%);
+        }
+      }
     }
     
     #bottomRight {
@@ -313,6 +451,41 @@ html {
         height: 258px;
         background: url('/images/website/foldedBgOrange.png') no-repeat;
         margin-top: 4px;
+        
+        #foldedTopWrapper {
+          width: 196px;
+          .rounded-corners(7px);
+          border: 1px solid #bdbcbe;
+          margin-left: 3px;
+          margin-top: -3px;
+
+          #foldedTopTitle {
+            color : #fff;
+            text-shadow: 0px 1px 1px rgba(0,0,0,1);
+            text-align: center;
+            line-height: 34px;
+            height: 33px;
+            .rounded-corners(7px);
+            border: 1px solid white;
+            /* IE10 Consumer Preview */ 
+            background-image: -ms-linear-gradient(top, #FC8424 0%, #E94523 100%);
+
+            /* Mozilla Firefox */ 
+            background-image: -moz-linear-gradient(top, #FC8424 0%, #E94523 100%);
+
+            /* Opera */ 
+            background-image: -o-linear-gradient(top, #FC8424 0%, #E94523 100%);
+
+            /* Webkit (Safari/Chrome 10) */ 
+            background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #FC8424), color-stop(1, #E94523));
+
+            /* Webkit (Chrome 11+) */ 
+            background-image: -webkit-linear-gradient(top, #FC8424 0%, #E94523 100%);
+
+            /* W3C Markup, IE10 Release Preview */ 
+            background-image: linear-gradient(to bottom, #FC8424 0%, #E94523 100%);
+          }
+        }
       }
       
       #foldedBottom {
@@ -320,6 +493,41 @@ html {
         height: 221px;
         background: url('/images/website/foldedBgRed.png') no-repeat;
         margin-top: 26px;
+        
+        #foldedBottomWrapper {
+          width: 196px;
+          .rounded-corners(7px);
+          border: 1px solid #bdbcbe;
+          margin-left: 3px;
+          margin-top: -3px;
+
+          #foldedBottomTitle {
+            color : #fff;
+            text-shadow: 0px 1px 1px rgba(0,0,0,1);
+            text-align: center;
+            line-height: 34px;
+            height: 33px;
+            .rounded-corners(7px);
+            border: 1px solid white;
+            /* IE10 Consumer Preview */ 
+            background-image: -ms-linear-gradient(top, #E30B1C 0%, #A40610 100%);
+
+            /* Mozilla Firefox */ 
+            background-image: -moz-linear-gradient(top, #E30B1C 0%, #A40610 100%);
+
+            /* Opera */ 
+            background-image: -o-linear-gradient(top, #E30B1C 0%, #A40610 100%);
+
+            /* Webkit (Safari/Chrome 10) */ 
+            background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #E30B1C), color-stop(1, #A40610));
+
+            /* Webkit (Chrome 11+) */ 
+            background-image: -webkit-linear-gradient(top, #E30B1C 0%, #A40610 100%);
+
+            /* W3C Markup, IE10 Release Preview */ 
+            background-image: linear-gradient(to bottom, #E30B1C 0%, #A40610 100%);
+          }
+        }
       }
     }
   }

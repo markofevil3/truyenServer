@@ -5,12 +5,15 @@ block content
     div(id="imageSlider")
       div(id="imageSliderWrapper")
         div(class="pages")
-          div(class="books")
-          div(class="books")
-          div(class="books")
-          div(class="books")
-          div(class="books")
-          div(class="books")
+          - each story,i in sliderBooks
+            - if (i < 6)
+              div(class="books")
+                div(id="bookCoverWrapper")
+                  img(id="bookCover", src="#{story.cover}")
+                div(id="bookDetails")
+                  a(href="#") #{story.title}
+                  span(id="bookAuthor")  - #{story.author}
+                  p(id="bookDes") #{story.shortDes}
     div(id="pagingWrapper")
       a(href="#", class="pagingItems")
         img(src="/images/website/btnToStart.png", id="btnToStart", class="pagingImgs")
@@ -27,7 +30,23 @@ block content
         img(src="/images/website/btnToEnd.png", id="btnToEnd", class="pagingImgs")
     div(id="bottomWrapper")
       div(id="bottomLeft")
+        div(id="bottomLeftCateWrapper")
+          ul(id="bottomLeftCateUl")
+            li(class="bottomLeftCateLi")
+              a(href="#") MỚI
+            li(class="bottomLeftCateLi")
+              a(href="#") HOT
+            li(class="bottomLeftCateLi")
+              a(href="#") FULL
+            li(class="bottomLeftCateLi")
+              a(href="#") ĐỀ CỬ
       div(id="bottomMiddle")
+        div(id="bottomMiddleWrapper")
+          div(id="bottomMiddleTitle") ĐIỂM TIN SÁCH
       div(id="bottomRight")
         div(id="foldedTop")
+          div(id="foldedTopWrapper")
+            div(id="foldedTopTitle") TRÍCH DẪN HAY
         div(id="foldedBottom")
+          div(id="foldedBottomWrapper")
+            div(id="foldedBottomTitle") GÓC NHỎ TÂM HỒN
