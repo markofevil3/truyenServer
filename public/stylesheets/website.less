@@ -236,6 +236,8 @@ html {
     #imageSliderWrapper {
       
       .pages {
+        position: absolute;
+        display: none;
         
         .books {
           width: 250px;
@@ -274,6 +276,8 @@ html {
           }
         }
       }
+      .pages:after { content: " "; display: block; clear: both;}
+      .pages:first-child { display: block;}
     }
   }
   
@@ -298,12 +302,19 @@ html {
     }
     .pagingNumbs:hover {
       background-color: floralwhite;
+      cursor: pointer;
+    }
+    .active {
+      background-color: floralwhite;
     }
     .pagingImgs {
       margin: 0 5px;
       width: 26px;
       height: 27px;
       vertical-align: middle;
+    }
+    .pagingImgs:hover {
+      cursor: pointer;
     }
   }
   
