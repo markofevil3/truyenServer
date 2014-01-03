@@ -46,6 +46,10 @@ ImageSlider.Init = function(imgSlider, pageWrap) {
     });
   }
   ImageSlider.currentButton = ImageSlider.buttons[0];
+  setInterval(function() {
+    var nextPage = (ImageSlider.currentPageIndex + 1) % 6;
+    ImageSlider.ChangeToPage(nextPage > 0 ? nextPage : 1);
+  }, 10000);
 };
 
 ImageSlider.ChangeToPage = function(pageIndex) {
