@@ -12,13 +12,13 @@ block content
             - for (var j = 0; j < 6; j++)
               div(class="books")
                 div(id="bookCoverWrapper")
-                  img(id="bookCover", src="#{sliderBooks[count].cover}")
+                  img(id="bookCover", src="#{sliderBooks[count].cover}", onerror="this.src='/images/storyDefaultCover.jpg'")
                 div(id="bookDetails")
                   a(href="#") #{sliderBooks[count].title}
                   span(id="bookAuthor")  - #{sliderBooks[count].author}
                   p(id="bookDes") #{sliderBooks[count].shortDes}
               - count++
-    div(id="pagingWrapper")
+    div(class="pagingWrapper")
       div(id="toStart", class="pagingItems")
         img(src="/images/website/btnToStart.png", id="btnToStart", class="pagingImgs")
       div(id="prev", class="pagingItems")

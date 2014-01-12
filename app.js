@@ -91,6 +91,7 @@ app.get('/facebook', routes.facebook);
 // ## website
 app.get('/contactUs', websiteRoute.contactUs);
 app.get('/', websiteRoute.homePage);
+app.get('/w/stories/:page/:orderType/:orderStyle', websiteRoute.listStories);
 
 //## import manga
 app.get('/import', tools.importManga);

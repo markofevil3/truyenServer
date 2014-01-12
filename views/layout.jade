@@ -2,9 +2,9 @@ doctype 5
 html
   head
     title= title
-    link(rel="stylesheet/less", type="text/css", href="stylesheets/website.less")
-    script(src="javascripts/less.js", type="text/javascript")
-    script(src="javascripts/jquery.js", type="text/javascript")
+    link(rel="stylesheet/less", type="text/css", href="/stylesheets/website.less")
+    script(src="/javascripts/less.js", type="text/javascript")
+    script(src="/javascripts/jquery.js", type="text/javascript")
     block jsScripts
     // script(src="javascripts/button.js", type="text/javascript")
     // script(src="javascripts/haml.js", type="text/javascript")
@@ -29,12 +29,12 @@ html
     div(id="category-content")
       ul(id="categoryUl")
         li(class="mainCates")
-          a(class="a-mainCates", href="#")
+          a(class="a-mainCates", href="/")
             img(id="iconHome", src="/images/website/icon-home.png")
             span Trang chủ
         - for(key in category.mainCateList)
           li(class="mainCates")
-            a(class="a-mainCates", href="#{key}") #{category.mainCateList[key].text}
+            a(class="a-mainCates", href="#{category.mainCateList[key].link}") #{category.mainCateList[key].text}
             - if (category.mainCateList[key].subCate.length > 0)
               ul(class="subCategory")
                 - each subCate in category.mainCateList[key].subCate

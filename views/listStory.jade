@@ -1,0 +1,84 @@
+extends layout
+
+block content
+  div(id="listStoryPage", class="contentPages")
+    div(id="listStoryContent", class="listContent")
+      - if (stories.length > 0)
+        table(id="listStoryTable", class="listTable")
+          tr(id="tableHeaders")
+            - if (orderType == "0")
+              th(class="listTableHeader")
+                a(class="row-title link-row-title", href="/w/stories/#{currentPage}/0/#{orderStyle == 'asc' ? 'des' : 'asc'}") Tên Truyện
+                img(src="/images/website/#{orderStyle == 'asc' ? 'ascending.png' : 'descending.png'}", class="order-img-row-title")
+            - else
+              th(class="listTableHeader")
+                a(class="row-title link-row-title", href="/w/stories/#{currentPage}/0/asc") Tên Truyện
+            - if (orderType == "1")
+              th(class="listTableHeader", style="width:125px")
+                a(class="row-title link-row-title", href="/w/stories/#{currentPage}/1/#{orderStyle == 'asc' ? 'des' : 'asc'}") Tác Giả
+                img(src="/images/website/#{orderStyle == 'asc' ? 'ascending.png' : 'descending.png'}", class="order-img-row-title")
+            - else
+              th(class="listTableHeader", style="width:125px")
+                a(class="row-title link-row-title", href="/w/stories/#{currentPage}/1/asc") Tác Giả
+            - if (orderType == "2")
+              th(class="listTableHeader", style="width:80px")
+                a(class="row-title link-row-title", href="/w/stories/#{currentPage}/2/#{orderStyle == 'asc' ? 'des' : 'asc'}") Thể Loại
+                img(src="/images/website/#{orderStyle == 'asc' ? 'ascending.png' : 'descending.png'}", class="order-img-row-title")
+            - else
+              th(class="listTableHeader", style="width:80px")
+                a(class="row-title link-row-title", href="/w/stories/#{currentPage}/2/asc") Thể Loại
+            - if (orderType == "3")
+              th(class="listTableHeader", style="width:80px")
+                a(class="row-title link-row-title", href="/w/stories/#{currentPage}/3/#{orderStyle == 'asc' ? 'des' : 'asc'}") Lượt Xem
+                img(src="/images/website/#{orderStyle == 'asc' ? 'ascending.png' : 'descending.png'}", class="order-img-row-title")
+            - else
+              th(class="listTableHeader", style="width:70px")
+                a(class="row-title link-row-title", href="/w/stories/#{currentPage}/3/asc") Lượt Xem
+            - if (orderType == "4")
+              th(class="listTableHeader", style="width:100px")
+                a(class="row-title link-row-title", href="/w/stories/#{currentPage}/4/#{orderStyle == 'asc' ? 'des' : 'asc'}") Ngày Post 
+                img(src="/images/website/#{orderStyle == 'asc' ? 'ascending.png' : 'descending.png'}", class="order-img-row-title")
+            - else
+              th(class="listTableHeader", style="width:100px")
+                a(class="row-title link-row-title", href="/w/stories/#{currentPage}/4/asc") Ngày Post 
+          tr(id="gapLine", style="height:5px")
+          - each story,i in stories
+            tr(class="listTableTR")
+              td(class="listTableRow listTableRowTitle")
+                a(href="/editStory?id=#{story._id}") #{story.title}
+              td(class="listTableRow listTableRowAuthor")
+                span #{story.author}
+              td(class="listTableRow listTableRowNumView")
+                span #{story.cate}
+              td(class="listTableRow listTableRowNumView")
+                span #{story.numView}
+              td(class="listTableRow listTableRowNumView")
+                span #{prettyDate(story.datePost)}
+    div(id="listStoryCategoryContent", class="categoryContent")
+      div(id="cateTitle") Thể Loại
+      a(href="#")
+        div(class="cateTypes") Tất Cả
+      - each type in storyTypes
+        a(href="#")
+          div(class="cateTypes") #{type}
+    div(class="pagingWrapper", id="listStoryPagingWrapper")
+      - if (currentPage - 3 > 1)
+        a(id="toStart", class="pagingItems", href="/w/stories/1/#{orderType}/#{orderStyle}")
+          img(src="/images/website/btnToStart.png", id="btnToStart", class="pagingImgs")
+        a(id="prev", class="pagingItems", href="/w/stories/#{currentPage - 1}/#{orderType}/#{orderStyle}")
+          img(src="/images/website/btnPrev.png", id="btnPrev", class="pagingImgs")
+        span ...
+      - var maxBound = currentPage + 3 > maxStoryPage ? maxStoryPage : currentPage + 3;
+      - for (var i = (currentPage - 3) > 0 ? (currentPage - 3) : 1; i <= maxBound; i++)
+        - if (currentPage == i)
+          a(href="/w/stories/#{i}/#{orderType}/#{orderStyle}")
+            div(id="page#{i}", class="pagingItems pagingNumbs active") #{i}
+        - else
+          a(href="/w/stories/#{i}/#{orderType}/#{orderStyle}")
+            div(id="page#{i}", class="pagingItems pagingNumbs") #{i}
+      - if (currentPage + 3 < maxStoryPage)
+        span ...
+        a(id="next", class="pagingItems", href="/w/stories/#{currentPage + 1}/#{orderType}/#{orderStyle}")
+          img(src="/images/website/btnNext.png", id="btnNext", class="pagingImgs")
+        a(id="toEnd", class="pagingItems", href="/w/stories/#{maxStoryPage}/#{orderType}/#{orderStyle}")  
+          img(src="/images/website/btnToEnd.png", id="btnToEnd", class="pagingImgs")
