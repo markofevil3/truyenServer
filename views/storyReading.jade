@@ -3,5 +3,10 @@ extends layout
 block content
   div(id="storyReadingPage", class="contentPages")
     div(id="chapterTitle") #{chapter.title}
+    div(class="fb-like fbLikeChapters", data-href="http://fulltruyen.com/w/storyReading/#{story._id}/#{chapter._id}/#{chapter.title}", data-layout="button_count", data-action="like", data-show-faces="true", data-share="true")
     != chapter.content
-  div(class="pageGap")
+    div(id="bottomPage")
+      h1(id="commentTitle") Bình luận cho "#{chapter.title}"
+      div(class="fb-like fbLikeChapters", data-href="http://fulltruyen.com/w/storyReading/#{story._id}/#{chapter._id}/#{chapter.title}", data-layout="button_count", data-action="like", data-show-faces="true", data-share="true")
+      div(class="fb-comments", data-href="http://fulltruyen.com/w/storyReading/#{story._id}/#{chapter._id}/#{chapter.title}", data-width="830", data-numposts="5", data-colorscheme="light")
+    div(class="pageGap")

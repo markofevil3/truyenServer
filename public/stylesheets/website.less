@@ -703,9 +703,35 @@ html {
   font-family: "Times New Roman",Times,serif;
   font-size: 20px;
   
+  #bottomPage {
+    width: 100%;
+    padding: 10px;
+    clear: both;
+    float: left;
+    .rounded-corners(8px);
+    -moz-box-shadow:inset 0px 1px 20px #e2e0da;
+    -webkit-box-shadow:inset 0px 1px 20px #e2e0da;
+    box-shadow:inset 0px 1px 20px #e2e0da;
+    background: url('/images/website/backgroundRepeat2.png') repeat;
+    
+    #commentTitle {
+      margin-bottom: 10px;
+      font-size: 1.1em;
+      font-weight: bold;
+    }
+    
+    .fbLikeChapters {
+      margin-bottom: 10px;
+    }
+  }
+  
   #chapterTitle {
     font-size: 1.7em;
     font-weight: bold;
+  }
+  
+  .fbLikeChapters {
+    margin-top: 10px;
   }
   
   p {
@@ -721,6 +747,29 @@ html {
   margin: auto;
   margin-top: 15px;
   margin-bottom: 20px;
+  
+  #bottomPage {
+    width: 100%;
+    padding: 15px;
+    margin-top: 20px;
+    clear: both;
+    float: left;
+    .rounded-corners(8px);
+    -moz-box-shadow:inset 0px 1px 20px #e2e0da;
+    -webkit-box-shadow:inset 0px 1px 20px #e2e0da;
+    box-shadow:inset 0px 1px 20px #e2e0da;
+    background: url('/images/website/backgroundRepeat2.png') repeat;
+    
+    #commentTitle {
+      margin-bottom: 10px;
+      font-size: 1.2em;
+      font-weight: bold;
+    }
+    
+    .fbLikeChapters {
+      margin-bottom: 10px;
+    }
+  }
   
   #topPage {
     width: 100%;
@@ -841,6 +890,21 @@ html {
           .detailRows {
             padding-bottom: 3px;
           }
+        }
+      }
+      
+      #socialWrapper {
+        margin: 0 15px;
+        margin-top: 6px;
+        
+        .socialGap {
+          height: 20px;
+          float: left;
+          width: 1px;
+        }
+        
+        .fbLikeChapters {
+          float: left;
         }
       }
       

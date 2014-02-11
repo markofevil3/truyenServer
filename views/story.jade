@@ -36,7 +36,9 @@ block content
           div(class="lines")
             img(src="/images/website/line.png")
           div(id="socialWrapper")
-          div(class="lines")
+            div(class="socialGap")
+            div(class="fb-like fbLikeChapters", data-href="http://fulltruyen.com/w/story/#{story._id}/#{story.title}", data-layout="button_count", data-action="like", data-show-faces="true", data-share="true")
+          div(class="lines", style="clear:both")
             img(src="/images/website/line.png")
           - if (story.chapters.length > 0)
             div(id="newestText") 5 Chương mới nhất của "#{story.title}"
@@ -71,4 +73,7 @@ block content
                   span(class="bookView") Lượt xem: #{book.numView}
                 div(class="spacer", style="clear: both;")
     div(id="bottomPage")
+      h1(id="commentTitle") Bình luận cho "#{story.title}"
+      div(class="fb-like fbLikeChapters", data-href="http://fulltruyen.com/w/story/#{story._id}/#{story.title}", data-layout="button_count", data-action="like", data-show-faces="true", data-share="true")
+      div(class="fb-comments", data-href="http://fulltruyen.com/w/story/#{story._id}/#{story.title}", data-width="830", data-numposts="5", data-colorscheme="light")
   div(class="pageGap")

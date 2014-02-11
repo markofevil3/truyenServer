@@ -19,6 +19,23 @@ html
       ga('create', 'UA-44461245-2', 'fulltruyen.com');
       ga('send', 'pageview');
   body
+    div(id="fb-root")
+    script
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId      : '517068261714145',
+          status     : true,
+          xfbml      : true
+        });
+      };
+
+      (function(d, s, id){
+         var js, fjs = d.getElementsByTagName(s)[0];
+         if (d.getElementById(id)) {return;}
+         js = d.createElement(s); js.id = id;
+         js.src = "//connect.facebook.net/en_US/all.js";
+         fjs.parentNode.insertBefore(js, fjs);
+       }(document, 'script', 'facebook-jssdk'));
     div(id="header-content")
       div(id="leftPanel")
         img(id="logo", src="/images/website/fulltruyenLogo.png")
