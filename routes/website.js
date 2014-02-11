@@ -161,6 +161,8 @@ exports.getStory = function(req, res) {
 
 exports.getStoryChapter = function(req, res) {
   Story.findOne({ '_id': req.params.storyId }).exec(function(error, story) {
+    story.numView++;
+    story.save();
     story.chapters.sort(Util.dynamicSort('chapter', 1));
     var chapter = story.chapters.id(req.params.storyChapterId);
     res.render('storyReading', { 

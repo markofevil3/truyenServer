@@ -20,13 +20,13 @@ block content
             - else
               th(class="listTableHeader", style="width:125px")
                 a(class="row-title link-row-title", href="/w/stories/#{currentPage}/1/asc") Tác Giả
-            - if (orderType == "2")
-              th(class="listTableHeader", style="width:80px")
-                a(class="row-title link-row-title", href="/w/stories/#{currentPage}/2/#{orderStyle == 'asc' ? 'des' : 'asc'}") Thể Loại
-                img(src="/images/website/#{orderStyle == 'asc' ? 'ascending.png' : 'descending.png'}", class="order-img-row-title")
-            - else
-              th(class="listTableHeader", style="width:80px")
-                a(class="row-title link-row-title", href="/w/stories/#{currentPage}/2/asc") Thể Loại
+            // - if (orderType == "2")
+            //   th(class="listTableHeader", style="width:80px")
+            //     a(class="row-title link-row-title", href="/w/stories/#{currentPage}/2/#{orderStyle == 'asc' ? 'des' : 'asc'}") Thể Loại
+            //     img(src="/images/website/#{orderStyle == 'asc' ? 'ascending.png' : 'descending.png'}", class="order-img-row-title")
+            // - else
+            //   th(class="listTableHeader", style="width:80px")
+            //     a(class="row-title link-row-title", href="/w/stories/#{currentPage}/2/asc") Thể Loại
             - if (orderType == "3")
               th(class="listTableHeader", style="width:80px")
                 a(class="row-title link-row-title", href="/w/stories/#{currentPage}/3/#{orderStyle == 'asc' ? 'des' : 'asc'}") Lượt Xem
@@ -48,8 +48,8 @@ block content
                 a(href="/w/story/#{story._id}/#{story.title}") #{story.title}
               td(class="listTableRow listTableRowAuthor")
                 span #{story.author}
-              td(class="listTableRow listTableRowNumView")
-                span #{story.cate}
+              // td(class="listTableRow listTableRowNumView")
+              //   span #{story.cate}
               td(class="listTableRow listTableRowNumView")
                 span #{story.numView}
               td(class="listTableRow listTableRowNumView")
