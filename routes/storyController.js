@@ -71,6 +71,7 @@ exports.addStory = function(req, res) {
     story.shortDes = req.body["storyShortDes"];
     story.type = 1;
     story.cate = req.body.storyCategory;
+    story.poster = req.session.user.username;
     if (req.files.storyCoverUpload.size > 0) {
       var data = fs.readFileSync(req.files.storyCoverUpload.path);
       var coverFileName = story.title + "." + Util.getFileExtension(req.files.storyCoverUpload.name);

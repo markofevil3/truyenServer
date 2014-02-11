@@ -74,10 +74,20 @@ Story.find({}, '_id title author shortDes cover').skip(0).limit(30).exec(functio
 var newBooks;
 
 var listBooks;
-Story.find({}, '_id title author cate updatedAt datePost numView').exec(function(error, stories) {
+Story.find({}, '_id title author cover cate updatedAt datePost numView').exec(function(error, stories) {
   listBooks = stories;
   maxStoryPage = Math.ceil(listBooks.length / numPage);
 });
+
+function getBooksByCate(cateType, bookId) {
+  var books = [];
+  for (var i = 0; i < listBooks.length; i++) {
+    if (listBooks[i].cate.indexOf(cateType) != -1 && listBooks[i]._id.toString() != bookId.toString()) {
+      books.push(listBooks[i]);
+    }
+  }
+  return books;
+}
 
 exports.contactUs = function(req, res) {
   res.render('contactUs', { 
@@ -128,3 +138,37 @@ exports.listStories = function(req, res) {
     storyTypes: Util.storyCate
   });
 };
+
+exports.getStory = function(req, res) {
+  Story.findOne({ '_id': req.params.storyId }, '_id author cover source poster translator status title datePost cate numView shortDes chapters.chapter chapters.title chapters._id').exec(function(error, story) {
+    var suggestCate = story.cate.randomElement();
+    var suggestBooks;
+    if (suggestCate) {
+      suggestBooks = getBooksByCate(suggestCate, story._id);
+      suggestBooks.sort(Util.dynamicSort('datePost', -1));
+      suggestBooks = suggestBooks.slice(0, 10);
+    }
+    story.chapters.sort(Util.dynamicSort('chapter', -1));
+    res.render('story', { 
+      title: 'Full Truyện',
+      error: '',
+      category: category,
+      story: story,
+      suggestBooks: suggestBooks
+    });
+  });
+};
+
+exports.getStoryChapter = function(req, res) {
+  Story.findOne({ '_id': req.params.storyId }).exec(function(error, story) {
+    story.chapters.sort(Util.dynamicSort('chapter', 1));
+    var chapter = story.chapters.id(req.params.storyChapterId);
+    res.render('storyReading', { 
+      title: 'Full Truyện',
+      error: '',
+      category: category,
+      story: story,
+      chapter: chapter
+    });
+  });
+}

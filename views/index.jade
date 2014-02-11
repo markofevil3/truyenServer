@@ -12,9 +12,10 @@ block content
             - for (var j = 0; j < 6; j++)
               div(class="books")
                 div(id="bookCoverWrapper")
-                  img(id="bookCover", src="#{sliderBooks[count].cover}", onerror="this.src='/images/storyDefaultCover.jpg'")
+                  a(href="/w/story/#{sliderBooks[count]._id}/#{sliderBooks[count].title}")
+                    img(id="bookCover", src="#{sliderBooks[count].cover}", onerror="this.src='/images/storyDefaultCover.jpg'")
                 div(id="bookDetails")
-                  a(href="#") #{sliderBooks[count].title}
+                  a(href="/w/story/#{sliderBooks[count]._id}/#{sliderBooks[count].title}") #{sliderBooks[count].title}
                   span(id="bookAuthor")  - #{sliderBooks[count].author}
                   p(id="bookDes") #{sliderBooks[count].shortDes}
               - count++

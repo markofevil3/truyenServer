@@ -1,0 +1,7 @@
+extends layout
+
+block content
+  div(id="storyReadingPage", class="contentPages")
+    div(id="chapterTitle") #{chapter.title}
+    != chapter.content
+  div(class="pageGap")

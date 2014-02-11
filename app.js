@@ -92,6 +92,8 @@ app.get('/facebook', routes.facebook);
 app.get('/contactUs', websiteRoute.contactUs);
 app.get('/', websiteRoute.homePage);
 app.get('/w/stories/:page/:orderType/:orderStyle', websiteRoute.listStories);
+app.get('/w/story/:storyId/:storyName', websiteRoute.getStory);
+app.get('/w/storyReading/:storyId/:storyChapterId/:storyName', websiteRoute.getStoryChapter);
 
 //## import manga
 app.get('/import', tools.importManga);

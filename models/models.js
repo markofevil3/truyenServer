@@ -61,6 +61,7 @@ var storySchema = new Schema({
   translator: String,
   cover: String,
   status: { type: Number, default: 0 },
+  poster: String,
   chapters: [ chapterStorySchema ]
 });
 

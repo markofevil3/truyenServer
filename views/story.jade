@@ -1,0 +1,74 @@
+extends layout
+
+block content
+  div(id="storyPage", class="contentPages")
+    div(id="topPage")
+      div(id="storyDetailContainer")
+        div(id="storyInfo")
+          div(id="titleText") Thông tin truyện
+          div(id="infoWrapper")
+            div(id="leftPart")
+              img(id="storyCover", src="#{story.cover}", onerror="this.src='/images/storyDefaultCover.jpg'")
+            div(id="middlePart")
+              table(id="middleTable")
+                tr
+                  td(id="storyTitle") #{story.title}
+                tr
+                  td(id="storyAuthor", class="detailRows") Tác giả: #{story.author}
+                tr
+                  td(id="storyType", class="detailRows") Thể loại: #{story.cate}
+                tr
+                  td(id="storyView", class="detailRows") Lượt xem: #{story.numView}
+                tr
+                  td(id="storyView", class="detailRows")
+                    - if (story.chapters.length > 0)
+                      a(id="btnStoryReading", href="/w/storyReading/#{story._id}/#{story.chapters[story.chapters.length - 1]._id}/#{story.chapters[story.chapters.length - 1].title}") Đọc Truyện
+            div(id="rightPart")
+              table(id="rightTable")
+                tr
+                  td(id="storyTranslator", class="detailRows") Nhóm dịch: #{story.translator}
+                tr
+                  td(id="storyStatus", class="detailRows")
+                    span Tình trạng: 
+                    span(style="color:#34a159") #{story.status}
+                tr
+                  td(id="storyPoster", class="detailRows") Người đăng: #{story.poster}
+          div(class="lines")
+            img(src="/images/website/line.png")
+          div(id="socialWrapper")
+          div(class="lines")
+            img(src="/images/website/line.png")
+          - if (story.chapters.length > 0)
+            div(id="newestText") 5 Chương mới nhất của "#{story.title}"
+            div(id="newestChapters")
+              - for(var i = 1; i <= 5; i++)
+                - if (story.chapters[story.chapters.length - i])
+                  div(class="newestChapterLinks")
+                    a(href="/w/storyReading/#{story._id}/#{story.chapters[story.chapters.length - i]._id}/#{story.chapters[story.chapters.length - i].title}") #{story.chapters[story.chapters.length - i].title}
+          div(id="shortDesWrapper")
+            div(id="text") Tóm tắt truyện
+            | #{story.shortDes}
+        div(id="storyChapters")
+          div(id="readingText") Đọc truyện #{story.title}
+          input(id="searchChapterInput", type="text", placeholder="Nhập tên chương cần tìm, ví dụ: 205")
+          div(class="lines")
+            img(src="/images/website/line.png")
+          div(id="chaptersWrapper")
+            - each chapter,i in story.chapters
+              div(class="newestChapterLinks")
+                a(href="/w/storyReading/#{story._id}/#{chapter._id}/#{chapter.title}") #{chapter.title}
+      div(id="suggestContainer")
+        div(id="suggestWrapper")
+          div(id="text") Cùng thể loại
+          - if (typeof(suggestBooks) != 'undefined')
+            - each book in suggestBooks
+              div(class="suggestBooks")
+                a(href="/w/story/#{book._id}/#{book.title}")
+                  img(class="bookCovers", src="#{book.cover}", onerror="this.src='/images/storyDefaultCover.jpg'")
+                div(class="bookDetails")
+                  a(href="/w/story/#{book._id}/#{book.title}") #{book.title}
+                  br
+                  span(class="bookView") Lượt xem: #{book.numView}
+                div(class="spacer", style="clear: both;")
+    div(id="bottomPage")
+  div(class="pageGap")
