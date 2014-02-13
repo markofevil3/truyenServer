@@ -293,6 +293,26 @@ html {
       background: url('/images/website/bottomLeftBg.png') no-repeat;
       margin-right: 9px;
       margin-left: 27px;
+      overflow: scroll;
+      
+      #bottomLeftContent {
+        width: 300px;
+        margin: auto;
+        
+        .bookContents {
+          margin: 10px 0;
+          
+          a {
+            text-decoration: none;
+            color: #383d41;
+          }
+          
+          a:hover {
+            color: black;
+            font-weight: bold;
+          }
+        }
+      }
       
       #bottomLeftCateWrapper {
         width: 324px;
@@ -339,7 +359,7 @@ html {
           .bottomLeftCateLi:first-child { 
             .rounded-corners-left(6px);
           }
-          .bottomLeftCateLi:hover {
+          .bottomLeftCateLiActive, .bottomLeftCateLi:hover {
             /* IE10 Consumer Preview */ 
             background-image: -ms-linear-gradient(top, #8BDBFD 0%, #18BDF0 100%);
 
@@ -357,12 +377,13 @@ html {
 
             /* W3C Markup, IE10 Release Preview */ 
             background-image: linear-gradient(to bottom, #8BDBFD 0%, #18BDF0 100%);
+            cursor: pointer;
           }
-          .bottomLeftCateLi:hover > a {
+          .bottomLeftCateLiActive span, .bottomLeftCateLi:hover > span {
             color: black;
             text-shadow: none;
           }
-          .bottomLeftCateLi a {
+          span {
             color : #fff;
             text-decoration: none;
             text-shadow: 0px 1px 1px rgba(0,0,0,1);
@@ -623,6 +644,18 @@ html {
       text-align: left;
       padding: 7px 5px;
       overflow-wrap: break-word;
+      vertical-align: middle;
+      
+      a {
+        text-decoration: none;
+        color: rgba(0, 0, 0, 0.75);
+        font-weight: bold;
+      }
+      
+      a:hover {
+        color: black;
+        text-decoration: underline;
+      }
     }
     .listTableRowCoverLink {
       text-align: left;
@@ -661,13 +694,18 @@ html {
     color: black;
   }
   
+  .cateTypes:hover {
+    background: #A0E953;
+    color: rgba(0, 0, 0, 0.75);
+  }
+  
   a {
     text-decoration: none;
   }
 }
 
 #listStoryPage {
-  width: 840px;
+  width: 100%;
   position: relative;
   margin: auto;
   margin-top: 15px;
@@ -675,11 +713,16 @@ html {
   #listStoryContent {
     background: url('/images/website/listStoryRepeatBg.png') repeat;
     .rounded-corners(7px);
-  }
+    width: 757px;
+    
+    .listTable {
+      width: 746px;
+    }
+  } 
   
   #listStoryPagingWrapper {
     clear: both;
-    width: 700px;
+    width: 743px;
     position: relative;
     top: 8px;
     
@@ -809,7 +852,7 @@ html {
             margin-left: 20px;
             
             #middleTable {
-              width: 190px;
+              width: 375px;
               table-layout: fixed;
               
               #storyTitle {
@@ -821,6 +864,7 @@ html {
               
               #btnStoryReading {
                 text-decoration: none;
+                float: right;
                 cursor: pointer; /*forces the cursor to change to a hand when the button is hovered*/
                 padding: 8px 12px; /*add some padding to the inside of the button*/
                 border: 1px solid white; /*required or the default border for the browser will appear*/
@@ -835,7 +879,7 @@ html {
                 /*style the text*/
                 color:#f3f3f3;
                 font-size:1.3em;
-                line-height: 60px;
+                line-height: 25px;
                 /* IE10 Consumer Preview */ 
                 background-image: -ms-linear-gradient(top, #6DBE22 0%, #328C16 100%);
 

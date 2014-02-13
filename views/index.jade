@@ -19,7 +19,7 @@ block content
                   span(id="bookAuthor")  - #{sliderBooks[count].author}
                   p(id="bookDes") #{sliderBooks[count].shortDes}
               - count++
-    div(class="pagingWrapper")
+    div(id="homePagePagingWrapper", class="pagingWrapper")
       div(id="toStart", class="pagingItems")
         img(src="/images/website/btnToStart.png", id="btnToStart", class="pagingImgs")
       div(id="prev", class="pagingItems")
@@ -37,14 +37,19 @@ block content
       div(id="bottomLeft")
         div(id="bottomLeftCateWrapper")
           ul(id="bottomLeftCateUl")
-            li(class="bottomLeftCateLi")
-              a(href="#") MỚI
-            li(class="bottomLeftCateLi")
-              a(href="#") HOT
-            li(class="bottomLeftCateLi")
-              a(href="#") FULL
-            li(class="bottomLeftCateLi")
-              a(href="#") ĐỀ CỬ
+            li(class="bottomLeftCateLi bottomLeftCateLiActive", data-id="new")
+              span MỚI
+            li(class="bottomLeftCateLi", data-id="hot")
+              span HOT
+            li(class="bottomLeftCateLi", data-id="full")
+              span FULL
+            li(class="bottomLeftCateLi", data-id="recommend")
+              span ĐỀ CỬ
+        div(id="bottomLeftContent")
+          - each book in newBooks
+            div(class="bookContents")
+              a(href="/w/story/#{book._id}/#{book.title}") - #{book.title} - 
+              span(style="font-style:italic; color: grey") #{book.author}
       div(id="bottomMiddle")
         div(id="bottomMiddleWrapper")
           div(id="bottomMiddleTitle") ĐIỂM TIN SÁCH
@@ -56,6 +61,39 @@ block content
           div(id="foldedBottomWrapper")
             div(id="foldedBottomTitle") GÓC NHỎ TÂM HỒN
   script
-    var pagingWrapper = document.getElementById("pagingWrapper");
+    var pagingWrapper = document.getElementById("homePagePagingWrapper");
     var imageSlider = document.getElementById("imageSlider");
     ImageSlider.Init(imageSlider, pagingWrapper);
+    var dataHotBooks = !{JSON.stringify(hotBooks)};
+    var dataNewBooks = !{JSON.stringify(newBooks)};
+    var datafulledBooks = !{JSON.stringify(fulledBooks)};
+    $(".bottomLeftCateLi").click(function(e) {
+      $(".bottomLeftCateLi").removeClass("bottomLeftCateLiActive");
+      $(this).addClass("bottomLeftCateLiActive");
+      var dataString = "";
+      switch($(this).data("id")) {
+        case "new":
+          for (var i = 0; i < dataNewBooks.length; i++) {
+            dataString += '<div class="bookContents"><a href="/w/story/' + dataNewBooks[i]._id + '/' + dataNewBooks[i].title + '"> - ' + dataNewBooks[i].title
+                        + ' - </a><span style="font-style:italic; color: grey">' + dataNewBooks[i].author + '</span></div>'
+          }
+        break;
+        case "hot":
+          for (var i = 0; i < dataHotBooks.length; i++) {
+            dataString += '<div class="bookContents"><a href="/w/story/' + dataHotBooks[i]._id + '/' + dataHotBooks[i].title + '"> - ' + dataHotBooks[i].title
+                        + ' - </a><span style="font-style:italic; color: grey">' + dataHotBooks[i].author + '</span></div>'
+          }
+        break;
+        case "full":
+          for (var i = 0; i < dataHotBooks.length; i++) {
+            dataString += '<div class="bookContents"><a href="/w/story/' + datafulledBooks[i]._id + '/' + datafulledBooks[i].title + '"> - ' + datafulledBooks[i].title
+                        + ' - </a><span style="font-style:italic; color: grey">' + datafulledBooks[i].author + '</span></div>'
+          }
+        break;
+      }
+      var bottomLeftContent = $("#bottomLeftContent");
+      bottomLeftContent.html(dataString);
+      bottomLeftContent.hide();
+      bottomLeftContent.fadeIn(400);
+      
+    });

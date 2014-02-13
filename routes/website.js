@@ -67,22 +67,39 @@ var numPage = 30;
 var maxStoryPage;
 
 var sliderBooks;
-Story.find({}, '_id title author shortDes cover').skip(0).limit(30).exec(function(error, stories) {
-  sliderBooks = stories;
-});
 
 var newBooks;
 
 var listBooks;
-Story.find({}, '_id title author cover cate updatedAt datePost numView').exec(function(error, stories) {
-  listBooks = stories;
-  maxStoryPage = Math.ceil(listBooks.length / numPage);
-});
+
+updateCacheData();
+
+setInterval(updateCacheData, 7200000);
+
+function updateCacheData() {
+  Story.find({}, '_id title author cover cate updatedAt datePost numView status').exec(function(error, stories) {
+    listBooks = stories;
+    maxStoryPage = Math.ceil(listBooks.length / numPage);
+  });
+  Story.find({}, '_id title author shortDes cover').skip(0).limit(30).exec(function(error, stories) {
+    sliderBooks = stories;
+  });
+}
 
 function getBooksByCate(cateType, bookId) {
   var books = [];
   for (var i = 0; i < listBooks.length; i++) {
     if (listBooks[i].cate.indexOf(cateType) != -1 && listBooks[i]._id.toString() != bookId.toString()) {
+      books.push(listBooks[i]);
+    }
+  }
+  return books;
+}
+
+function getFullStatusBooks() {
+  var books = [];
+  for (var i = 0; i < listBooks.length; i++) {
+    if (listBooks[i].status == 0) {
       books.push(listBooks[i]);
     }
   }
@@ -98,11 +115,17 @@ exports.contactUs = function(req, res) {
 };
 
 exports.homePage = function(req, res) {
+  var newBooks = listBooks.slice(0).sort(Util.dynamicSort('updatedAt', -1)).slice(0, 14);
+  var hotBooks = listBooks.slice(0).sort(Util.dynamicSort('numView', -1)).slice(0, 14);
+  var fulledBooks = getFullStatusBooks().sort(Util.dynamicSort('datePost', -1)).slice(0, 14);
   res.render('index', { 
     title: 'Full Truyện',
     error: '',
     category: category,
-    sliderBooks: sliderBooks
+    sliderBooks: sliderBooks,
+    newBooks: newBooks,
+    hotBooks: hotBooks,
+    fulledBooks: fulledBooks
   });
 };
 
@@ -148,7 +171,7 @@ exports.getStory = function(req, res) {
       suggestBooks.sort(Util.dynamicSort('datePost', -1));
       suggestBooks = suggestBooks.slice(0, 10);
     }
-    story.chapters.sort(Util.dynamicSort('chapter', -1));
+    story.chapters.sort(Util.dynamicSort('chapter', 1));
     res.render('story', { 
       title: 'Full Truyện',
       error: '',

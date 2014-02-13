@@ -16,23 +16,26 @@ block content
                 tr
                   td(id="storyAuthor", class="detailRows") Tác giả: #{story.author}
                 tr
-                  td(id="storyType", class="detailRows") Thể loại: #{story.cate}
+                  td(id="storyType", class="detailRows") Thể loại: 
+                    span(style="font-style:italic") #{getBookCateStrings(story.cate)}
                 tr
                   td(id="storyView", class="detailRows") Lượt xem: #{story.numView}
-                tr
-                  td(id="storyView", class="detailRows")
-                    - if (story.chapters.length > 0)
-                      a(id="btnStoryReading", href="/w/storyReading/#{story._id}/#{story.chapters[story.chapters.length - 1]._id}/#{story.chapters[story.chapters.length - 1].title}") Đọc Truyện
-            div(id="rightPart")
-              table(id="rightTable")
                 tr
                   td(id="storyTranslator", class="detailRows") Nhóm dịch: #{story.translator}
                 tr
                   td(id="storyStatus", class="detailRows")
                     span Tình trạng: 
-                    span(style="color:#34a159") #{story.status}
+                    span(style="color:#34a159") #{getStatusString(story.status)}
                 tr
                   td(id="storyPoster", class="detailRows") Người đăng: #{story.poster}
+                    - if (story.chapters.length > 0)
+                      a(id="btnStoryReading", href="/w/storyReading/#{story._id}/#{story.chapters[story.chapters.length - 1]._id}/#{story.chapters[story.chapters.length - 1].title}") Đọc Truyện
+                tr
+                  td(id="storyView", class="detailRows")
+                    
+            div(id="rightPart")
+              table(id="rightTable")
+
           div(class="lines")
             img(src="/images/website/line.png")
           div(id="socialWrapper")
@@ -49,7 +52,7 @@ block content
                     a(href="/w/storyReading/#{story._id}/#{story.chapters[story.chapters.length - i]._id}/#{story.chapters[story.chapters.length - i].title}") #{story.chapters[story.chapters.length - i].title}
           div(id="shortDesWrapper")
             div(id="text") Tóm tắt truyện
-            | #{story.shortDes}
+            != story.shortDes
         div(id="storyChapters")
           div(id="readingText") Đọc truyện #{story.title}
           input(id="searchChapterInput", type="text", placeholder="Nhập tên chương cần tìm, ví dụ: 205")
@@ -74,6 +77,17 @@ block content
                 div(class="spacer", style="clear: both;")
     div(id="bottomPage")
       h1(id="commentTitle") Bình luận cho "#{story.title}"
-      div(class="fb-like fbLikeChapters", data-href="http://fulltruyen.com/w/story/#{story._id}/#{story.title}", data-layout="button_count", data-action="like", data-show-faces="true", data-share="true")
       div(class="fb-comments", data-href="http://fulltruyen.com/w/story/#{story._id}/#{story.title}", data-width="830", data-numposts="5", data-colorscheme="light")
   div(class="pageGap")
+  script
+    function isHidingContent(){
+        var $s = $('#storyInfo');
+
+        $s.wrapInner('<div />'); // wrap inner contents
+        var hidden = $s.height() < $s.children('div').height();
+        console.log($s.height() + " " + $s.children('div').height());
+        $s.children('div').replaceWith( $s.children('div').html() ); //unwrap
+
+        return hidden;
+    }
+    // alert(isHidingContent());
