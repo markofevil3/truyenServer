@@ -91,9 +91,9 @@ app.get('/facebook', routes.facebook);
 // ## website
 app.get('/contactUs', websiteRoute.contactUs);
 app.get('/', websiteRoute.homePage);
-app.get('/w/stories/:page/:orderType/:orderStyle', websiteRoute.listStories);
-app.get('/w/story/:storyId/:storyName', websiteRoute.getStory);
-app.get('/w/storyReading/:storyId/:storyChapterId/:storyName', websiteRoute.getStoryChapter);
+app.get('/danh-sach-truyen/:page/:orderType/:orderStyle', websiteRoute.listStories);
+app.get('/truyen/:storyId/:storyName', websiteRoute.getStory);
+app.get('/doc-truyen/:storyId/:storyChapterId/:storyName', websiteRoute.getStoryChapter);
 
 //## import manga
 app.get('/import', tools.importManga);

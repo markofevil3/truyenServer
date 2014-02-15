@@ -14,32 +14,32 @@ var mainCateList = {
   listStory: {
     text: "Sách truyện",
     subCate: [],
-    link: "/w/stories/1/4/des"
+    link: "/danh-sach-truyen/1/4/des"
   },
   listManga: {
     text: "Truyện tranh",
     subCate: [],
-    link: "/w/stories/1"
+    link: "/danh-sach-truyen/1"
   },
   listAudio: {
     text: "Radio",
     subCate: [],
-    link: "/w/stories/1"
+    link: "/danh-sach-truyen/1"
   },
   news: {
     text: "Điểm tin",
     subCate: [],
-    link: "/w/stories/1"
+    link: "/danh-sach-truyen/1"
   },
   shareEmotion: {
     text: "Góc nhỏ tâm hồn",
     subCate: ["poetry", "shortStory", "experience"],
-    link: "/w/stories/1"
+    link: "/danh-sach-truyen/1"
   },
   contactUs: {
     text: "Liên hệ",
     subCate: [],
-    link: "/w/stories/1"
+    link: "/danh-sach-truyen/1"
   }
 }
 

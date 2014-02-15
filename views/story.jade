@@ -29,7 +29,7 @@ block content
                 tr
                   td(id="storyPoster", class="detailRows") Người đăng: #{story.poster}
                     - if (story.chapters.length > 0)
-                      a(id="btnStoryReading", href="/w/storyReading/#{story._id}/#{story.chapters[story.chapters.length - 1]._id}/#{story.chapters[story.chapters.length - 1].title}") Đọc Truyện
+                      a(id="btnStoryReading", href="/doc-truyen/#{story._id}/#{story.chapters[story.chapters.length - 1]._id}/#{story.chapters[story.chapters.length - 1].title}") Đọc Truyện
                 tr
                   td(id="storyView", class="detailRows")
                     
@@ -40,7 +40,7 @@ block content
             img(src="/images/website/line.png")
           div(id="socialWrapper")
             div(class="socialGap")
-            div(class="fb-like fbLikeChapters", data-href="http://fulltruyen.com/w/story/#{story._id}/#{story.title}", data-layout="button_count", data-action="like", data-show-faces="true", data-share="true")
+            div(class="fb-like fbLikeChapters", data-href="http://fulltruyen.com/truyen/#{story._id}/#{story.title}", data-layout="button_count", data-action="like", data-show-faces="true", data-share="true")
           div(class="lines", style="clear:both")
             img(src="/images/website/line.png")
           - if (story.chapters.length > 0)
@@ -49,7 +49,7 @@ block content
               - for(var i = 1; i <= 5; i++)
                 - if (story.chapters[story.chapters.length - i])
                   div(class="newestChapterLinks")
-                    a(href="/w/storyReading/#{story._id}/#{story.chapters[story.chapters.length - i]._id}/#{story.chapters[story.chapters.length - i].title}") #{story.chapters[story.chapters.length - i].title}
+                    a(href="/doc-truyen/#{story._id}/#{story.chapters[story.chapters.length - i]._id}/#{story.chapters[story.chapters.length - i].title}") #{story.chapters[story.chapters.length - i].title}
           div(id="shortDesWrapper")
             div(id="text") Tóm tắt truyện
             != story.shortDes
@@ -61,17 +61,17 @@ block content
           div(id="chaptersWrapper")
             - each chapter,i in story.chapters
               div(class="newestChapterLinks")
-                a(href="/w/storyReading/#{story._id}/#{chapter._id}/#{chapter.title}") #{chapter.title}
+                a(href="/doc-truyen/#{story._id}/#{chapter._id}/#{chapter.title}") #{chapter.title}
       div(id="suggestContainer")
         div(id="suggestWrapper")
           div(id="text") Cùng thể loại
           - if (typeof(suggestBooks) != 'undefined')
             - each book in suggestBooks
               div(class="suggestBooks")
-                a(href="/w/story/#{book._id}/#{book.title}")
+                a(href="/truyen/#{book._id}/#{book.title}")
                   img(class="bookCovers", src="#{book.cover}", onerror="this.src='/images/storyDefaultCover.jpg'")
                 div(class="bookDetails")
-                  a(href="/w/story/#{book._id}/#{book.title}") #{book.title}
+                  a(href="/truyen/#{book._id}/#{book.title}") #{book.title}
                   br
                   span(class="bookView") Lượt xem: #{book.numView}
                 div(class="spacer", style="clear: both;")
@@ -79,7 +79,7 @@ block content
           div(class="fb-like-box", data-href="https://www.facebook.com/fulltruyen", data-width="265", data-colorscheme="light", data-show-faces="true", data-header="false", data-stream="false", data-show-border="true")
     div(id="bottomPage")
       h1(id="commentTitle") Bình luận cho "#{story.title}"
-      div(class="fb-comments", data-href="http://fulltruyen.com/w/story/#{story._id}/#{story.title}", data-width="830", data-numposts="5", data-colorscheme="light")
+      div(class="fb-comments", data-href="http://fulltruyen.com/truyen/#{story._id}/#{story.title}", data-width="830", data-numposts="5", data-colorscheme="light")
   div(class="pageGap")
   script
     function isHidingContent(){

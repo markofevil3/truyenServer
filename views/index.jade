@@ -12,10 +12,10 @@ block content
             - for (var j = 0; j < 6; j++)
               div(class="books")
                 div(id="bookCoverWrapper")
-                  a(href="/w/story/#{sliderBooks[count]._id}/#{sliderBooks[count].title}")
+                  a(href="/truyen/#{sliderBooks[count]._id}/#{sliderBooks[count].title}")
                     img(id="bookCover", src="#{sliderBooks[count].cover}", onerror="this.src='/images/storyDefaultCover.jpg'")
                 div(id="bookDetails")
-                  a(href="/w/story/#{sliderBooks[count]._id}/#{sliderBooks[count].title}") #{sliderBooks[count].title}
+                  a(href="/truyen/#{sliderBooks[count]._id}/#{sliderBooks[count].title}") #{sliderBooks[count].title}
                   span(id="bookAuthor")  - #{sliderBooks[count].author}
                   p(id="bookDes") #{sliderBooks[count].shortDes}
               - count++
@@ -48,7 +48,7 @@ block content
         div(id="bottomLeftContent")
           - each book in newBooks
             div(class="bookContents")
-              a(href="/w/story/#{book._id}/#{book.title}") - #{book.title} - 
+              a(href="/truyen/#{book._id}/#{book.title}") - #{book.title} - 
               span(style="font-style:italic; color: grey") #{book.author}
       div(id="bottomMiddle")
         div(id="bottomMiddleWrapper")
@@ -74,19 +74,19 @@ block content
       switch($(this).data("id")) {
         case "new":
           for (var i = 0; i < dataNewBooks.length; i++) {
-            dataString += '<div class="bookContents"><a href="/w/story/' + dataNewBooks[i]._id + '/' + dataNewBooks[i].title + '"> - ' + dataNewBooks[i].title
+            dataString += '<div class="bookContents"><a href="/truyen/' + dataNewBooks[i]._id + '/' + dataNewBooks[i].title + '"> - ' + dataNewBooks[i].title
                         + ' - </a><span style="font-style:italic; color: grey">' + dataNewBooks[i].author + '</span></div>'
           }
         break;
         case "hot":
           for (var i = 0; i < dataHotBooks.length; i++) {
-            dataString += '<div class="bookContents"><a href="/w/story/' + dataHotBooks[i]._id + '/' + dataHotBooks[i].title + '"> - ' + dataHotBooks[i].title
+            dataString += '<div class="bookContents"><a href="/truyen/' + dataHotBooks[i]._id + '/' + dataHotBooks[i].title + '"> - ' + dataHotBooks[i].title
                         + ' - </a><span style="font-style:italic; color: grey">' + dataHotBooks[i].author + '</span></div>'
           }
         break;
         case "full":
           for (var i = 0; i < dataHotBooks.length; i++) {
-            dataString += '<div class="bookContents"><a href="/w/story/' + datafulledBooks[i]._id + '/' + datafulledBooks[i].title + '"> - ' + datafulledBooks[i].title
+            dataString += '<div class="bookContents"><a href="/truyen/' + datafulledBooks[i]._id + '/' + datafulledBooks[i].title + '"> - ' + datafulledBooks[i].title
                         + ' - </a><span style="font-style:italic; color: grey">' + datafulledBooks[i].author + '</span></div>'
           }
         break;
