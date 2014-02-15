@@ -115,9 +115,9 @@ exports.contactUs = function(req, res) {
 };
 
 exports.homePage = function(req, res) {
-  var newBooks = listBooks.slice(0).sort(Util.dynamicSort('updatedAt', -1)).slice(0, 14);
-  var hotBooks = listBooks.slice(0).sort(Util.dynamicSort('numView', -1)).slice(0, 14);
-  var fulledBooks = getFullStatusBooks().sort(Util.dynamicSort('datePost', -1)).slice(0, 14);
+  var newBooks = listBooks.slice(0).sort(Util.dynamicSort('updatedAt', -1)).slice(0, 12);
+  var hotBooks = listBooks.slice(0).sort(Util.dynamicSort('numView', -1)).slice(0, 12);
+  var fulledBooks = getFullStatusBooks().sort(Util.dynamicSort('datePost', -1)).slice(0, 12);
   res.render('index', { 
     title: 'Full Truyện',
     error: '',
@@ -182,6 +182,22 @@ exports.getStory = function(req, res) {
   });
 };
 
+function getNextPrevChapter(chapters, chapterId) {
+  var next, prev, index;
+  for (var i = 0; i < chapters.length; i++) {
+    if (chapters[i]._id.toString() == chapterId.toString()) {
+      index = i;
+    }
+  }
+  if (chapters[index + 1]) {
+    next = chapters[index + 1];
+  }
+  if (chapters[index - 1]) {
+    prev = chapters[index - 1];
+  }
+  return {next: next, prev: prev};
+}
+
 exports.getStoryChapter = function(req, res) {
   Story.findOne({ '_id': req.params.storyId }).exec(function(error, story) {
     story.numView++;
@@ -193,7 +209,8 @@ exports.getStoryChapter = function(req, res) {
       error: '',
       category: category,
       story: story,
-      chapter: chapter
+      chapter: chapter,
+      nextPrevChapter: getNextPrevChapter(story.chapters, req.params.storyChapterId)
     });
   });
 }

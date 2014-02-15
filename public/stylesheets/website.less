@@ -293,7 +293,7 @@ html {
       background: url('/images/website/bottomLeftBg.png') no-repeat;
       margin-right: 9px;
       margin-left: 27px;
-      overflow: scroll;
+      overflow: hidden;
       
       #bottomLeftContent {
         width: 300px;
@@ -745,6 +745,40 @@ html {
   margin-bottom: 20px;
   font-family: "Times New Roman",Times,serif;
   font-size: 20px;
+  
+  #changeChapterWrap {
+    margin-bottom: 30px;
+    
+    #tableContent {
+      width: 100%;
+      table-layout: fixed;
+      
+      #colum1 {
+        text-align: left;
+      }
+      #colum2 {
+        text-align: right;
+      }
+      .buttons {
+        width: 50px;
+      }
+      .colums {
+        vertical-align: middle;
+        
+        a {
+          text-decoration: none;
+          color: #3571bd;
+        }
+        a:hover {
+          color: #4d9b95;
+        }
+      }
+      .nextImages {
+        vertical-align: middle;
+        text-align: center;
+      }
+    }
+  }
   
   #bottomPage {
     width: 100%;
