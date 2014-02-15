@@ -169,7 +169,7 @@ exports.getStory = function(req, res) {
     if (suggestCate) {
       suggestBooks = getBooksByCate(suggestCate, story._id);
       suggestBooks.sort(Util.dynamicSort('datePost', -1));
-      suggestBooks = suggestBooks.slice(0, 10);
+      suggestBooks = suggestBooks.slice(0, 8);
     }
     story.chapters.sort(Util.dynamicSort('chapter', 1));
     res.render('story', { 

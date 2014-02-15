@@ -75,6 +75,8 @@ block content
                   br
                   span(class="bookView") Lượt xem: #{book.numView}
                 div(class="spacer", style="clear: both;")
+        div(id="fbFanPage")
+          div(class="fb-like-box", data-href="https://www.facebook.com/fulltruyen", data-width="265", data-colorscheme="light", data-show-faces="true", data-header="false", data-stream="false", data-show-border="true")
     div(id="bottomPage")
       h1(id="commentTitle") Bình luận cho "#{story.title}"
       div(class="fb-comments", data-href="http://fulltruyen.com/w/story/#{story._id}/#{story.title}", data-width="830", data-numposts="5", data-colorscheme="light")
