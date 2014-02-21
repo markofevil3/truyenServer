@@ -64,6 +64,8 @@ block content
     var pagingWrapper = document.getElementById("homePagePagingWrapper");
     var imageSlider = document.getElementById("imageSlider");
     ImageSlider.Init(imageSlider, pagingWrapper);
+    
+    // switch bottom tab
     var dataHotBooks = !{JSON.stringify(hotBooks)};
     var dataNewBooks = !{JSON.stringify(newBooks)};
     var datafulledBooks = !{JSON.stringify(fulledBooks)};
@@ -95,5 +97,4 @@ block content
       bottomLeftContent.html(dataString);
       bottomLeftContent.hide();
       bottomLeftContent.fadeIn(400);
-      
     });

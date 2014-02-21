@@ -80,10 +80,11 @@ function updateCacheData() {
   Story.find({}, '_id title author cover cate updatedAt datePost numView status').exec(function(error, stories) {
     listBooks = stories;
     maxStoryPage = Math.ceil(listBooks.length / numPage);
+    sliderBooks = listBooks.slice(0).sort(Util.dynamicSort('datePost', -1)).slice(0, 30);
   });
-  Story.find({}, '_id title author shortDes cover').skip(0).limit(30).exec(function(error, stories) {
-    sliderBooks = stories;
-  });
+  // Story.find({}, '_id title author shortDes cover').skip(0).limit(30).exec(function(error, stories) {
+  //   sliderBooks = stories;
+  // });
 }
 
 function getBooksByCate(cateType, bookId) {
@@ -108,9 +109,10 @@ function getFullStatusBooks() {
 
 exports.contactUs = function(req, res) {
   res.render('contactUs', { 
-    title: 'Full Truyện',
+    title: 'Liên hệ | Full Truyện',
     error: '',
-    category: category
+    category: category,
+    allBooks: listBooks
   });
 };
 
@@ -125,7 +127,8 @@ exports.homePage = function(req, res) {
     sliderBooks: sliderBooks,
     newBooks: newBooks,
     hotBooks: hotBooks,
-    fulledBooks: fulledBooks
+    fulledBooks: fulledBooks,
+    allBooks: listBooks
   });
 };
 
@@ -149,7 +152,7 @@ exports.listStories = function(req, res) {
       stories = listBooks.slice(0).sort(Util.dynamicSort('datePost', req.params.orderStyle == "asc" ? 1 : -1));
   }
   res.render('listStory', { 
-    title: 'Full Truyện',
+    title: 'Danh sách truyện | Full Truyện',
     error: '',
     category: category,
     totalPage: 5,
@@ -158,7 +161,8 @@ exports.listStories = function(req, res) {
     orderStyle: req.params.orderStyle,
     maxStoryPage: maxStoryPage,
     currentPage: parseInt(req.params.page),
-    storyTypes: Util.storyCate
+    storyTypes: Util.storyCate,
+    allBooks: listBooks
   });
 };
 
@@ -173,11 +177,12 @@ exports.getStory = function(req, res) {
     }
     story.chapters.sort(Util.dynamicSort('chapter', 1));
     res.render('story', { 
-      title: 'Full Truyện',
+      title: story.title + ' | Full Truyện',
       error: '',
       category: category,
       story: story,
-      suggestBooks: suggestBooks
+      suggestBooks: suggestBooks,
+      allBooks: listBooks
     });
   });
 };
@@ -205,12 +210,13 @@ exports.getStoryChapter = function(req, res) {
     story.chapters.sort(Util.dynamicSort('chapter', 1));
     var chapter = story.chapters.id(req.params.storyChapterId);
     res.render('storyReading', { 
-      title: 'Full Truyện',
+      title: chapter.title + ' | Full Truyện',
       error: '',
       category: category,
       story: story,
       chapter: chapter,
-      nextPrevChapter: getNextPrevChapter(story.chapters, req.params.storyChapterId)
+      nextPrevChapter: getNextPrevChapter(story.chapters, req.params.storyChapterId),
+      allBooks: listBooks
     });
   });
 }
