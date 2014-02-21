@@ -92,6 +92,7 @@ app.get('/facebook', routes.facebook);
 app.get('/contactUs', websiteRoute.contactUs);
 app.get('/', websiteRoute.homePage);
 app.get('/danh-sach-truyen/:page/:orderType/:orderStyle', websiteRoute.listStories);
+app.get('/danh-sach-truyen', websiteRoute.listStories);
 app.get('/truyen/:storyId/:storyName', websiteRoute.getStory);
 app.get('/doc-truyen/:storyId/:storyChapterId/:storyName', websiteRoute.getStoryChapter);
 

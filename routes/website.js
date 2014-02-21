@@ -134,6 +134,15 @@ exports.homePage = function(req, res) {
 
 exports.listStories = function(req, res) {
   var stories;
+  if (req.params.orderType == undefined) {
+    req.params.orderType = "4";
+  }
+  if (req.params.orderStyle == undefined) {
+    req.params.orderStyle = "des";
+  }
+  if (req.params.page == undefined) {
+    req.params.page = "1";
+  }
   switch(req.params.orderType) {
     case "0": // title
       stories = listBooks.slice(0).sort(Util.dynamicSort('title', req.params.orderStyle == "asc" ? 1 : -1));
@@ -151,6 +160,7 @@ exports.listStories = function(req, res) {
     default: // datepost
       stories = listBooks.slice(0).sort(Util.dynamicSort('datePost', req.params.orderStyle == "asc" ? 1 : -1));
   }
+
   res.render('listStory', { 
     title: 'Danh sách truyện | Full Truyện',
     error: '',
