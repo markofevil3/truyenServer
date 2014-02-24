@@ -662,7 +662,7 @@ input[type=search] {
   float: left;
   
   .listTable {
-    table-layout: fixed;
+/*    table-layout: fixed;*/
     border-collapse: separate;
     border-spacing: 0;
     width: 690px;
@@ -736,6 +736,10 @@ input[type=search] {
       overflow-wrap: break-word;
       vertical-align: middle;
       
+      span {
+        color: #2795bf;
+      }
+      
       a {
         text-decoration: none;
         color: rgba(0, 0, 0, 0.75);
@@ -762,7 +766,9 @@ input[type=search] {
 }
 
 .categoryContent {
-  float: left;
+/*  float: left;*/
+  position: absolute;
+  right: -140px;
   width: 140px;
   background: url('/images/website/listStoryRepeatBg.png') repeat;
   .rounded-corners-right(7px);
@@ -803,16 +809,16 @@ input[type=search] {
   #listStoryContent {
     background: url('/images/website/listStoryRepeatBg.png') repeat;
     .rounded-corners(7px);
-    width: 757px;
+    width: 100%;
     
     .listTable {
-      width: 746px;
+      width: 890px;
     }
   } 
   
   #listStoryPagingWrapper {
     clear: both;
-    width: 743px;
+    width: 100%;
     position: relative;
     top: 8px;
     

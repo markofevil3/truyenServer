@@ -14,11 +14,11 @@ block content
               th(class="listTableHeader")
                 a(class="row-title link-row-title", href="/danh-sach-truyen/#{currentPage}/0/asc") Tên Truyện
             - if (orderType == "1")
-              th(class="listTableHeader", style="width:125px")
+              th(class="listTableHeader")
                 a(class="row-title link-row-title", href="/danh-sach-truyen/#{currentPage}/1/#{orderStyle == 'asc' ? 'des' : 'asc'}") Tác Giả
                 img(src="/images/website/#{orderStyle == 'asc' ? 'ascending.png' : 'descending.png'}", class="order-img-row-title")
             - else
-              th(class="listTableHeader", style="width:125px")
+              th(class="listTableHeader")
                 a(class="row-title link-row-title", href="/danh-sach-truyen/#{currentPage}/1/asc") Tác Giả
             // - if (orderType == "2")
             //   th(class="listTableHeader", style="width:80px")
@@ -28,18 +28,18 @@ block content
             //   th(class="listTableHeader", style="width:80px")
             //     a(class="row-title link-row-title", href="/danh-sach-truyen/#{currentPage}/2/asc") Thể Loại
             - if (orderType == "3")
-              th(class="listTableHeader", style="width:80px")
+              th(class="listTableHeader")
                 a(class="row-title link-row-title", href="/danh-sach-truyen/#{currentPage}/3/#{orderStyle == 'asc' ? 'des' : 'asc'}") Lượt Xem
                 img(src="/images/website/#{orderStyle == 'asc' ? 'ascending.png' : 'descending.png'}", class="order-img-row-title")
             - else
-              th(class="listTableHeader", style="width:70px")
+              th(class="listTableHeader")
                 a(class="row-title link-row-title", href="/danh-sach-truyen/#{currentPage}/3/asc") Lượt Xem
             - if (orderType == "4")
-              th(class="listTableHeader", style="width:100px")
+              th(class="listTableHeader")
                 a(class="row-title link-row-title", href="/danh-sach-truyen/#{currentPage}/4/#{orderStyle == 'asc' ? 'des' : 'asc'}") Ngày Post 
                 img(src="/images/website/#{orderStyle == 'asc' ? 'ascending.png' : 'descending.png'}", class="order-img-row-title")
             - else
-              th(class="listTableHeader", style="width:100px")
+              th(class="listTableHeader")
                 a(class="row-title link-row-title", href="/danh-sach-truyen/#{currentPage}/4/asc") Ngày Post 
           tr(id="gapLine", style="height:5px")
           - each story,i in stories
