@@ -107,6 +107,10 @@ function getFullStatusBooks() {
   return books;
 }
 
+exports.updateCacheDataNow = function() {
+  updateCacheData();
+};
+
 exports.contactUs = function(req, res) {
   res.render('contactUs', { 
     title: 'Liên hệ | Full Truyện',
