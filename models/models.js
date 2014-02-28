@@ -13,7 +13,7 @@ var chapterSchema = new Schema({
   title: String,
   numPages: Number,
   datePost: Date,
-  pages: [],
+  pages: [String],
   poster: String
 });
 
@@ -45,6 +45,17 @@ var chapterStorySchema = new Schema({
   datePost: Date,
   folder: String,
   poster: String,
+});
+
+var newsSchema = new Schema({
+  title: { type: String, index: true },
+  poster: String,  
+  datePost: {type: Date, index: true},
+  type: Number,
+  shortDes: String,
+  content: String,
+  source: String,
+  cover: String
 });
 
 var storySchema = new Schema({
@@ -93,4 +104,5 @@ module.exports = {
   'Chapter': mongoose.model('Chapter', chapterSchema),
   'Story': mongoose.model('Story', storySchema),
   'StoryAudio': mongoose.model('StoryAudio', storyAudioSchema),
+  'News': mongoose.model('News', newsSchema),
 };

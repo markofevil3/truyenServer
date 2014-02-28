@@ -12,8 +12,10 @@ var Favorite = require('../models/models').Favorite;
 var Manga = require('../models/models').Manga;
 var Story = require('../models/models').Story;
 var StoryAudio = require('../models/models').StoryAudio;
+var News = require('../models/models').News;
 
 var StoryController = require('./storyController');
+var NewsController = require('./newsController');
 
 // Story cate:
 // 0: ngon tinh
@@ -213,6 +215,30 @@ exports.index = function(req, res) {
     title: 'Full Truyện',
     admin: req.session.user
   });
+};
+
+exports.listNews = function(req, res) {
+  NewsController.listNews(req, res);
+};
+
+exports.addNewsPage = function(req, res) {
+  NewsController.addNewsPage(req, res);
+};
+
+exports.addNews = function(req, res) {
+  NewsController.addNews(req, res);
+};
+
+exports.editNewsPage = function(req, res) {
+  NewsController.editNewsPage(req, res);
+};
+
+exports.editNews = function(req, res) {
+  NewsController.editNews(req, res);
+};
+
+exports.removeNews = function(req, res) {
+  NewsController.removeNews(req, res);
 };
 
 exports.listManga = function(req, res) {

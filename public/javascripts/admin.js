@@ -199,6 +199,23 @@ function removeStory(storyId, storyName) {
   }
 }
 
+function removeNews(newsId, newsName) {
+  var confirmBox = confirm("Xoá Tin: " + newsName + " ?");
+  if (confirmBox == true) {
+    $.ajax( "/removeNews?id=" + newsId)
+      .done(function(response) {
+        if (response.data == 'success') {
+          window.location.replace("/listNews");
+        } else {
+          alert('Không có quyền xoá!');
+        }
+      })
+      .fail(function() {
+        window.location.replace("/listNews");
+      })
+  }
+}
+
 function removeAudio(audioId, audioName) {
   var confirmBox = confirm("Xoá audio: " + audioName + " ?");
   if (confirmBox == true) {

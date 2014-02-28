@@ -1,0 +1,37 @@
+extends layout
+
+block content
+  div(id="listNews-page", class="contentPages")
+    div(id="button-wrapper")
+      a(href="/addNews", class="button_link", id="btnAddStory") Nhập Tin Tức
+    - if (news.length > 0)
+      table(class="listTable")
+        tr
+          // td
+          th(class="listTableHeader", style="width:20px")
+            span(class="row-title listTableRowSTT") STT
+          th(class="listTableHeader")
+            span Tiêu Đề
+          - if (orderBy == "author")
+            th(class="listTableHeader", style="width:100px")
+              span Poster
+              img(src="/images/website/#{oType == 'asc' ? 'ascending.png' : 'descending.png'}", class="order-img-row-title")
+          - else
+            th(class="listTableHeader", style="width:100px")
+              a(class="row-title link-row-title", href="/listNews?orderBy=author&oType=asc") Poster
+          - if (orderBy == "datePost")
+            th(class="listTableHeader", style="width:80px")
+              a(class="row-title link-row-title", href="/listNews?orderBy=datePost&oType=#{oType == 'asc' ? 'des' : 'asc'}") Ngày Post 
+              img(src="/images/website/#{oType == 'asc' ? 'ascending.png' : 'descending.png'}", class="order-img-row-title")
+          - else
+            th(class="listTableHeader", style="width:80px")
+              a(class="row-title link-row-title", href="/listNews?orderBy=datePost&oType=asc") Ngày Post 
+        - each aNew,i in news
+          tr(class="listTableTR")
+            td(class="listTableRow listTableRowSTT") #{i}
+            td(class="listTableRow listTableRowTitle")
+              a(href="/editNews?id=#{aNew._id}") #{aNew.title}
+            td(class="listTableRow listTableRowAuthor")
+              span #{aNew.poster}
+            td(class="listTableRow listTableRowNumView")
+              span #{prettyDate(aNew.datePost)}

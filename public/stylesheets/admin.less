@@ -240,6 +240,26 @@ a:hover {
     margin-top: 13px;
     background-color: ivory;
   }
+  
+  #btnRemoveNews {
+    margin-left: 50px;
+    margin-top: 15px;
+    cursor:pointer; /*forces the cursor to change to a hand when the button is hovered*/
+    padding:5px 25px; /*add some padding to the inside of the button*/
+    background: red; /*the colour of the button*/
+    border:1px solid #F80059; /*required or the default border for the browser will appear*/
+    /*give the button curved corners, alter the size as required*/
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    /*give the button a drop shadow*/
+    -webkit-box-shadow: 0 0 4px rgba(0,0,0, .75);
+    -moz-box-shadow: 0 0 4px rgba(0,0,0, .75);
+    box-shadow: 0 0 4px rgba(0,0,0, .75);
+    /*style the text*/
+    color:#f3f3f3;
+    font-size:1.1em;
+  }
 }
 
 #addUser-page {
@@ -263,7 +283,7 @@ a:hover {
   }
 }
 
-#listStory-page {
+#listStory-page, #listNews-page {
   #button-wrapper {
     height: 70px;
   }

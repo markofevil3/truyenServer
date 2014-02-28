@@ -124,6 +124,10 @@ app.get('/addStoryChapter', check_auth, adminRoute.addStoryChapterPage);
 app.get('/removeStoryChapter', check_auth, adminRoute.removeStoryChapter);
 app.get('/editStoryChapter', check_auth, adminRoute.editStoryChapterPage);
 app.get('/listStory', check_auth, adminRoute.listStory);
+app.get('/listNews', check_auth, adminRoute.listNews);
+app.get('/addNews', check_auth, adminRoute.addNewsPage);
+app.get('/editNews', check_auth, adminRoute.editNewsPage);
+app.get('/removeNews', check_auth, adminRoute.removeNews);
 
 app.post('/authenticate', adminRoute.authenticate);
 app.post('/updateUserInfo', check_auth, adminRoute.updateUserInfo);
@@ -134,6 +138,8 @@ app.post('/editStoryChapter', check_auth, adminRoute.editStoryChapter);
 app.post('/updateAudios', check_auth, adminRoute.updateAudios);
 app.post('/addAudio', check_auth, adminRoute.addAudio);
 app.post('/updateMangas', check_auth, adminRoute.updateMangas);
+app.post('/addNews', check_auth, adminRoute.addNews);
+app.post('/editNews', check_auth, adminRoute.editNews);
 //###################
 
 http.createServer(app).listen(app.get('port'), function(){

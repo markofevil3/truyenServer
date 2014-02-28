@@ -1,0 +1,100 @@
+extends layout
+
+block textEditor
+  script(src="/ckeditor/ckeditor.js")
+  script.
+    // window.onload = function() {
+    //   CKEDITOR.replace( 'msgpost',{
+    //   });
+    // };
+block content
+  div(id="addStory-page")
+    div(class="pageTitle") Nhập Tin Tức
+    - if (typeof(error) != 'undefined')
+      div(class="errorText", style="text-align:center") #{error}
+    form(id="addStoryForm", action="addNews", method="POST", enctype="multipart/form-data", style="width:90%; margin:auto")
+      table(id="detailTable", class="detailTable")
+        tr
+          td(class="detailTableTexts") Tiêu Đề:
+          td(class="detailTableInputRows")
+            input(name="newsTitle", id="newsTitle", class="detailTableInputs", type="text", value="")
+        tr
+          td(class="detailTableTexts") Nguồn:
+          td(class="detailTableInputRows")
+            input(name="newsSource", id="newsSource", class="detailTableInputs", type="text", value="", placeholder="Ghi nguồn tin nếu có.")
+        tr
+          td(class="detailTableTexts") Thể Loại:
+          td(class="detailTableInputRows")
+            select(name="newsCategory", id="newsCategory")
+              - each cate, index in newsCates
+                option(value="#{index}") #{cate}
+        tr
+          td(class="detailTableTexts") Ảnh Bìa:
+          td(class="detailTableInputRows")
+            input(type="file", name="newsCoverUpload", id="newsCoverUpload")
+        tr
+          td(class="detailTableTexts") Tóm Tắt:
+          td(class="detailTableInputRows")
+            textarea(name="newsShortDes", id="newsShortDes", class="detailTableInputs shortDesInput", value="")
+        tr
+          td(class="detailTableTexts") Nội Dung:
+          td(class="detailTableInputRows")
+            textarea(id="msgpost", name="msgpost", class="input-panel")
+      br
+      br
+      input(type="submit", name="submit", value="Save", class="submitButton", style="margin: -10px 100px 20px 190px")
+      div(id="btnPreview", class="btnPreview", style="float:right; margin-top: -10px") Preview
+    div(id="previewPanel", class="previewPanel")
+      div(id="toPopup")
+        div(class="close")
+        div(id="popup_content")
+      div(class="loader")
+      div(id="backgroundPopup")
+  script
+    CKEDITOR.replace( 'msgpost',{
+      width: "700px",
+      height: "600px"
+    });
+    $("document").ready(function(){
+      
+      $("#btnPreview").click(function() {
+        showPopupPreview(CKEDITOR.instances['msgpost'].getData());
+      });
+      
+      $("#addStoryForm").validate({
+        rules: {
+          newsTitle: {
+            required: true,
+          },
+          newsCoverUpload: {
+            accept: "image/*"
+          }
+        },
+        messages: {
+          newsTitle: {
+            required: "Chưa Điền Tên Truyện!",
+          },
+          newsCoverUpload: {
+            accept: "Không Đúng File!"
+          }
+        }
+      });
+      // check file size
+      var _URL = window.URL || window.webkitURL;
+
+      $("#newsCoverUpload").change(function(e) {
+        var file, img;
+        if ((file = this.files[0])) {
+          img = new Image();
+          img.onload = function() {
+            if (this.width < 200 || this.height < 300) {
+              $("#newsCoverUpload").replaceWith($("#newsCoverUpload").val('').clone(true));
+              alert("Ảnh size tối thiểu là 200x300!");
+            }
+            // alert(this.width + " " + this.height);
+          };
+          img.src = _URL.createObjectURL(file);
+        }
+      });
+    });
+      

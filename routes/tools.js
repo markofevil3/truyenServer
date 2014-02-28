@@ -19,6 +19,40 @@ var mangaRoot = 'public/images/manga';
 var mangaDir = [];
 var clone;
 
+// mapMangaData();
+
+function mapMangaData() {
+  // ServerManga.find({}, function(error, serverMangas) {
+  //   checkAndGetFromLocal(serverMangas);
+  // });
+}
+
+function checkAndGetFromLocal(serverMangas) {
+  // var serverManga = serverMangas.shift();
+  // Manga.findOne({'_id': serverManga._id}, function(error, localManga) {
+  //   if (localManga != null) {
+  //     console.log('local-' + localManga.title);
+  //     for (var j = 0; j < serverManga.chapters.length; j++) {
+  //       var serverChapter = serverManga.chapters[j];
+  //       if (serverChapter.pages == undefined || serverChapter.pages.length == 0) {
+  //         // console.log("++++" + serverChapter.chapter);
+  //         var localMangaChapter = localManga.chapters.id(serverChapter._id);
+  //         if (localMangaChapter != null && localMangaChapter.pages.length > 0) {
+  //           serverChapter.pages = localMangaChapter.pages;
+  //           console.log(serverManga.title + "--chapter:" + serverChapter.chapter);
+  //           console.log("success----");
+  //         }
+  //       }
+  //     }
+  //     serverManga.save(function() {
+  //       checkAndGetFromLocal(serverMangas);
+  //     });
+  //   } else {
+  //     checkAndGetFromLocal(serverMangas);
+  //   }
+  // });
+}
+
 function autoDownloadChapters(startIndex, callback) {
   // var autoDownloadLink = 'http://truyentranhtuan.com/moi-cap-nhat/' + startIndex + '/index.html';
   var autoDownloadLink = 'http://truyentranhtuan.com/page/' + startIndex;
