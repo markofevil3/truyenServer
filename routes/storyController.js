@@ -13,6 +13,8 @@ var Manga = require('../models/models').Manga;
 var Story = require('../models/models').Story;
 var StoryAudio = require('../models/models').StoryAudio;
 
+var WebsiteController = require('./website');
+
 exports.listStory = function(req, res) {
   Story.find({}, '_id title author datePost numView shortDes cover type').exec(function(error, stories) {
     if (error) {
@@ -94,8 +96,9 @@ exports.addStory = function(req, res) {
       if (error) {
         console.log(error);
       }
+      WebsiteController.updateCacheDataNow();
       // adminRoute.addStoryPage(req, res);
-      req.query.id = story._id;
+      req.query.id = story._id;i
       adminRoute.addStoryChapterPage(req, res);
     });
   } else {
