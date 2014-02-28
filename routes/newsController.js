@@ -34,7 +34,6 @@ exports.addNews = function(req, res) {
   if (Util.checkAccessRight("addNews", req.session.user.accessable)) {
     var news = new News({});
     news.title = req.body["newsTitle"];
-    news.source = req.body["newsSource"];
     news.datePost = Date.now();
     news.shortDes = req.body["newsShortDes"];
     news.type = parseInt(req.body["newsCategory"]);
@@ -85,7 +84,6 @@ exports.editNews = function(req, res) {
   News.findOne({"_id": req.body.newsId}, function(error, news) {
     if (news != null) {
       news.title = req.body["newsTitle"];
-      news.source = req.body["newsSource"];
       news.shortDes = req.body["newsShortDes"];
       news.type = parseInt(req.body["newsCategory"]);
       news.content = req.body["msgpost"];
