@@ -10,36 +10,38 @@ var Favorite = require('../models/models').Favorite;
 var Manga = require('../models/models').Manga;
 var Story = require('../models/models').Story;
 
+var NewsController = require('./newsController');
+
 var mainCateList = {
   listStory: {
     text: "Sách truyện",
     subCate: [],
     link: "/danh-sach-truyen/1/4/des"
   },
+  news: {
+    text: "Điểm tin",
+    subCate: [],
+    link: "/diem-tin"
+  },
   listManga: {
     text: "Truyện tranh",
     subCate: [],
-    link: "/danh-sach-truyen/1"
+    link: "/"
   },
   listAudio: {
     text: "Radio",
     subCate: [],
-    link: "/danh-sach-truyen/1"
-  },
-  news: {
-    text: "Điểm tin",
-    subCate: [],
-    link: "/danh-sach-truyen/1"
+    link: "/"
   },
   shareEmotion: {
     text: "Góc nhỏ tâm hồn",
     subCate: ["poetry", "shortStory", "experience"],
-    link: "/danh-sach-truyen/1"
+    link: "/"
   },
   contactUs: {
     text: "Liên hệ",
     subCate: [],
-    link: "/danh-sach-truyen/1"
+    link: "/contactUs"
   }
 }
 
@@ -233,4 +235,16 @@ exports.getStoryChapter = function(req, res) {
       allBooks: listBooks
     });
   });
+}
+
+exports.getListBooks = function() {
+  return listBooks;
+}
+
+exports.getCategory = function() {
+  return category;
+}
+
+exports.listNews = function(req, res) {
+  NewsController.listNewsForWebsite(req, res);
 }

@@ -1,0 +1,24 @@
+extends layout
+
+block metaData
+  meta(name="keywords", content="Đọc truyện trực tuyến, đọc truyện online, doc truyen truc tuyen, doc truyen online, đọc truyện, doc truyen, truyen tranh, sach truyen, truyện tranh, sách truyện, full truyen ,diem tin, điểm tin")
+
+block content
+  div(id="newsPage", class="contentPages")
+    div(id="newsCates")
+      - each cate in newsCates
+        - if (cate.route == currentDisplayType)
+          div(class="newsCate cateActive")
+            a(href="/diem-tin/#{cate.route}") #{cate.title}
+        - else
+          div(class="newsCate")
+            a(href="/diem-tin/#{cate.route}") #{cate.title}
+      div(style="clear:both")
+    div(id="topNewsWrapper")
+      div(id="topPanel")
+        div(id="bigBook")
+          div(id="imgCropWrapper")
+            img(id="imgCrop", src="#{hotNewsList[0].cover}", onerror="this.src='/images/storyDefaultCover.jpg'")
+          div(id="bigBookTitle") #{hotNewsList[0].title}
+        div(id="rightContent")
+      div(id="bottomPanel")

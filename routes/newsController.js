@@ -8,6 +8,9 @@ var fs = require('fs');
 var User = require('../models/models').User;
 var News = require('../models/models').News;
 
+var WebsiteController = require('./website');
+
+
 exports.listNews = function(req, res) {
   News.find({}, '_id title poster datePost cover').sort({'datePost': -1}).exec(function(error, news) {
     if (error) {
@@ -38,6 +41,7 @@ exports.addNews = function(req, res) {
     news.shortDes = req.body["newsShortDes"];
     news.type = parseInt(req.body["newsCategory"]);
     news.poster = req.session.user.username;
+    news.storyLink = req.body["newsStoryLink"];
     news.content = req.body["msgpost"];
     if (req.files.newsCoverUpload.size > 0) {
       var data = fs.readFileSync(req.files.newsCoverUpload.path);
@@ -87,6 +91,7 @@ exports.editNews = function(req, res) {
       news.shortDes = req.body["newsShortDes"];
       news.type = parseInt(req.body["newsCategory"]);
       news.content = req.body["msgpost"];
+      news.storyLink = req.body["newsStoryLink"];
       if (req.files.newsCoverUpload.size > 0) {
         var data = fs.readFileSync(req.files.newsCoverUpload.path);
         var coverFileName = news.title + "." + Util.getFileExtension(req.files.newsCoverUpload.name);
@@ -120,5 +125,54 @@ exports.removeNews = function(req, res) {
     });
   } else {
     res.json({ data: "error" });
+  }
+};
+
+// Website routes
+
+var hotNewsNumb = 8;
+var numNewsPerPage = 8;
+
+var hotNewsList;
+
+updateNewsCacheData();
+
+setInterval(updateNewsCacheData, 7200000);
+
+function updateNewsCacheData() {
+  News.find({}, '_id title cover type shortDes datePost').sort({'datePost': -1}).skip(0).limit(hotNewsNumb).exec(function(error, news) {
+    hotNewsList = news;
+  });
+}
+
+exports.listNewsForWebsite = function(req, res) {
+  var displayType = "";
+  if (req.params.displayType == undefined) {
+    displayType = "tong-hop";
+  } else {
+    displayType = req.params.displayType;
+  }
+  var maxNewsPage = 1;
+  if (req.params.page == undefined) {
+    req.params.page = 1;
+  }
+  switch (displayType) {
+    case "tong-hop":
+      News.count({}, function( err, count){
+        maxNewsPage = Math.ceil(count / numNewsPerPage);
+        News.find({}, '_id title cover type shortDes datePost').sort({'datePost': -1}).skip((req.params.page - 1) * numNewsPerPage).limit(numNewsPerPage).exec(function(error, news) {
+          res.render('news', { 
+            title: 'Full Truyện | Điểm Tin',
+            maxNewsPage: maxNewsPage,
+            currentPage: req.params.page,
+            allBooks: WebsiteController.getListBooks(),
+            category: WebsiteController.getCategory(),
+            newsCates: Util.newsCate,
+            hotNewsList: hotNewsList,
+            currentDisplayType: displayType
+          });
+        });
+      })
+    break;
   }
 };

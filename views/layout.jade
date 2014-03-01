@@ -69,11 +69,9 @@ html
        }
        // search content
        $(function() {
-         console.log(allBooks);
          var autoComplete = $( "#searchInput" ).autocomplete({
             source: allBooks,
             select: function( event, ui ) {
-             console.log(ui);
              window.location = "/truyen/" + ui.item._id + "/" + ui.item.title;
            }
          });
@@ -114,7 +112,7 @@ html
     div(id="category-content")
       ul(id="categoryUl")
         li(class="mainCates")
-          a(class="a-mainCates", href="/")
+          a(id="homeCate", class="a-mainCates", href="/")
             img(id="iconHome", src="/images/website/icon-home.png")
             span Trang chủ
         - for(key in category.mainCateList)

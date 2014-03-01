@@ -96,6 +96,9 @@ app.get('/danh-sach-truyen/:page/:orderType/:orderStyle', websiteRoute.listStori
 app.get('/danh-sach-truyen', websiteRoute.listStories);
 app.get('/truyen/:storyId/:storyName', websiteRoute.getStory);
 app.get('/doc-truyen/:storyId/:storyChapterId/:storyName', websiteRoute.getStoryChapter);
+// app.get('/diem-tin/:displayType', websiteRoute.listNews);
+// app.get('/diem-tin/:displayType/:page', websiteRoute.listNews);
+// app.get('/diem-tin', websiteRoute.listNews);
 
 //## import manga
 app.get('/import', tools.importManga);

@@ -23,11 +23,15 @@ block content
           td(class="detailTableInputRows")
             select(name="newsCategory", id="newsCategory")
               - each cate, index in newsCates
-                option(value="#{index}") #{cate}
+                option(value="#{index}") #{cate.title}
         tr
           td(class="detailTableTexts") Ảnh Bìa:
           td(class="detailTableInputRows")
             input(type="file", name="newsCoverUpload", id="newsCoverUpload")
+        tr
+          td(class="detailTableTexts") Link Truyện:
+          td(class="detailTableInputRows")
+            input(name="newsStoryLink", id="newsStoryLink", class="detailTableInputs", type="text", value="")
         tr
           td(class="detailTableTexts") Tóm Tắt:
           td(class="detailTableInputRows")
