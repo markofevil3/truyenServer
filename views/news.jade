@@ -3,6 +3,8 @@ extends layout
 block metaData
   meta(name="keywords", content="Đọc truyện trực tuyến, đọc truyện online, doc truyen truc tuyen, doc truyen online, đọc truyện, doc truyen, truyen tranh, sach truyen, truyện tranh, sách truyện, full truyen ,diem tin, điểm tin")
 
+block jsScripts
+  script(src="/javascripts/jquery.dotdotdot.min.js", type="text/javascript")
 block content
   div(id="newsPage", class="contentPages")
     div(id="newsCates")
@@ -21,4 +23,18 @@ block content
             img(id="imgCrop", src="#{hotNewsList[0].cover}", onerror="this.src='/images/storyDefaultCover.jpg'")
           div(id="bigBookTitle") #{hotNewsList[0].title}
         div(id="rightContent")
+          div(id="text") Điểm Tin
+          ul(id="listNews")
+            - for (var i = 1; i <= 4; i++)
+              li
+                div(class="newsContent")
+                  a(class="newsTitle", href="#") #{hotNewsList[i].title}
+                  br
+                  div(class="newsShortDes") #{hotNewsList[i].shortDes}
       div(id="bottomPanel")
+        - for (var i = 5; i <= 7; i++)
+          div(class="newsContent")
+            div(class="newsCover")
+  script
+    $('.newsContent').dotdotdot();
+    $('#bigBookTitle').dotdotdot();

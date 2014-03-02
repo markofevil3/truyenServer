@@ -32,7 +32,7 @@ block content
                 tr
                   td(id="storyPoster", class="detailRows") Người đăng: #{story.poster}
                     - if (story.chapters.length > 0)
-                      a(id="btnStoryReading", href="/doc-truyen/#{story._id}/#{story.chapters[story.chapters.length - 1]._id}/#{story.chapters[story.chapters.length - 1].title}") Đọc Truyện
+                      a(id="btnStoryReading", href="/doc-truyen/#{story._id}/#{story.chapters[0]._id}/#{story.chapters[0].title}") Đọc Truyện
                 tr
                   td(id="storyView", class="detailRows")
                     

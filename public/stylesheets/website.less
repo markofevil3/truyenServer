@@ -969,13 +969,81 @@ input[type=search] {
     margin-top: 15px;
     background: url('/images/website/newsTransBg.png');
     
+    #bottomPanel {
+      clear: both;
+      
+      .newsContent {
+        width: 255px;
+        height: 155px;
+        background-color: yellow;
+        float: left;
+        margin-left: 20px;
+        margin-top: 10px;
+        
+        .newsCover {
+          width: 251px;
+          height: 114px;
+          background: url('/images/website/newsBookBgSmall.png');
+        }
+      }
+    }
+    
     #topPanel {
       margin: 18px 20px;
+      width: 100%;
+      
+      #rightContent {
+        float: left;
+        margin-left: 20px;
+        width: 439px;
+        
+        #text {
+          font-size: 1.3em;
+          font-weight: lighter;
+        }
+        
+        #listNews {
+          list-style-type:disc;
+          margin-left: 20px;
+          
+          .newsContent {
+            height: 62px;
+            margin-top: 7px;
+            
+            .newsTitle {
+              text-decoration: none;
+              color: black;
+              font-weight: bold;
+              font-size: 1em;
+            }
+            .newsTitle:hover {
+              text-decoration: underline;
+            }
+            .newsShortDes {
+              margin-top: 2px;
+              font-style: italic;
+            }
+          }
+        }
+      }
       
       #bigBook {
         background: url('/images/website/newsBookBg.png');
         width: 338px;
         height: 294px;
+        float: left;
+        
+        #bigBookTitle {
+          width: 284px;
+          float: left;
+          text-align: center;
+          margin-left: 35px;
+          margin-top: 4px;
+          height: 36px;
+          overflow: hidden;
+          font-size: 1.1em;
+          color: white;
+        }
         
         #imgCropWrapper {
         	overflow: hidden;
