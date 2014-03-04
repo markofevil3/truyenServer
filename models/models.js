@@ -55,7 +55,8 @@ var newsSchema = new Schema({
   shortDes: String,
   content: String,
   cover: String,
-  storyLink: String
+  storyLink: String,
+  storyTitle: String
 });
 
 var storySchema = new Schema({

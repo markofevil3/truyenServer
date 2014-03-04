@@ -248,3 +248,7 @@ exports.getCategory = function() {
 exports.listNews = function(req, res) {
   NewsController.listNewsForWebsite(req, res);
 }
+
+exports.readingNews = function(req, res) {
+  NewsController.readingNews(req, res);
+};

@@ -116,7 +116,6 @@ var addChapterDiv =
 );
 
 function previewStoryChapter(chapterIndex) {
-  console.log(chapterIndex);
   showPopupPreview(CKEDITOR.instances['chapter-content-' + chapterIndex].getData());
 };
 

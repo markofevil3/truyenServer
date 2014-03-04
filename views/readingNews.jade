@@ -1,0 +1,40 @@
+extends layout
+
+block metaData
+  meta(name="keywords", content="Đọc truyện trực tuyến, đọc truyện online, doc truyen truc tuyen, doc truyen online, đọc truyện, doc truyen, truyen tranh, sach truyen, truyện tranh, sách truyện, full truyen, #{news.title}")
+
+block content
+  div(id="newsReadingPage", class="contentPages")
+    div(id="newsContent")
+      div(id="newsDatePost") #{prettyDate(news.datePost)}
+      h1(id="newsTitle") #{news.title}
+      div(id="newsShortDes")
+        div!= news.shortDes
+      div(id="newsMainContent")!= news.content
+      - if (typeof(news.storyLink) != 'undefined')
+        div(id="newsStoryLink")
+          span(style="font-style: italic") Link đọc truyện: 
+          a(href="news.storyLink", style="color: #1b769a; font-style: italic") #{news.storyTitle}
+      div(id="otherNews")
+        div(id="text") Các tin khác:
+        - each otherNew in otherNews
+          div(class="otherNewsLinks")
+            span - 
+            a(href="/diem-tin/list-truyen/#{otherNew._id}/#{otherNew.title}") #{otherNew.title}
+    div(id="suggestContainer")
+      div(id="suggestWrapper")
+        div(id="text") Giới thiệu truyện
+        - if (typeof(suggestBooks) != 'undefined')
+          - each book in suggestBooks
+            div(class="suggestBooks")
+              a(href="/truyen/#{book._id}/#{book.title}")
+                img(class="bookCovers", src="#{book.cover}", onerror="this.src='/images/storyDefaultCover.jpg'")
+              div(class="bookDetails")
+                a(href="/truyen/#{book._id}/#{book.title}") #{book.title}
+                br
+                span(class="bookView") Lượt xem: #{book.numView}
+              div(class="spacer", style="clear: both;")
+    div(id="bottomPage")
+      div(class="fb-like fbLikeChapters", data-href="http://fulltruyen.com/diem-tin/#{news._id}/#{news.title}", data-layout="button_count", data-action="like", data-show-faces="true", data-share="true")
+      div(class="fb-comments", data-href="http://fulltruyen.com/diem-tin/#{news._id}/#{news.title}", data-width="830", data-numposts="5", data-colorscheme="light")
+    div(class="pageGap")

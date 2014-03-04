@@ -20,21 +20,62 @@ block content
       div(id="topPanel")
         div(id="bigBook")
           div(id="imgCropWrapper")
-            img(id="imgCrop", src="#{hotNewsList[0].cover}", onerror="this.src='/images/storyDefaultCover.jpg'")
-          div(id="bigBookTitle") #{hotNewsList[0].title}
+            a(href="/diem-tin/#{currentDisplayType}/#{hotNewsList[0]._id}/#{hotNewsList[0].title}")
+              img(id="imgCrop", src="#{hotNewsList[0].cover}", onerror="this.src='/images/storyDefaultCover.jpg'")
+          div(id="bigBookTitle") 
+            a(href="/diem-tin/#{currentDisplayType}/#{hotNewsList[0]._id}/#{hotNewsList[0].title}") #{hotNewsList[0].title}
         div(id="rightContent")
           div(id="text") Điểm Tin
           ul(id="listNews")
             - for (var i = 1; i <= 4; i++)
               li
                 div(class="newsContent")
-                  a(class="newsTitle", href="#") #{hotNewsList[i].title}
+                  a(class="newsTitle", href="/diem-tin/#{currentDisplayType}/#{hotNewsList[i]._id}/#{hotNewsList[i].title}") #{hotNewsList[i].title}
                   br
                   div(class="newsShortDes") #{hotNewsList[i].shortDes}
       div(id="bottomPanel")
         - for (var i = 5; i <= 7; i++)
-          div(class="newsContent")
+          a(href="/diem-tin/#{currentDisplayType}/#{hotNewsList[i]._id}/#{hotNewsList[i].title}")
+            div(class="newsContents")
+              div(class="newsCover")
+                img(class="newsCoverImg", src="#{hotNewsList[i].cover}", onerror="this.src='/images/storyDefaultCover.jpg'")
+              div(class="smallBookNewsTitles") #{hotNewsList[i].title}
+    div(id="line")
+    div(id="pagingContent")
+      div(id="wrapper")
+        - each aNews in allNews
+          div(class="dailyNews")
             div(class="newsCover")
+              img(class="newsCoverImg", src="#{aNews.cover}", onerror="this.src='/images/storyDefaultCover.jpg'")
+            div(class="newsRightContent")
+              div(class="newsRightTitle") 
+                a(href="/diem-tin/#{currentDisplayType}/#{aNews._id}/#{aNews.title}") #{aNews.title}
+              div(class="newsRightDatePost") Ngày đăng: #{prettyDate(aNews.datePost)}
+              div(class="newsRightShortDes") #{aNews.shortDes}
+    div(class="pagingWrapper", id="listStoryPagingWrapper")
+      - if (currentPage - 3 > 1)
+        a(id="toStart", class="pagingItems", href="/diem-tin/#{currentDisplayType}/1")
+          img(src="/images/website/btnToStart.png", id="btnToStart", class="pagingImgs")
+        a(id="prev", class="pagingItems", href="/diem-tin/#{currentDisplayType}/#{currentPage - 1}")
+          img(src="/images/website/btnPrev.png", id="btnPrev", class="pagingImgs")
+        span ...
+      - var maxBound = currentPage + 3 > maxNewsPage ? maxNewsPage : currentPage + 3;
+      - for (var i = (currentPage - 3) > 0 ? (currentPage - 3) : 1; i <= maxBound; i++)
+        - if (currentPage == i)
+          a(href="/diem-tin/#{currentDisplayType}/#{i}")
+            div(id="page#{i}", class="pagingItems pagingNumbs active") #{i}
+        - else
+          a(href="/diem-tin/#{currentDisplayType}/#{i}")
+            div(id="page#{i}", class="pagingItems pagingNumbs") #{i}
+      - if (currentPage + 3 < maxNewsPage)
+        span ...
+        a(id="next", class="pagingItems", href="/diem-tin/#{currentDisplayType}/#{currentPage + 1}")
+          img(src="/images/website/btnNext.png", id="btnNext", class="pagingImgs")
+        a(id="toEnd", class="pagingItems", href="/diem-tin/#{currentDisplayType}/#{maxNewsPage}")  
+          img(src="/images/website/btnToEnd.png", id="btnToEnd", class="pagingImgs")
+      
   script
     $('.newsContent').dotdotdot();
     $('#bigBookTitle').dotdotdot();
+    $('.smallBookNewsTitles').dotdotdot();
+    $('.newsRightContent').dotdotdot();

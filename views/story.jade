@@ -3,6 +3,10 @@ extends layout
 block metaData
   meta(name="keywords", content="Đọc truyện trực tuyến, đọc truyện online, doc truyen truc tuyen, doc truyen online, đọc truyện, doc truyen, truyen tranh, sach truyen, truyện tranh, sách truyện, full truyen, #{story.title}")
 
+block jsScripts
+  script(src="/javascripts/jquery.dotdotdot.min.js", type="text/javascript")
+  script(src="/javascripts/utils.js", type="text/javascript")
+
 block content
   div(id="storyPage", class="contentPages")
     div(id="topPage")
@@ -55,7 +59,8 @@ block content
                     a(href="/doc-truyen/#{story._id}/#{story.chapters[story.chapters.length - i]._id}/#{story.chapters[story.chapters.length - i].title}") #{story.chapters[story.chapters.length - i].title}
           div(id="shortDesWrapper")
             div(id="text") Tóm tắt truyện
-            != story.shortDes
+            div(id="shortDesContent")!= story.shortDes
+            a(id="readmore", href="#", class="readmore") Xem thêm&raquo;
         div(id="storyChapters")
           div(id="readingText") Đọc truyện #{story.title}
           input(id="searchChapterInput", type="text", placeholder="Nhập tên chương cần tìm, ví dụ: 205")
@@ -84,15 +89,18 @@ block content
       h1(id="commentTitle") Bình luận cho "#{story.title}"
       div(class="fb-comments", data-href="http://fulltruyen.com/truyen/#{story._id}/#{story.title}", data-width="830", data-numposts="5", data-colorscheme="light")
   div(class="pageGap")
+  div(id="previewPanel", class="previewPanel")
+    div(id="toPopup")
+      div(class="close")
+      h1(id="title") Giới thiệu truyện "#{story.title}":
+      div(id="popup_content")
+    div(class="loader")
+    div(id="backgroundPopup")
   script
-    function isHidingContent(){
-        var $s = $('#storyInfo');
-
-        $s.wrapInner('<div />'); // wrap inner contents
-        var hidden = $s.height() < $s.children('div').height();
-        console.log($s.height() + " " + $s.children('div').height());
-        $s.children('div').replaceWith( $s.children('div').html() ); //unwrap
-
-        return hidden;
-    }
-    // alert(isHidingContent());
+    $("#shortDesWrapper").dotdotdot({
+      after: 'a.readmore'
+    });
+    var storyData = !{JSON.stringify(story)};
+    $("#readmore").click(function() {
+      showPopupPreview(storyData.shortDes);
+    });

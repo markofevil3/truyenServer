@@ -342,12 +342,9 @@ exports.editStoryChapter = function(req, res) {
           adminRoute.editStoryPage(req, res);
         })
       } else {
-        console.log("##########");
         adminRoute.index(req, res);
       }
-    } else {
-      console.log("##########22");
-      
+    } else {      
       adminRoute.index(req, res);
     }
   });
