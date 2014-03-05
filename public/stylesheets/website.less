@@ -393,8 +393,14 @@ input[type=search] {
         width: 300px;
         margin: auto;
         
+        .bookContents:last-child {
+          border-bottom: none;
+        }
+        
         .bookContents {
           margin: 10px 0;
+          height: 55px;
+          border-bottom: 1px solid rgb(167, 210, 226);
           
           a {
             text-decoration: none;
@@ -504,10 +510,6 @@ input[type=search] {
         margin-top: -3px;
         
         #bottomMiddleTitle {
-          color : #fff;
-          text-shadow: 0px 1px 1px rgba(0,0,0,1);
-          text-align: center;
-          line-height: 34px;
           height: 33px;
           .rounded-corners(7px);
           border: 1px solid white;
@@ -528,6 +530,38 @@ input[type=search] {
 
           /* W3C Markup, IE10 Release Preview */ 
           background-image: linear-gradient(to bottom, #6CBD22 0%, #338E17 100%);
+          
+          #text {
+            color : #fff;
+            text-shadow: 0px 1px 1px rgba(0,0,0,1);
+            text-align: center;
+            line-height: 34px;
+          }
+          
+          #newsUL {
+            
+            .newsContents:last-child {
+              border-bottom: none;
+            }
+            
+            .newsContents {
+              text-align: left;
+              line-height: 120%;
+              border-bottom: 1px solid rgb(183, 228, 183);
+              margin: 0 5px;
+              height: 55px;
+              margin-top: 10px;
+              
+              a {
+                color: black;
+                text-decoration: none;
+              }
+              
+              a:hover {
+                text-decoration: underline;
+              }
+            }
+          }
         }
       }
     }

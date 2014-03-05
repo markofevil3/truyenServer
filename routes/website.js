@@ -9,6 +9,7 @@ var Chapter = require('../models/models').Chapter;
 var Favorite = require('../models/models').Favorite;
 var Manga = require('../models/models').Manga;
 var Story = require('../models/models').Story;
+var News = require('../models/models').News;
 
 var NewsController = require('./newsController');
 
@@ -74,6 +75,8 @@ var newBooks;
 
 var listBooks;
 
+var homePageNews;
+
 updateCacheData();
 
 setInterval(updateCacheData, 7200000);
@@ -83,6 +86,9 @@ function updateCacheData() {
     listBooks = stories;
     maxStoryPage = Math.ceil(listBooks.length / numPage);
     sliderBooks = listBooks.slice(0).sort(Util.dynamicSort('datePost', -1)).slice(0, 30);
+  });
+  News.find({}, '_id title datePost shortDes').sort({'datePost': -1}).skip(0).limit(7).exec(function(error, news) {
+    homePageNews = news;
   });
   // Story.find({}, '_id title author shortDes cover').skip(0).limit(30).exec(function(error, stories) {
   //   sliderBooks = stories;
@@ -123,9 +129,9 @@ exports.contactUs = function(req, res) {
 };
 
 exports.homePage = function(req, res) {
-  var newBooks = listBooks.slice(0).sort(Util.dynamicSort('updatedAt', -1)).slice(0, 12);
-  var hotBooks = listBooks.slice(0).sort(Util.dynamicSort('numView', -1)).slice(0, 12);
-  var fulledBooks = getFullStatusBooks().sort(Util.dynamicSort('datePost', -1)).slice(0, 12);
+  var newBooks = listBooks.slice(0).sort(Util.dynamicSort('updatedAt', -1)).slice(0, 7);
+  var hotBooks = listBooks.slice(0).sort(Util.dynamicSort('numView', -1)).slice(0, 7);
+  var fulledBooks = getFullStatusBooks().sort(Util.dynamicSort('datePost', -1)).slice(0, 7);
   res.render('index', { 
     title: 'Full Truyện',
     error: '',
@@ -134,7 +140,8 @@ exports.homePage = function(req, res) {
     newBooks: newBooks,
     hotBooks: hotBooks,
     fulledBooks: fulledBooks,
-    allBooks: listBooks
+    allBooks: listBooks,
+    homePageNews: homePageNews
   });
 };
 

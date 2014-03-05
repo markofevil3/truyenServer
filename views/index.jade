@@ -6,6 +6,8 @@ block metaData
 block jsScripts
   script(src="javascripts/button.js", type="text/javascript")
   script(src="javascripts/imageSlider.js", type="text/javascript")
+  script(src="/javascripts/jquery.dotdotdot.min.js", type="text/javascript")
+  
 block content
   div(id="homePage")
     div(id="imageSlider")
@@ -50,13 +52,21 @@ block content
             li(class="bottomLeftCateLi", data-id="recommend")
               span ĐỀ CỬ
         div(id="bottomLeftContent")
-          - each book in newBooks
+          - each book, i in newBooks
             div(class="bookContents")
-              a(href="/truyen/#{book._id}/#{book.title}") - #{book.title} - 
-              span(style="font-style:italic; color: grey") #{book.author}
+              span(style="color:#2795bf") #{i + 1}. 
+              a(href="/truyen/#{book._id}/#{book.title}") #{book.title}
+              br
+              div(style="font-style:italic; color: grey; margin-left: 16px; margin-top: 3px") #{book.author}
       div(id="bottomMiddle")
         div(id="bottomMiddleWrapper")
-          div(id="bottomMiddleTitle") ĐIỂM TIN SÁCH
+          div(id="bottomMiddleTitle")
+            div(id="text") ĐIỂM TIN SÁCH
+            ul(id="newsUL")
+              - each aNews in homePageNews
+                li(class="newsContents")
+                  span(style="color: green") &raquo; 
+                  a(href="/diem-tin/list-truyen/#{aNews._id}/#{aNews.title}") #{aNews.title}
       div(id="bottomRight")
         div(id="foldedTop")
           div(id="foldedTopWrapper")
@@ -73,6 +83,8 @@ block content
     var dataHotBooks = !{JSON.stringify(hotBooks)};
     var dataNewBooks = !{JSON.stringify(newBooks)};
     var datafulledBooks = !{JSON.stringify(fulledBooks)};
+    $('.bookContents').dotdotdot();
+    $('.newsContents').dotdotdot();
     $(".bottomLeftCateLi").click(function(e) {
       $(".bottomLeftCateLi").removeClass("bottomLeftCateLiActive");
       $(this).addClass("bottomLeftCateLiActive");
@@ -80,25 +92,27 @@ block content
       switch($(this).data("id")) {
         case "new":
           for (var i = 0; i < dataNewBooks.length; i++) {
-            dataString += '<div class="bookContents"><a href="/truyen/' + dataNewBooks[i]._id + '/' + dataNewBooks[i].title + '"> - ' + dataNewBooks[i].title
-                        + ' - </a><span style="font-style:italic; color: grey">' + dataNewBooks[i].author + '</span></div>'
+            dataString += '<div class="bookContents"><span style="color:#2795bf">' + (i + 1) + '. </span><a href="/truyen/' + dataNewBooks[i]._id + '/' + dataNewBooks[i].title + '">' + dataNewBooks[i].title
+                        + '</a></br><div style="font-style:italic; color: grey; margin-left: 16px; margin-top: 3px">' + dataNewBooks[i].author + '</div></div>'
           }
         break;
         case "hot":
           for (var i = 0; i < dataHotBooks.length; i++) {
-            dataString += '<div class="bookContents"><a href="/truyen/' + dataHotBooks[i]._id + '/' + dataHotBooks[i].title + '"> - ' + dataHotBooks[i].title
-                        + ' - </a><span style="font-style:italic; color: grey">' + dataHotBooks[i].author + '</span></div>'
+            dataString += '<div class="bookContents"><span style="color:#2795bf">' + (i + 1) + '. </span><a href="/truyen/' + dataHotBooks[i]._id + '/' + dataHotBooks[i].title + '">' + dataHotBooks[i].title
+                        + '</a></br><div style="font-style:italic; color: grey; margin-left: 16px; margin-top: 3px">' + dataHotBooks[i].author + '</div></div>'
           }
         break;
         case "full":
           for (var i = 0; i < dataHotBooks.length; i++) {
-            dataString += '<div class="bookContents"><a href="/truyen/' + datafulledBooks[i]._id + '/' + datafulledBooks[i].title + '"> - ' + datafulledBooks[i].title
-                        + ' - </a><span style="font-style:italic; color: grey">' + datafulledBooks[i].author + '</span></div>'
+            dataString += '<div class="bookContents"><span style="color:#2795bf">' + (i + 1) + '. </span><a href="/truyen/'
+                        + datafulledBooks[i]._id + '/' + datafulledBooks[i].title + '">' + datafulledBooks[i].title
+                        + '</a></br><div style="font-style:italic; color: grey; margin-left: 16px; margin-top: 3px">' + datafulledBooks[i].author + '</div></div>'
           }
         break;
       }
       var bottomLeftContent = $("#bottomLeftContent");
       bottomLeftContent.html(dataString);
+      $('.bookContents').dotdotdot();
       bottomLeftContent.hide();
       bottomLeftContent.fadeIn(400);
     });
