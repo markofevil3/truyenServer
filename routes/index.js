@@ -164,8 +164,7 @@ exports.manga = function(req, res) {
       } else {
         manga.numView = 1;
       }
-      manga.save();
-      console.log("manga - " + manga.title);
+      // manga.save();
       User.findOne({ 'userId': req.query.userId }, function(error, user) {
         manga.chapters.sort(Util.dynamicSortNumber('chapter', -1));
         if (user == null) {
@@ -190,7 +189,7 @@ exports.mangaReading = function(req, res) {
     if (manga == null) {
       console.log(error);
     } else {
-      console.log("mangaReading - " + manga.title);
+      manga.save();
       manga.chapters.sort(Util.dynamicSortNumber('chapter', -1));
       var chapter = manga.chapters.id(req.query.chapter);
       chapter.pages.sort();

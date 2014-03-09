@@ -14,7 +14,7 @@ block content
       - if (typeof(news.storyLink) != 'undefined')
         div(id="newsStoryLink")
           span(style="font-style: italic") Link đọc truyện: 
-          a(href="news.storyLink", style="color: #1b769a; font-style: italic") #{news.storyTitle}
+          a(href="#{news.storyLink}", style="color: #1b769a; font-style: italic") #{news.storyTitle}
       div(id="otherNews")
         div(id="text") Các tin khác:
         - each otherNew in otherNews
