@@ -68,6 +68,7 @@ var category = {
 // page for paging story list
 var numPage = 30;
 var maxStoryPage;
+var homePageBottomMaxBook = 10;
 
 var sliderBooks;
 
@@ -87,7 +88,7 @@ function updateCacheData() {
     maxStoryPage = Math.ceil(listBooks.length / numPage);
     sliderBooks = listBooks.slice(0).sort(Util.dynamicSort('datePost', -1)).slice(0, 30);
   });
-  News.find({}, '_id title datePost shortDes').sort({'datePost': -1}).skip(0).limit(7).exec(function(error, news) {
+  News.find({}, '_id title datePost shortDes').sort({'datePost': -1}).skip(0).limit(homePageBottomMaxBook).exec(function(error, news) {
     homePageNews = news;
   });
   // Story.find({}, '_id title author shortDes cover').skip(0).limit(30).exec(function(error, stories) {
@@ -129,9 +130,9 @@ exports.contactUs = function(req, res) {
 };
 
 exports.homePage = function(req, res) {
-  var newBooks = listBooks.slice(0).sort(Util.dynamicSort('updatedAt', -1)).slice(0, 7);
-  var hotBooks = listBooks.slice(0).sort(Util.dynamicSort('numView', -1)).slice(0, 7);
-  var fulledBooks = getFullStatusBooks().sort(Util.dynamicSort('datePost', -1)).slice(0, 7);
+  var newBooks = listBooks.slice(0).sort(Util.dynamicSort('updatedAt', -1)).slice(0, homePageBottomMaxBook);
+  var hotBooks = listBooks.slice(0).sort(Util.dynamicSort('numView', -1)).slice(0, homePageBottomMaxBook);
+  var fulledBooks = getFullStatusBooks().sort(Util.dynamicSort('datePost', -1)).slice(0, homePageBottomMaxBook);
   res.render('index', { 
     title: 'Full Truyện',
     error: '',
