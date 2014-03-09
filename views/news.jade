@@ -21,7 +21,10 @@ block content
         div(id="bigBook")
           div(id="imgCropWrapper")
             a(href="/diem-tin/#{currentDisplayType}/#{hotNewsList[0]._id}/#{hotNewsList[0].title}")
-              img(id="imgCrop", src="#{hotNewsList[0].cover}", onerror="this.src='/images/storyDefaultCover.jpg'")
+              - if (typeof(hotNewsList[0].cover) != 'undefined')
+                img(id="imgCrop", src="#{hotNewsList[0].cover}", onerror="this.src='/images/website/fulltruyenLogo.png'")
+              - else
+                img(id="imgCrop", src="/images/website/fulltruyenLogo.png", onerror="this.src='/images/website/fulltruyenLogo.png'")
           div(id="bigBookTitle") 
             a(href="/diem-tin/#{currentDisplayType}/#{hotNewsList[0]._id}/#{hotNewsList[0].title}") #{hotNewsList[0].title}
         div(id="rightContent")
@@ -38,7 +41,10 @@ block content
           a(href="/diem-tin/#{currentDisplayType}/#{hotNewsList[i]._id}/#{hotNewsList[i].title}")
             div(class="newsContents")
               div(class="newsCover")
-                img(class="newsCoverImg", src="#{hotNewsList[i].cover}", onerror="this.src='/images/storyDefaultCover.jpg'")
+                - if (typeof(hotNewsList[i].cover) != 'undefined')
+                  img(class="newsCoverImg", src="#{hotNewsList[i].cover}", onerror="this.src='/images/website/fulltruyenLogo.png'")
+                - else
+                  img(class="newsCoverImg", src="/images/website/fulltruyenLogo.png'", onerror="this.src='/images/website/fulltruyenLogo.png'")
               div(class="smallBookNewsTitles") #{hotNewsList[i].title}
     div(id="line")
     div(id="pagingContent")
@@ -46,7 +52,10 @@ block content
         - each aNews in allNews
           div(class="dailyNews")
             div(class="newsCover")
-              img(class="newsCoverImg", src="#{aNews.cover}", onerror="this.src='/images/storyDefaultCover.jpg'")
+              - if (typeof(aNews.cover) != 'undefined')
+                img(class="newsCoverImg", src="#{aNews.cover}", onerror="this.src='/images/website/fulltruyenLogo.png'")
+              - else
+                img(class="newsCoverImg", src="/images/website/fulltruyenLogo.png", onerror="this.src='/images/website/fulltruyenLogo.png'")
             div(class="newsRightContent")
               div(class="newsRightTitle") 
                 a(href="/diem-tin/#{currentDisplayType}/#{aNews._id}/#{aNews.title}") #{aNews.title}
