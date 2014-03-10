@@ -29,6 +29,9 @@ block content
                   td(id="storyView", class="detailRows") Lượt xem: #{story.numView}
                 tr
                   td(id="storyTranslator", class="detailRows") Nhóm dịch: #{story.translator}
+                - if (typeof(story.source) != 'undefined')
+                  tr
+                    td(id="storySource", class="detailRows") Nguồn: #{story.source}
                 tr
                   td(id="storyStatus", class="detailRows")
                     span Tình trạng: 
