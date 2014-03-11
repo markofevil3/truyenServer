@@ -44,7 +44,6 @@ block content
             - else
               th(class="listTableHeader")
                 a(class="row-title link-row-title", href="/danh-sach-truyen/#{currentPage}/4/asc") Ngày Post 
-          tr(id="gapLine", style="height:5px")
           - each story,i in stories
             tr(class="listTableTR")
               td(class="listTableRow listTableRowTitle")
@@ -60,10 +59,12 @@ block content
     div(id="listStoryCategoryContent", class="categoryContent")
       div(id="cateTitle") Thể Loại
       a(href="#")
-        div(class="cateTypes") Tất Cả
+        div(class="cateTypes")
+          div(class="text") Tất Cả
       - each type in storyTypes
         a(href="#")
-          div(class="cateTypes") #{type}
+          div(class="cateTypes")
+            div(class="text") #{type}
     div(class="pagingWrapper", id="listStoryPagingWrapper")
       - if (currentPage - 3 > 1)
         a(id="toStart", class="pagingItems", href="/danh-sach-truyen/1/#{orderType}/#{orderStyle}")
