@@ -77,6 +77,15 @@ var storySchema = new Schema({
   chapters: [ chapterStorySchema ]
 });
 
+var quoteSchema = new Schema({
+  storyId: {type: String, index: true},
+  storyTitle: String,
+  storyAuthor: String,
+  content: String,
+  datePost: Date,
+  poster: String
+});
+
 var storyAudioSchema = new Schema({
   title: { type: String, index: true },
   author: String,
@@ -106,4 +115,5 @@ module.exports = {
   'Story': mongoose.model('Story', storySchema),
   'StoryAudio': mongoose.model('StoryAudio', storyAudioSchema),
   'News': mongoose.model('News', newsSchema),
+  'Quotes': mongoose.model('Quotes', quoteSchema),
 };

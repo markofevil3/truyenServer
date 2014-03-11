@@ -34,11 +34,11 @@ var mainCateList = {
     subCate: [],
     link: "/"
   },
-  shareEmotion: {
-    text: "Góc nhỏ tâm hồn",
-    subCate: ["poetry", "shortStory", "experience"],
-    link: "/"
-  },
+  // shareEmotion: {
+  //   text: "Góc nhỏ tâm hồn",
+  //   subCate: ["poetry", "shortStory", "experience"],
+  //   link: "/"
+  // },
   contactUs: {
     text: "Liên hệ",
     subCate: [],
@@ -78,6 +78,8 @@ var listBooks;
 
 var homePageNews;
 
+var booksForSearch;
+
 updateCacheData();
 
 setInterval(updateCacheData, 7200000);
@@ -87,6 +89,9 @@ function updateCacheData() {
     listBooks = stories;
     maxStoryPage = Math.ceil(listBooks.length / numPage);
     sliderBooks = listBooks.slice(0).sort(Util.dynamicSort('datePost', -1)).slice(0, 30);
+  });
+  Story.find({}, '_id title author').exec(function(error, stories) {
+    booksForSearch = stories;
   });
   News.find({}, '_id title datePost shortDes').sort({'datePost': -1}).skip(0).limit(homePageBottomMaxBook).exec(function(error, news) {
     homePageNews = news;
@@ -125,7 +130,7 @@ exports.contactUs = function(req, res) {
     title: 'Liên hệ | Full Truyện',
     error: '',
     category: category,
-    allBooks: listBooks
+    allBooks: booksForSearch
   });
 };
 
@@ -141,7 +146,7 @@ exports.homePage = function(req, res) {
     newBooks: newBooks,
     hotBooks: hotBooks,
     fulledBooks: fulledBooks,
-    allBooks: listBooks,
+    allBooks: booksForSearch,
     homePageNews: homePageNews
   });
 };
@@ -186,7 +191,7 @@ exports.listStories = function(req, res) {
     maxStoryPage: maxStoryPage,
     currentPage: parseInt(req.params.page),
     storyTypes: Util.storyCate,
-    allBooks: listBooks
+    allBooks: booksForSearch
   });
 };
 
@@ -206,7 +211,7 @@ exports.getStory = function(req, res) {
       category: category,
       story: story,
       suggestBooks: suggestBooks,
-      allBooks: listBooks
+      allBooks: booksForSearch
     });
   });
 };
@@ -240,13 +245,13 @@ exports.getStoryChapter = function(req, res) {
       story: story,
       chapter: chapter,
       nextPrevChapter: getNextPrevChapter(story.chapters, req.params.storyChapterId),
-      allBooks: listBooks
+      allBooks: booksForSearch
     });
   });
 }
 
 exports.getListBooks = function() {
-  return listBooks;
+  return booksForSearch;
 }
 
 exports.getCategory = function() {
