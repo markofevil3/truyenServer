@@ -184,11 +184,6 @@ exports.editStory = function(req, res) {
         }
         story.save(function(err) {
           adminRoute.listStory(req, res);
-          // res.render('admin/listStory', { 
-          //   title: 'Full Truyện'
-          //   // story: story,
-          //   // storyCates: Util.storyCate
-          // });
         });
       } else {
         adminRoute.listStory(req, res);
