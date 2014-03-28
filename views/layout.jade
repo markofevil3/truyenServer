@@ -20,6 +20,13 @@
 -  return data;
 - };
 
+- var beautyLink = function(stringTitle) {
+-   if (stringTitle != null && stringTitle != "") {
+-     stringTitle = stringTitle.replace(/ /g, '-');  
+-   }
+-   return stringTitle;
+- };
+
 doctype 5
 html
   head

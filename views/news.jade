@@ -20,25 +20,25 @@ block content
       div(id="topPanel")
         div(id="bigBook")
           div(id="imgCropWrapper")
-            a(href="/diem-tin/#{currentDisplayType}/#{hotNewsList[0]._id}/#{hotNewsList[0].title}")
+            a(href="/diem-tin/#{currentDisplayType}/#{hotNewsList[0]._id}/#{beautyLink(hotNewsList[0].title)}")
               - if (typeof(hotNewsList[0].cover) != 'undefined')
                 img(id="imgCrop", src="#{hotNewsList[0].cover}", onerror="this.src='/images/website/fulltruyenLogo.png'")
               - else
                 img(id="imgCrop", src="/images/website/fulltruyenLogo.png", onerror="this.src='/images/website/fulltruyenLogo.png'")
           div(id="bigBookTitle") 
-            a(href="/diem-tin/#{currentDisplayType}/#{hotNewsList[0]._id}/#{hotNewsList[0].title}") #{hotNewsList[0].title}
+            a(href="/diem-tin/#{currentDisplayType}/#{hotNewsList[0]._id}/#{beautyLink(hotNewsList[0].title)}") #{hotNewsList[0].title}
         div(id="rightContent")
           div(id="text") Điểm Tin
           ul(id="listNews")
             - for (var i = 1; i <= 4; i++)
               li
                 div(class="newsContent")
-                  a(class="newsTitle", href="/diem-tin/#{currentDisplayType}/#{hotNewsList[i]._id}/#{hotNewsList[i].title}") #{hotNewsList[i].title}
+                  a(class="newsTitle", href="/diem-tin/#{currentDisplayType}/#{hotNewsList[i]._id}/#{beautyLink(hotNewsList[i].title)}") #{hotNewsList[i].title}
                   br
                   div(class="newsShortDes") #{hotNewsList[i].shortDes}
       div(id="bottomPanel")
         - for (var i = 5; i <= 7; i++)
-          a(href="/diem-tin/#{currentDisplayType}/#{hotNewsList[i]._id}/#{hotNewsList[i].title}")
+          a(href="/diem-tin/#{currentDisplayType}/#{hotNewsList[i]._id}/#{beautyLink(hotNewsList[i].title)}")
             div(class="newsContents")
               div(class="newsCover")
                 - if (typeof(hotNewsList[i].cover) != 'undefined')
@@ -58,7 +58,7 @@ block content
                 img(class="newsCoverImg", src="/images/website/fulltruyenLogo.png", onerror="this.src='/images/website/fulltruyenLogo.png'")
             div(class="newsRightContent")
               div(class="newsRightTitle") 
-                a(href="/diem-tin/#{currentDisplayType}/#{aNews._id}/#{aNews.title}") #{aNews.title}
+                a(href="/diem-tin/#{currentDisplayType}/#{aNews._id}/#{beautyLink(aNews.title)}") #{aNews.title}
               div(class="newsRightDatePost") Ngày đăng: #{prettyDate(aNews.datePost)}
               div(class="newsRightShortDes") #{aNews.shortDes}
     div(class="pagingWrapper", id="listStoryPagingWrapper")

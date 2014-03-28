@@ -18,10 +18,10 @@ block content
             - for (var j = 0; j < 6; j++)
               div(class="books")
                 div(id="bookCoverWrapper")
-                  a(href="/truyen/#{sliderBooks[count]._id}/#{sliderBooks[count].title}")
+                  a(href="/truyen/#{sliderBooks[count]._id}/#{beautyLink(sliderBooks[count].title)}")
                     img(id="bookCover", src="#{sliderBooks[count].cover}", onerror="this.src='/images/storyDefaultCover.jpg'")
                 div(id="bookDetails")
-                  a(href="/truyen/#{sliderBooks[count]._id}/#{sliderBooks[count].title}") #{sliderBooks[count].title}
+                  a(href="/truyen/#{sliderBooks[count]._id}/#{beautyLink(sliderBooks[count].title)}") #{sliderBooks[count].title}
                   span(id="bookAuthor")  - #{sliderBooks[count].author}
                   // p(id="bookDes") #{sliderBooks[count].shortDes}
               - count++
@@ -55,7 +55,7 @@ block content
           - each book, i in newBooks
             div(class="bookContents")
               span(style="color:#2795bf") #{i + 1}. 
-              a(href="/truyen/#{book._id}/#{book.title}") #{book.title}
+              a(href="/truyen/#{book._id}/#{beautyLink(book.title)}") #{book.title}
               br
               div(style="font-style:italic; color: grey; margin-left: 16px; margin-top: 3px") #{book.author}
       div(id="bottomMiddle")
@@ -66,7 +66,7 @@ block content
               - each aNews in homePageNews
                 li(class="newsContents")
                   span(style="color: green") ✿&nbsp;&nbsp;
-                  a(href="/diem-tin/list-truyen/#{aNews._id}/#{aNews.title}") #{aNews.title}
+                  a(href="/diem-tin/list-truyen/#{aNews._id}/#{beautyLink(aNews.title)}") #{aNews.title}
       div(id="bottomRight")
         div(id="foldedTop")
           div(id="foldedTopWrapper")

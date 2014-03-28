@@ -47,7 +47,7 @@ block content
           - each story,i in stories
             tr(class="listTableTR")
               td(class="listTableRow listTableRowTitle")
-                a(href="/truyen/#{story._id}/#{story.title}") #{story.title}
+                a(href="/truyen/#{story._id}/#{beautyLink(story.title)}") #{story.title}
               td(class="listTableRow listTableRowAuthor")
                 span #{story.author}
               // td(class="listTableRow listTableRowNumView")
