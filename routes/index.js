@@ -267,8 +267,8 @@ exports.checkUnlockFunction = function(req, res) {
         }
         
         // free or have to purchase
-        res.json({ 'data': {isPurchased: check, time: user.pTime}, 'advPublisher': advPublisher, 'admobPublisher': admobPublisher });
-        // res.json({ 'data': {isPurchased: true, time: user.pTime}, 'advPublisher': advPublisher, 'admobPublisher': admobPublisher });
+        // res.json({ 'data': {isPurchased: check, time: user.pTime}, 'advPublisher': advPublisher, 'admobPublisher': admobPublisher });
+        res.json({ 'data': {isPurchased: true, time: user.pTime}, 'advPublisher': advPublisher, 'admobPublisher': admobPublisher });
       });
     });
   } else {
