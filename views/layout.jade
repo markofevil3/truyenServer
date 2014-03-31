@@ -22,7 +22,16 @@
 
 - var beautyLink = function(stringTitle) {
 -   if (stringTitle != null && stringTitle != "") {
--     stringTitle = stringTitle.replace(/ /g, '-');  
+-     stringTitle = stringTitle.replace(/ /g, '-'); 
+-     stringTitle = stringTitle.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g,"a");
+-     stringTitle = stringTitle.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g,"e");
+-     stringTitle = stringTitle.replace(/ì|í|ị|ỉ|ĩ/g,"i");
+-     stringTitle = stringTitle.replace(/ì|í|ị|ỉ|ĩ/g,"i");
+-     stringTitle = stringTitle.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g,"o");
+-     stringTitle = stringTitle.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g,"u");
+-     stringTitle = stringTitle.replace(/ỳ|ý|ỵ|ỷ|ỹ/g,"y");
+-     stringTitle = stringTitle.replace(/đ/g,"d");
+-     stringTitle = stringTitle.replace(/đ/g,"d");
 -   }
 -   return stringTitle;
 - };

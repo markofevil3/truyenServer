@@ -12,6 +12,7 @@ block content
     div(id="topPage")
       div(id="storyDetailContainer")
         div(id="storyInfo")
+          div(id="gap")
           div(id="titleText") Thông tin truyện
           div(id="infoWrapper")
             div(id="leftPart")
@@ -54,7 +55,7 @@ block content
           div(class="lines", style="clear:both")
             img(src="/images/website/line.png")
           - if (story.chapters.length > 0)
-            div(id="newestText") 5 Chương mới nhất của "#{story.title}"
+            div(id="newestText") 5 Chương mới nhất
             div(id="newestChapters")
               - for(var i = 1; i <= 5; i++)
                 - if (story.chapters[story.chapters.length - i])
@@ -65,7 +66,8 @@ block content
             div(id="shortDesContent")!= story.shortDes
             a(id="readmore", href="#", class="readmore") Xem thêm&raquo;
         div(id="storyChapters")
-          div(id="readingText") Đọc truyện #{story.title}
+          div(id="gap")
+          div(id="readingText") Đọc truyện
           input(id="searchChapterInput", type="text", placeholder="Nhập tên chương cần tìm, ví dụ: 205")
           div(class="lines")
             img(src="/images/website/line.png")
@@ -87,7 +89,7 @@ block content
                   span(class="bookView") Lượt xem: #{book.numView}
                 div(class="spacer", style="clear: both;")
     div(id="bottomPage")
-      h1(id="commentTitle") Bình luận cho "#{story.title}"
+      div(id="commentTitle") Bình luận
       div(class="fb-comments", data-href="http://fulltruyen.com/truyen/#{story._id}/#{beautyLink(story.title)}", data-width="830", data-numposts="5", data-colorscheme="light")
   div(class="pageGap")
   div(id="previewPanel", class="previewPanel")
