@@ -56,15 +56,16 @@ block content
             img(src="/images/website/line.png")
           - if (story.chapters.length > 0)
             div(id="newestText") 5 Chương mới nhất
-            div(id="newestChapters")
-              - for(var i = 1; i <= 5; i++)
-                - if (story.chapters[story.chapters.length - i])
-                  div(class="newestChapterLinks")
-                    a(href="/doc-truyen/#{story._id}/#{story.chapters[story.chapters.length - i]._id}/#{beautyLink(story.chapters[story.chapters.length - i].title)}") #{story.chapters[story.chapters.length - i].title}
-          div(id="shortDesWrapper")
-            div(id="text") Tóm tắt truyện
-            div(id="shortDesContent")!= story.shortDes
-            a(id="readmore", href="#", class="readmore") Xem thêm&raquo;
+            div(id="newestPanel")
+              div(id="newestChapters")
+                - for(var i = 1; i <= 5; i++)
+                  - if (story.chapters[story.chapters.length - i])
+                    div(class="newestChapterLinks")
+                      a(href="/doc-truyen/#{story._id}/#{story.chapters[story.chapters.length - i]._id}/#{beautyLink(story.chapters[story.chapters.length - i].title)}") #{story.chapters[story.chapters.length - i].title}
+              div(id="shortDesWrapper")
+                div(id="text") Tóm tắt truyện
+                div(id="shortDesContent")!= story.shortDes
+                a(id="readmore", href="#", class="readmore") Xem thêm&raquo;
         div(id="storyChapters")
           div(id="gap")
           div(id="readingText") Đọc truyện
