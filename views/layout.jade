@@ -63,6 +63,21 @@ html
   body
     div(id="fb-root")
     script
+      // Chitika Ads
+      if (window.location.pathname.indexOf("danh-sach-truyen") == -1) {
+        ( function() {
+          if (window.CHITIKA === undefined) { window.CHITIKA = { 'units' : [] }; };
+          var unit = {"publisher":"markofevil3","width":300,"height":600,"sid":"Chitika Default","color_bg":"#f1f1f1"};
+          var placement_id = window.CHITIKA.units.length;
+          window.CHITIKA.units.push(unit);
+          var s = document.createElement('script');
+          s.type = 'text/javascript';
+          s.src = '//cdn.chitika.net/getads.js';
+          try { document.getElementsByTagName('head')[0].appendChild(s); } catch(e) { document.write(s.outerHTML); }
+        }());
+      }
+
+      //#########
       window.fbAsyncInit = function() {
         FB.init({
           appId      : '517068261714145',
@@ -125,6 +140,7 @@ html
               option Tên truyện
               option Tác giả 
           div(id="searchButton")
+      div(id="chitikaAdBlock-0")
     div(id="category-content")
       ul(id="categoryUl")
         li(class="mainCates")
