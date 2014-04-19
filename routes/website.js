@@ -80,6 +80,8 @@ var homePageNews;
 
 var booksForSearch;
 
+var listAuthors = [];
+
 updateCacheData();
 
 setInterval(updateCacheData, 7200000);
@@ -95,6 +97,15 @@ function updateCacheData() {
   });
   News.find({}, '_id title datePost shortDes').sort({'datePost': -1}).skip(0).limit(homePageBottomMaxBook).exec(function(error, news) {
     homePageNews = news;
+  });
+  
+  Story.distinct("author", function(error, results){
+    for (var i = 0; i < results.length; i++) {
+      if (results[i] != null && results[i] != "") {
+        listAuthors.push(results[i].trim());
+      }
+    }
+    // listAuthors = results;
   });
   // Story.find({}, '_id title author shortDes cover').skip(0).limit(30).exec(function(error, stories) {
   //   sliderBooks = stories;
@@ -130,7 +141,8 @@ exports.contactUs = function(req, res) {
     title: 'Liên hệ | Full Truyện',
     error: '',
     category: category,
-    allBooks: booksForSearch
+    allBooks: booksForSearch,
+    listAuthors: listAuthors
   });
 };
 
@@ -147,11 +159,18 @@ exports.homePage = function(req, res) {
     hotBooks: hotBooks,
     fulledBooks: fulledBooks,
     allBooks: booksForSearch,
-    homePageNews: homePageNews
+    homePageNews: homePageNews,
+    listAuthors: listAuthors
   });
 };
 
 exports.listStories = function(req, res) {
+  var filteredBooks;
+  if (req.params.filterBy != undefined) {
+    filteredBooks = Util.filter(listBooks, "author", req.params.filterBy);
+  } else {
+    filteredBooks = listBooks.slice(0);
+  }
   var stories;
   if (req.params.orderType == undefined) {
     req.params.orderType = "4";
@@ -164,20 +183,20 @@ exports.listStories = function(req, res) {
   }
   switch(req.params.orderType) {
     case "0": // title
-      stories = listBooks.slice(0).sort(Util.dynamicSort('title', req.params.orderStyle == "asc" ? 1 : -1));
+      stories = filteredBooks.sort(Util.dynamicSort('title', req.params.orderStyle == "asc" ? 1 : -1));
     break;
     case "1": // author
-      stories = listBooks.slice(0).sort(Util.dynamicSort('author', req.params.orderStyle == "asc" ? 1 : -1));
+      stories = filteredBooks.sort(Util.dynamicSort('author', req.params.orderStyle == "asc" ? 1 : -1));
     break;
     case "2": // type
-      stories = listBooks.slice(0).sort(Util.dynamicSort('cate', req.params.orderStyle == "asc" ? 1 : -1));
+      stories = filteredBooks.sort(Util.dynamicSort('cate', req.params.orderStyle == "asc" ? 1 : -1));
     break;
     case "3": // view
-      stories = listBooks.slice(0).sort(Util.dynamicSort('numView', req.params.orderStyle == "asc" ? 1 : -1));
+      stories = filteredBooks.sort(Util.dynamicSort('numView', req.params.orderStyle == "asc" ? 1 : -1));
     break;
     case "4": // date post
     default: // datepost
-      stories = listBooks.slice(0).sort(Util.dynamicSort('datePost', req.params.orderStyle == "asc" ? 1 : -1));
+      stories = filteredBooks.sort(Util.dynamicSort('datePost', req.params.orderStyle == "asc" ? 1 : -1));
   }
 
   res.render('listStory', { 
@@ -188,10 +207,11 @@ exports.listStories = function(req, res) {
     stories: stories.splice(numPage * (parseInt(req.params.page) - 1), numPage),
     orderType: req.params.orderType,
     orderStyle: req.params.orderStyle,
-    maxStoryPage: maxStoryPage,
+    maxStoryPage: Math.ceil(stories.length / numPage),
     currentPage: parseInt(req.params.page),
     storyTypes: Util.storyCate,
-    allBooks: booksForSearch
+    allBooks: booksForSearch,
+    listAuthors: listAuthors
   });
 };
 
@@ -211,7 +231,8 @@ exports.getStory = function(req, res) {
       category: category,
       story: story,
       suggestBooks: suggestBooks,
-      allBooks: booksForSearch
+      allBooks: booksForSearch,
+      listAuthors: listAuthors
     });
   });
 };
@@ -245,7 +266,8 @@ exports.getStoryChapter = function(req, res) {
       story: story,
       chapter: chapter,
       nextPrevChapter: getNextPrevChapter(story.chapters, req.params.storyChapterId),
-      allBooks: booksForSearch
+      allBooks: booksForSearch,
+      listAuthors: listAuthors
     });
   });
 }
@@ -254,13 +276,17 @@ exports.getListBooks = function() {
   return booksForSearch;
 }
 
+exports.getListAuthor = function() {
+  return listAuthors;
+}
+
 exports.getCategory = function() {
   return category;
 }
 
 exports.listNews = function(req, res) {
   NewsController.listNewsForWebsite(req, res);
-}
+} 
 
 exports.readingNews = function(req, res) {
   NewsController.readingNews(req, res);

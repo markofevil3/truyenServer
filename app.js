@@ -21,7 +21,8 @@ app.configure(function(){
   app.set('view engine', 'jade');
   // app.use(express.favicon());
   app.use(express.favicon(__dirname + '/public/favicon.ico'));
-  app.use(express.static(path.join(__dirname, '/public')));
+  app.use(express.compress());
+  app.use(express.static(path.join(__dirname, '/public'), { maxAge: 43200000 }));
   app.use(express.logger('dev'));
   app.use(express.limit('30mb'));
   app.use(express.bodyParser());
