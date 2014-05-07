@@ -12,6 +12,7 @@ var Story = require('../models/models').Story;
 var News = require('../models/models').News;
 
 var NewsController = require('./newsController');
+var WebsiteController = require('./website');
 
 var mainCateList = {
   listStory: {
@@ -217,23 +218,27 @@ exports.listStories = function(req, res) {
 
 exports.getStory = function(req, res) {
   Story.findOne({ '_id': req.params.storyId }, '_id author cover source poster translator status title datePost cate numView shortDes chapters.chapter chapters.title chapters._id').exec(function(error, story) {
-    var suggestCate = story.cate.randomElement();
-    var suggestBooks;
-    if (suggestCate) {
-      suggestBooks = getBooksByCate(suggestCate, story._id);
-      suggestBooks.sort(Util.dynamicSort('datePost', -1));
-      suggestBooks = suggestBooks.slice(0, 8);
+    if (story != null) {
+      var suggestCate = story.cate.randomElement();
+      var suggestBooks;
+      if (suggestCate) {
+        suggestBooks = getBooksByCate(suggestCate, story._id);
+        suggestBooks.sort(Util.dynamicSort('datePost', -1));
+        suggestBooks = suggestBooks.slice(0, 8);
+      }
+      story.chapters.sort(Util.dynamicSort('chapter', 1));
+      res.render('story', { 
+        title: story.title + ' | Full Truyện',
+        error: '',
+        category: category,
+        story: story,
+        suggestBooks: suggestBooks,
+        allBooks: booksForSearch,
+        listAuthors: listAuthors
+      });
+    } else {
+      WebsiteController.homePage(req, res);
     }
-    story.chapters.sort(Util.dynamicSort('chapter', 1));
-    res.render('story', { 
-      title: story.title + ' | Full Truyện',
-      error: '',
-      category: category,
-      story: story,
-      suggestBooks: suggestBooks,
-      allBooks: booksForSearch,
-      listAuthors: listAuthors
-    });
   });
 };
 
@@ -255,20 +260,24 @@ function getNextPrevChapter(chapters, chapterId) {
 
 exports.getStoryChapter = function(req, res) {
   Story.findOne({ '_id': req.params.storyId }).exec(function(error, story) {
-    story.numView++;
-    story.save();
-    story.chapters.sort(Util.dynamicSort('chapter', 1));
-    var chapter = story.chapters.id(req.params.storyChapterId);
-    res.render('storyReading', { 
-      title: chapter.title + ' | Full Truyện',
-      error: '',
-      category: category,
-      story: story,
-      chapter: chapter,
-      nextPrevChapter: getNextPrevChapter(story.chapters, req.params.storyChapterId),
-      allBooks: booksForSearch,
-      listAuthors: listAuthors
-    });
+    if (story != null) {
+      story.numView++;
+      story.save();
+      story.chapters.sort(Util.dynamicSort('chapter', 1));
+      var chapter = story.chapters.id(req.params.storyChapterId);
+      res.render('storyReading', { 
+        title: chapter.title + ' | Full Truyện',
+        error: '',
+        category: category,
+        story: story,
+        chapter: chapter,
+        nextPrevChapter: getNextPrevChapter(story.chapters, req.params.storyChapterId),
+        allBooks: booksForSearch,
+        listAuthors: listAuthors
+      });
+    } else {
+      WebsiteController.homePage(req, res);
+    }
   });
 }
 
