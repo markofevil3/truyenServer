@@ -265,16 +265,20 @@ exports.getStoryChapter = function(req, res) {
       story.save();
       story.chapters.sort(Util.dynamicSort('chapter', 1));
       var chapter = story.chapters.id(req.params.storyChapterId);
-      res.render('storyReading', { 
-        title: chapter.title + ' | Full Truyện',
-        error: '',
-        category: category,
-        story: story,
-        chapter: chapter,
-        nextPrevChapter: getNextPrevChapter(story.chapters, req.params.storyChapterId),
-        allBooks: booksForSearch,
-        listAuthors: listAuthors
-      });
+      if (chapter != null) {
+        res.render('storyReading', { 
+          title: chapter.title + ' | Full Truyện',
+          error: '',
+          category: category,
+          story: story,
+          chapter: chapter,
+          nextPrevChapter: getNextPrevChapter(story.chapters, req.params.storyChapterId),
+          allBooks: booksForSearch,
+          listAuthors: listAuthors
+        });
+      } else {
+        WebsiteController.homePage(req, res);
+      }
     } else {
       WebsiteController.homePage(req, res);
     }
